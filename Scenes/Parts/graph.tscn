@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://p1gmq0pbvgk5"]
+
+[ext_resource type="Script" path="res://Scenes/Parts/graph.gd" id="1_7xbrk"]
+[ext_resource type="PackedScene" uid="uid://csuky2tuifwje" path="res://Scenes/Parts/edge.tscn" id="2_un6rm"]
+[ext_resource type="PackedScene" uid="uid://degepda22sxbs" path="res://Scenes/Parts/vertex.tscn" id="3_t7qd1"]
+[ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="4_e23mg"]
+
+[node name="Graph" type="Node2D" node_paths=PackedStringArray("vertex_container", "edge_container")]
+script = ExtResource("1_7xbrk")
+vertex_container = NodePath("Vertices")
+edge_container = NodePath("Edges")
+vertex_resource = ExtResource("3_t7qd1")
+edge_resource = ExtResource("2_un6rm")
+
+[node name="Edges" type="Node2D" parent="."]
+
+[node name="Vertices" type="Node2D" parent="."]
+
+[node name="GraphData" parent="." instance=ExtResource("4_e23mg")]

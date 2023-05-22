@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhtxtlvxsvi56"]
+
+[ext_resource type="PackedScene" uid="uid://p1gmq0pbvgk5" path="res://Scenes/Parts/graph.tscn" id="1_eqq77"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Graph" parent="." instance=ExtResource("1_eqq77")]

@@ -1,0 +1,268 @@
+[gd_scene load_steps=3 format=3 uid="uid://wfc5d7c5u2qc"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/GraphDataEditor/graph_data_editor.gd" id="1_nl6gu"]
+[ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="2_k5wwy"]
+
+[node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "remove_vertex_index", "add_edge_start_index", "add_edge_end_index", "remove_edge_start_index", "remove_edge_end_index")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nl6gu")
+graph_data = NodePath("GraphData")
+graph_text_display = NodePath("MarginContainer/Control/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
+remove_vertex_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2/RemoveVertexIndex")
+add_edge_start_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer/AddEdgeStartIndex")
+add_edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer/AddEdgeEndIndex")
+remove_edge_start_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer/RemoveEdgeStartIndex")
+remove_edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer/RemoveEdgeEndIndex")
+
+[node name="GraphData" parent="." instance=ExtResource("2_k5wwy")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Control" type="Control" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -496.0
+offset_bottom = 40.0
+grow_horizontal = 0
+alignment = 2
+
+[node name="DisplayGraph" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Display Graph"
+
+[node name="Control4" type="Control" parent="MarginContainer/Control/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="SaveLoad" type="HBoxContainer" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="SaveGraph" type="Button" parent="MarginContainer/Control/HBoxContainer/SaveLoad"]
+layout_mode = 2
+disabled = true
+text = "Save Graph"
+
+[node name="LoadGraph" type="Button" parent="MarginContainer/Control/HBoxContainer/SaveLoad"]
+layout_mode = 2
+disabled = true
+text = "Load Graph"
+
+[node name="Control3" type="Control" parent="MarginContainer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Pause" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+text = "Pause"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 0
+offset_right = 534.0
+offset_bottom = 283.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Graph properties:"
+
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="MakeReflexive" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Make reflexive"
+
+[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="MakeUndirected" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Make undirected"
+
+[node name="Control6" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Graph actions:"
+
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Fill" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Fill graph"
+
+[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Clear" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Clear graph"
+
+[node name="Control6" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Invert" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Invert graph"
+
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Vertex actions:"
+
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="AddVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Add vertex"
+
+[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="RemoveVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "Remove vertex"
+
+[node name="RemoveVertexIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Edge actions:"
+
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="AddEdge" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer"]
+layout_mode = 2
+text = "Add edge"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer"]
+layout_mode = 2
+
+[node name="AddEdgeStartIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddEdgeEndIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="RemoveEdge" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3"]
+layout_mode = 2
+text = "Remove edge"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3"]
+layout_mode = 2
+
+[node name="RemoveEdgeStartIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="RemoveEdgeEndIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.680581
+anchor_top = 0.23913
+anchor_right = 0.807622
+anchor_bottom = 0.361204
+offset_bottom = -1.52588e-05
+grow_horizontal = 0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Graph display:"
+horizontal_alignment = 1
+
+[node name="GraphTextDisplay" type="Label" parent="MarginContainer/Control/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/DisplayGraph" to="." method="display_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer/MakeReflexive" to="." method="make_reflexive"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer/MakeUndirected" to="." method="make_undirected"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer4/Fill" to="." method="fill_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer4/Clear" to="." method="clear_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer4/Invert" to="." method="invert_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer2/AddVertex" to="." method="add_vertex"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2/RemoveVertex" to="." method="remove_vertex"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/AddEdge" to="." method="add_edge"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/RemoveEdge" to="." method="remove_edge"]

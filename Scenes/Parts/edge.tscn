@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://csuky2tuifwje"]
+
+[ext_resource type="Texture2D" uid="uid://wryqe0jivfct" path="res://Art/edge.png" id="1_gi2do"]
+[ext_resource type="Script" path="res://Scenes/Parts/edge.gd" id="1_ifrx8"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_gl8vb"]
+b = Vector2(0, 0)
+
+[node name="Edge" type="Node2D"]
+script = ExtResource("1_ifrx8")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(20, 4)
+width = 30.0
+texture = ExtResource("1_gi2do")
+texture_mode = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("SegmentShape2D_gl8vb")

@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxfpg5hjabu16"]
+
+[ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="1_h05kn"]
+[ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_lfrgn"]
+[ext_resource type="PackedScene" uid="uid://p1gmq0pbvgk5" path="res://Scenes/Parts/graph.tscn" id="2_0sh65"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwcum"]
+
+[node name="GraphEditor" type="Node2D"]
+script = ExtResource("1_lfrgn")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="GUI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -724.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Buttons" type="HBoxContainer" parent="GUI/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="AddVertex" type="Button" parent="GUI/Control/HBoxContainer/Buttons"]
+layout_mode = 2
+text = "Add vertex"
+
+[node name="Control" type="Control" parent="GUI/Control/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Mode" type="HBoxContainer" parent="GUI/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="VertexMode" type="Button" parent="GUI/Control/HBoxContainer/Mode"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("1_h05kn")
+text = "Vertex mode"
+
+[node name="EdgeMode" type="Button" parent="GUI/Control/HBoxContainer/Mode"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("1_h05kn")
+text = "Edge mode"
+
+[node name="Control2" type="Control" parent="GUI/Control/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="SaveLoad" type="HBoxContainer" parent="GUI/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="SaveGraph" type="Button" parent="GUI/Control/HBoxContainer/SaveLoad"]
+layout_mode = 2
+text = "Save Graph"
+
+[node name="LoadGraph" type="Button" parent="GUI/Control/HBoxContainer/SaveLoad"]
+layout_mode = 2
+text = "Load Graph"
+
+[node name="Control3" type="Control" parent="GUI/Control/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Pause" type="Button" parent="GUI/Control/HBoxContainer"]
+layout_mode = 2
+text = "Pause"
+
+[node name="Graph" parent="." instance=ExtResource("2_0sh65")]
+
+[node name="DragSelector" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="DragSelector"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DragSelector/Area2D"]
+shape = SubResource("RectangleShape2D_kwcum")
+
+[node name="Panel" type="Panel" parent="DragSelector"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="GUI/Control/HBoxContainer/Buttons/AddVertex" to="Graph" method="add_vertex_in_editor"]
+[connection signal="pressed" from="GUI/Control/HBoxContainer/Mode/VertexMode" to="Graph" method="vertex_mode"]
+[connection signal="pressed" from="GUI/Control/HBoxContainer/Mode/EdgeMode" to="Graph" method="edge_mode"]

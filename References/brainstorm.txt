@@ -1,0 +1,74 @@
+Graph JSON file ideas
+
+What we need:
+	(Array of) Vertex
+		Index
+		Position
+		Label
+	(Array of) Edge
+		Start vertex
+		End vertex
+	Misc
+		Theme?
+
+
+Example (thank you ChatGPT):
+	{
+	  "vertices": [
+		{"position": {"x": 0, "y": 0}},
+		{"position": {"x": 1, "y": 1}}
+	  ],
+	  "edges": [
+		{"start": 0, "end": 1}
+	  ]
+	}
+	
+
+Another example (thanks again ChatGPT):
+	
+	//code
+	extends GraphEdit
+
+	func _ready():
+		var json_file = load("res://graph.json")
+		var graph_data = json_file.get_json()
+		
+		# Create nodes
+		for node_data in graph_data.nodes:
+			var node = add_node()
+			node.position = node_data.position
+			
+		# Create edges
+		for edge_data in graph_data.edges:
+			var start_node = get_node(edge_data.start)
+			var end_node = get_node(edge_data.end)
+			var edge = connect_node(start_node, end_node)
+	
+	//JSON
+	{
+		"nodes": [
+			{
+				"position": { "x": 100, "y": 100 }
+			},
+			{
+				"position": { "x": 300, "y": 100 }
+			},
+			{
+				"position": { "x": 200, "y": 200 }
+			}
+		],
+		"edges": [
+			{
+				"start": 0,
+				"end": 1
+			},
+			{
+				"start": 1,
+				"end": 2
+			},
+			{
+				"start": 2,
+				"end": 0
+			}
+		]
+	}
