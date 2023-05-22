@@ -14,7 +14,8 @@ extends GraphComponent
 
 @onready var area = $Area2D/CollisionShape2D
 
-func _process(_delta):
+func _ready():
+	#anchor edge at origin for consistency
 	global_position = Vector2(0,0)
 	
 	#draws only if both vertices are present
