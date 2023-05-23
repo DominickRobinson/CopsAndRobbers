@@ -48,7 +48,7 @@ func add_vertex():
 
 func remove_vertex(index : int):
 	#check for validity of vertex
-	if not is_valid_vertex(index) or graph.size() == 0: return
+	if not is_valid_vertex(index) or graph.size() == 1: return
 	#remove column
 	for i in graph.size():
 		graph[i].remove_at(index)
@@ -106,3 +106,20 @@ func make_undirected():
 		for j in graph.size():
 			graph[i][j] = graph[i][j] or graph[j][i]
 
+
+
+func bool_to_int(bool_graph : Array = graph):
+	var int_graph : Array
+	for i in graph.size():
+		int_graph.append([])
+		for j in graph.size():
+			int_graph[i].append(int(bool_graph[i][j]))
+	return int_graph
+
+func int_to_bool(int_graph : Array):
+	var bool_graph : Array
+	for i in graph.size():
+		int_graph.append([])
+		for j in graph.size():
+			int_graph[i].append(bool(bool_graph[i][j]))
+	return int_graph

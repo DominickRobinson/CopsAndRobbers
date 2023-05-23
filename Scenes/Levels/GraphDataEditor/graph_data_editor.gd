@@ -12,10 +12,15 @@ extends Control
 @export var remove_edge_start_index : SpinBox
 @export var remove_edge_end_index : SpinBox
 
+@export var save_file_dialog : FileDialog
+@export var load_file_dialog : FileDialog
+
 
 
 func _ready():
 	display_graph()
+	save_file_dialog.file_selected.connect(save_graph)
+	load_file_dialog.file_selected.connect(load_graph)
 
 
 func display_graph():
@@ -62,3 +67,139 @@ func clear_graph():
 func invert_graph():
 	graph_data.invert()
 	display_graph()
+
+
+func save_graph_button():
+	save_file_dialog.visible = true
+
+func load_graph_button():
+	load_file_dialog.visible = true
+
+
+func save_graph(path : String):
+	var save_file = FileAccess.open(path, FileAccess.WRITE)
+	var array = graph_data.bool_to_int()
+#	var array = graph_data.graph
+	
+	for i in graph_data.graph.size():
+		var row = PackedStringArray(array[i])
+		match path.get_extension():
+			"csv":
+				print("saving .csv")
+				save_file.store_csv_line(row, ",")
+			"tsv":
+				print("saving .tsv")
+				save_file.store_csv_line(row, "\t")
+
+
+
+func load_graph(path : String):
+	var load_file = FileAccess.open(path, FileAccess.READ)
+	
+	var array = []
+	var i = 0
+	
+	while !load_file.eof_reached():
+		array.append([])
+		var row
+		match path.get_extension():
+			"csv":
+				row = load_file.get_csv_line(",")
+			"tsv":
+				row = load_file.get_csv_line("\t")
+#		print(row)
+		for j in row.size():
+#			print(str(int(row[j])))
+			array[i].append(int(row[j]))
+		i += 1
+	
+	print("Before")
+	print(array)
+	array.pop_back()
+	print("\nAfter")
+	print(array)
+	
+	graph_data.graph = array
+	display_graph()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#func saveArrayToCSV(arrayData: Array, filePath: String):
+#	var csvString := ""
+#
+#	# Convert array of arrays of booleans to CSV string
+#	for row in arrayData:
+#		var rowString := ""
+#		for value in row:
+#			rowString += str(value) + ","
+#		rowString = rowString.substr(0, rowString.length() - 1) # Remove trailing comma
+#		csvString += rowString + "\n"
+#
+#	# Save CSV string to file
+#	var file := File.new()
+#	file.open(filePath, File.WRITE)
+#	file.store_string(csvString)
+#	file.close()
+#
+#
+#func loadCSVToArray(filePath: String) -> Array:
+#	var arrayData := []
+#
+#	# Read the .csv file
+#	var file := File.new()
+#	if file.open(filePath, File.READ) == OK:
+#		var fileContents := file.get_as_text()
+#		file.close()
+#
+#		# Split the file contents into rows
+#		var rows := fileContents.split("\n")
+#
+#		# Convert string values to booleans and create the array of arrays
+#		for row in rows:
+#			var columns := row.split(",")
+#
+#			var booleanRow := []
+#			for column in columns:
+#				# Convert string value to boolean
+#				var value := column.strip_edges() # Remove leading and trailing whitespaces
+#				var booleanValue := value.to_bool()
+#
+#				booleanRow.append(booleanValue)
+#
+#			arrayData.append(booleanRow)
+#	else:
+#		print("Failed to open file:", filePath)
+#
+#	return arrayData

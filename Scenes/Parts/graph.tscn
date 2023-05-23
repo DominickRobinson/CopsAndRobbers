@@ -5,8 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://degepda22sxbs" path="res://Scenes/Parts/vertex.tscn" id="3_t7qd1"]
 [ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="4_e23mg"]
 
-[node name="Graph" type="Node2D" node_paths=PackedStringArray("vertex_container", "edge_container")]
+[node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container")]
 script = ExtResource("1_7xbrk")
+graph_data = NodePath("GraphData")
 vertex_container = NodePath("Vertices")
 edge_container = NodePath("Edges")
 vertex_resource = ExtResource("3_t7qd1")

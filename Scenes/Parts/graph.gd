@@ -3,8 +3,11 @@ extends Node2D
 
 
 #graph data
+@export_group("data structures")
 @export var graph_data : GraphData
+@export var graph_position_data : Array[Vector2]
 
+@export_group("import data")
 #data of graph as json file
 @export var data_json : JSON = null
 

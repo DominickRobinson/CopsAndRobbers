@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://rf4w40minsy2"
+
+[deps]
+
+files=["res://Graphs/test_folder/test.0.translation"]
+
+source_file="res://Graphs/test_folder/test.csv"
+dest_files=["res://Graphs/test_folder/test.0.translation"]
+
+[params]
+
+compress=true
+delimiter=0
