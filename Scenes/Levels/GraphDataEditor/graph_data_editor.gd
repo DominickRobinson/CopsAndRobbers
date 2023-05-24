@@ -83,6 +83,11 @@ func invert_graph():
 	display_graph()
 	edit_graph()
 
+func square_graph():
+	graph_data.square()
+	display_graph()
+	edit_graph()
+
 
 func retract_strict_corners():
 	graph_data.retract_strict_corners()

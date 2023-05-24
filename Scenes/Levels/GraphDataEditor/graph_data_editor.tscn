@@ -141,6 +141,10 @@ text = "Clear"
 layout_mode = 2
 text = "Invert"
 
+[node name="Square" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer"]
+layout_mode = 2
+text = "Square"
+
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Control/VBoxContainer/GraphActions"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
@@ -153,6 +157,7 @@ layout_mode = 2
 text = "Retract strict corners"
 
 [node name="RetractCorners" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2"]
+visible = false
 layout_mode = 2
 text = "Retract corners"
 
@@ -240,12 +245,12 @@ prefix = "End:"
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.680581
-anchor_top = 0.171404
-anchor_right = 0.800363
-anchor_bottom = 0.293478
-grow_horizontal = 2
-grow_vertical = 2
+anchor_left = 0.683303
+anchor_top = 0.204013
+anchor_right = 0.683303
+anchor_bottom = 0.204013
+offset_right = 132.0
+offset_bottom = 73.0
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/PanelContainer"]
@@ -257,6 +262,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/PanelContainer/MarginContainer"]
 layout_mode = 2
+alignment = 2
 
 [node name="Label" type="Label" parent="MarginContainer/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -297,6 +303,7 @@ filters = PackedStringArray("*.csv", "*.tsv")
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer/Fill" to="." method="fill_graph"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer/Clear" to="." method="clear_graph"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer/Invert" to="." method="invert_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer/Square" to="." method="square_graph"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2/RetractStrictCorners" to="." method="retract_strict_corners"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2/RetractCorners" to="." method="retract_corners"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/AddVertex" to="." method="add_vertex"]
