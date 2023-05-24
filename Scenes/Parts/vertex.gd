@@ -16,7 +16,7 @@ var mouse_inside_area = false
 func _ready():
 	label.text = str(index)
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	if editable:
 		if Input.is_action_just_pressed("drag") and mouse_inside_area:
 			mouse_offset = global_position - get_global_mouse_position()

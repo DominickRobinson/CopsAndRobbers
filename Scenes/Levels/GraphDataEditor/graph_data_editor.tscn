@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://wfc5d7c5u2qc"]
+[gd_scene load_steps=4 format=3 uid="uid://wfc5d7c5u2qc"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphDataEditor/graph_data_editor.gd" id="1_nl6gu"]
 [ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="2_k5wwy"]
+[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_tgwf0"]
 
-[node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "remove_vertex_index", "add_edge_start_index", "add_edge_end_index", "remove_edge_start_index", "remove_edge_end_index", "save_file_dialog", "load_file_dialog")]
+[node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "vertex_index", "edge_start_index", "edge_end_index", "save_file_dialog", "load_file_dialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,11 +14,9 @@ grow_vertical = 2
 script = ExtResource("1_nl6gu")
 graph_data = NodePath("GraphData")
 graph_text_display = NodePath("MarginContainer/Control/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
-remove_vertex_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2/RemoveVertexIndex")
-add_edge_start_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer/AddEdgeStartIndex")
-add_edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer/AddEdgeEndIndex")
-remove_edge_start_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer/RemoveEdgeStartIndex")
-remove_edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer/RemoveEdgeEndIndex")
+vertex_index = NodePath("MarginContainer/Control/VBoxContainer/VertexActions/VertexIndex")
+edge_start_index = NodePath("MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/VBoxContainer/EdgeStartIndex")
+edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/VBoxContainer/EdgeEndIndex")
 save_file_dialog = NodePath("SaveFileDialog")
 load_file_dialog = NodePath("LoadFileDialog")
 
@@ -49,13 +48,16 @@ offset_bottom = 40.0
 grow_horizontal = 0
 alignment = 2
 
-[node name="DisplayGraph" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+[node name="Redo" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 visible = false
 layout_mode = 2
-text = "Display Graph"
+text = "Redo"
 
-[node name="Control4" type="Control" parent="MarginContainer/Control/HBoxContainer"]
-visible = false
+[node name="Undo" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+text = "Undo"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
@@ -75,155 +77,165 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Pause" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Pause"
+
+[node name="MainMenu" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+text = "Go to Main Menu"
+script = ExtResource("3_tgwf0")
+scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 0
 offset_right = 534.0
 offset_bottom = 283.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+[node name="GraphProperties" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/GraphProperties"]
 layout_mode = 2
 text = "Graph properties:"
 
-[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/GraphProperties"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="MakeReflexive" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="MakeReflexive" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphProperties"]
 layout_mode = 2
 text = "Make reflexive"
 
-[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-
-[node name="MakeUndirected" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="MakeUndirected" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphProperties"]
 layout_mode = 2
 text = "Make undirected"
 
-[node name="Control6" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+[node name="GraphActions" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Graph actions:"
 
-[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/GraphActions"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="Fill" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/GraphActions"]
 layout_mode = 2
-text = "Fill graph"
 
-[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+[node name="Fill" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer"]
+layout_mode = 2
+text = "Fill"
+
+[node name="Clear" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer"]
+layout_mode = 2
+text = "Clear"
+
+[node name="Invert" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer"]
+layout_mode = 2
+text = "Invert"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Control/VBoxContainer/GraphActions"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="Clear" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
-layout_mode = 2
-text = "Clear graph"
-
-[node name="Control6" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
-custom_minimum_size = Vector2(25, 0)
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/GraphActions"]
 layout_mode = 2
 
-[node name="Invert" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer4"]
+[node name="RetractStrictCorners" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2"]
 layout_mode = 2
-text = "Invert graph"
+text = "Retract strict corners"
 
-[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+[node name="RetractCorners" type="Button" parent="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2"]
+layout_mode = 2
+text = "Retract corners"
+
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+[node name="VertexActions" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
 layout_mode = 2
 text = "Vertex actions:"
 
-[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="AddVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+[node name="AddVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
 layout_mode = 2
-text = "Add vertex"
+text = "Add"
 
-[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(25, 0)
+[node name="RemoveVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
 layout_mode = 2
+text = "Remove"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2"]
+[node name="RetractVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
 layout_mode = 2
+text = "Retract"
 
-[node name="RemoveVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2"]
-layout_mode = 2
-text = "Remove vertex"
-
-[node name="RemoveVertexIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+[node name="VertexIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+alignment = 3
+prefix = "Vertex:"
+
+[node name="VSeparator3" type="VSeparator" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+[node name="EdgeActions" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/EdgeActions"]
 layout_mode = 2
 text = "Edge actions:"
 
-[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+[node name="Control4" type="Control" parent="MarginContainer/Control/VBoxContainer/EdgeActions"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/EdgeActions"]
 layout_mode = 2
 
-[node name="AddEdge" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer"]
+[node name="AddEdge" type="Button" parent="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer"]
 layout_mode = 2
-text = "Add edge"
+text = "Add"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer"]
+[node name="RemoveEdge" type="Button" parent="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer"]
 layout_mode = 2
+text = "Remove"
 
-[node name="AddEdgeStartIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="AddEdgeEndIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Control5" type="Control" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
-custom_minimum_size = Vector2(25, 0)
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="RemoveEdge" type="Button" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3"]
+[node name="EdgeStartIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Remove edge"
+alignment = 3
+prefix = "Start:"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3"]
+[node name="EdgeEndIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="RemoveEdgeStartIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer"]
-layout_mode = 2
-
-[node name="RemoveEdgeEndIndex" type="SpinBox" parent="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/VBoxContainer"]
-layout_mode = 2
+alignment = 3
+prefix = "End:"
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control"]
 layout_mode = 1
@@ -256,13 +268,11 @@ layout_mode = 2
 horizontal_alignment = 1
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
-title = "Open a File or Directory"
 position = Vector2i(300, 100)
 size = Vector2i(500, 400)
 content_scale_mode = 2
 content_scale_aspect = 1
-ok_button_text = "Open"
-file_mode = 3
+ok_button_text = "Save"
 access = 2
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv")
@@ -279,15 +289,18 @@ access = 2
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv")
 
-[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/DisplayGraph" to="." method="display_graph"]
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/Undo" to="." method="undo"]
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SaveLoad/SaveGraph" to="." method="save_graph_button"]
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SaveLoad/LoadGraph" to="." method="load_graph_button"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer/MakeReflexive" to="." method="make_reflexive"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer/MakeUndirected" to="." method="make_undirected"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer4/Fill" to="." method="fill_graph"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer4/Clear" to="." method="clear_graph"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer4/Invert" to="." method="invert_graph"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer2/AddVertex" to="." method="add_vertex"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer2/HBoxContainer2/RemoveVertex" to="." method="remove_vertex"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer/AddEdge" to="." method="add_edge"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/HBoxContainer3/HBoxContainer3/RemoveEdge" to="." method="remove_edge"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphProperties/MakeReflexive" to="." method="make_reflexive"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphProperties/MakeUndirected" to="." method="make_undirected"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer/Fill" to="." method="fill_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer/Clear" to="." method="clear_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer/Invert" to="." method="invert_graph"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2/RetractStrictCorners" to="." method="retract_strict_corners"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2/RetractCorners" to="." method="retract_corners"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/AddVertex" to="." method="add_vertex"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/RemoveVertex" to="." method="remove_vertex"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/RetractVertex" to="." method="retract_vertex"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/AddEdge" to="." method="add_edge"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/RemoveEdge" to="." method="remove_edge"]

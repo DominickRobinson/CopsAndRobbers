@@ -22,8 +22,8 @@ func _ready():
 	draw(vertices_exist())
 
 
-func draw(show=true):
-	if show:
+func draw(show_edge=true):
+	if show_edge:
 	#draw line
 		line.clear_points()
 		line.add_point(start_vertex.global_position)

@@ -5,20 +5,21 @@ extends Control
 
 @export var graph_text_display : Label
 
-@export var remove_vertex_index : SpinBox
+@export var vertex_index : SpinBox
 
-@export var add_edge_start_index : SpinBox
-@export var add_edge_end_index : SpinBox
-@export var remove_edge_start_index : SpinBox
-@export var remove_edge_end_index : SpinBox
+@export var edge_start_index : SpinBox
+@export var edge_end_index : SpinBox
 
 @export var save_file_dialog : FileDialog
 @export var load_file_dialog : FileDialog
 
+var edits : Array
 
 
 func _ready():
 	display_graph()
+	edits = [graph_data.graph.duplicate(true)]
+	
 	save_file_dialog.file_selected.connect(save_graph)
 	load_file_dialog.file_selected.connect(load_graph)
 
@@ -26,47 +27,72 @@ func _ready():
 func display_graph():
 	graph_text_display.text = graph_data.display()
 
-
 func make_reflexive():
 	graph_data.make_reflexive()
 	display_graph()
+	edit_graph()
 
 func make_undirected():
 	graph_data.make_undirected()
 	display_graph()
+	edit_graph()
 
 func add_vertex():
 	graph_data.add_vertex()
 	display_graph()
+	edit_graph()
 
 func remove_vertex():
-	var vtx = remove_vertex_index.value
+	var vtx = vertex_index.value
 	graph_data.remove_vertex(vtx)
 	display_graph()
+	edit_graph()
+
+func retract_vertex():
+	var vtx = vertex_index.value
+	graph_data.retract_vertex(vtx)
+	display_graph()
+	edit_graph()
 
 func add_edge():
-	var start_vtx = add_edge_start_index.value
-	var end_vtx = add_edge_end_index.value
+	var start_vtx = edge_start_index.value
+	var end_vtx = edge_end_index.value
 	graph_data.add_edge(start_vtx, end_vtx)
 	display_graph()
+	edit_graph()
 
 func remove_edge():
-	var start_vtx = add_edge_start_index.value
-	var end_vtx = add_edge_end_index.value
+	var start_vtx = edge_start_index.value
+	var end_vtx = edge_end_index.value
 	graph_data.remove_edge(start_vtx, end_vtx)
 	display_graph()
+	edit_graph()
 
 func fill_graph():
 	graph_data.fill()
 	display_graph()
+	edit_graph()
 
 func clear_graph():
 	graph_data.clear()
 	display_graph()
+	edit_graph()
 
 func invert_graph():
 	graph_data.invert()
 	display_graph()
+	edit_graph()
+
+
+func retract_strict_corners():
+	graph_data.retract_strict_corners()
+	display_graph()
+	edit_graph()
+
+func retract_corners():
+	graph_data.retract_corners()
+	display_graph()
+	edit_graph()
 
 
 func save_graph_button():
@@ -113,29 +139,63 @@ func load_graph(path : String):
 			array[i].append(int(row[j]))
 		i += 1
 	
-	print("Before")
-	print(array)
 	array.pop_back()
-	print("\nAfter")
-	print(array)
+
 	
 	graph_data.graph = array
+	
+	edit_graph()
+	display_graph()
+
+
+
+func edit_graph():
+	var new_edit : Array = graph_data.graph.duplicate(true)
+	
+	#if first edit or if this edit is not same as last edit
+	if edits.size() == 1:
+		edits.push_back(new_edit)
+		return
+	
+	if not graphs_equal(new_edit, edits[-1]):
+		edits.push_back(new_edit)
+		return
+	
+
+func print_edits():
+	print("Edits: ", edits.size())
+	for i in edits.size():
+		print(i)
+		print(edits[i])
+
+func undo():
+	if edits.size() > 1:
+		edits.pop_back()
+		graph_data.graph = edits[-1].duplicate(true)
+	elif edits.size() == 1:
+		graph_data.graph = edits[0].duplicate(true)
+#		print(4)
+	
 	display_graph()
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+func graphs_equal(g1 : Array, g2 : Array):
+	#must have same number of columns
+	if g1.size() != g2.size(): return false
+	
+	for i in g1.size():
+		#each row must have same size
+#		print("Row i: ", g1[i], " vs. ", g2[i])
+		if g1[i] != g2[i]: return false
+#		if g1[i].size() != g2[i].size(): return false
+#		for j in g1.size():
+#			#must have same value within each cell
+#			if g1[i][j] != g2[i][j]: return false
+	
+#	print("graphs equal")
+	return true
 
 
 
