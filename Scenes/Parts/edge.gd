@@ -1,50 +1,74 @@
 class_name Edge
 extends GraphComponent
 
+
 #start vertex of directed edge
-@export var start_vertex : Vertex
-		
+var start_vertex : Vertex
 
 #end vertex of directed edge
-@export var end_vertex : Vertex 
+var end_vertex : Vertex 
 
 
-@onready var line = $Line2D
-@onready var path = $Path2D
+@export var line : Line2D
+@export var path :Path2D
+@export var path_follow : PathFollow2D
 
-@onready var area = $Area2D/CollisionShape2D
+@export var label2D : Node2D
+@export var label : Label
+
+
 
 func _ready():
+	super._ready()
 	#anchor edge at origin for consistency
 	global_position = Vector2(0,0)
+
+
+
+
+
+func _process(delta):
+	label2D.global_rotation = 0
+	path_follow.progress_ratio = 0.75
 	
-	#draws only if both vertices are present
-	draw(vertices_exist())
-
-
-func draw(show_edge=true):
-	if show_edge:
-	#draw line
-		line.clear_points()
-		line.add_point(start_vertex.global_position)
-		line.add_point(end_vertex.global_position)
-		
-		#draw area
-		area.shape.a = start_vertex.global_position
-		area.shape.b = end_vertex.global_position
+	if can_draw():
+		draw()
 	else:
-		#hide line
-		line.clear_points()
-		#hide area
-		area.shape.a = Vector2.ZERO
-		area.shape.b = Vector2.ZERO
+		erase()
+	
+
+
+func draw():
+	line.clear_points()
+	#draw line
+	line.add_point(start_vertex.global_position)
+	line.add_point(end_vertex.global_position)
+	
+	path.show()
+	path.curve.clear_points()
+	for p in line.points:
+		path.curve.add_point(p)
+	
+	label.text = str(start_vertex.index) + " -> " + str(end_vertex.index)
+
+
+
+
+func erase():
+	line.clear_points()
+	path.curve.clear_points()
+	path.hide()
+	label.text = ""
+
 
 
 func vertices_exist():
-	return (start_vertex != null) and (end_vertex != null)
+	var result =  (start_vertex != null) and (end_vertex != null)
+	print("Vertices exist: ", result)
+	return result
 
 func contains_vertex(vertex : Vertex):
 	return start_vertex == vertex or end_vertex == vertex
 
-func remove():
-	queue_free()
+func can_draw():
+	return is_instance_valid(start_vertex) and is_instance_valid(end_vertex)

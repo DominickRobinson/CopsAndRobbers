@@ -2,6 +2,7 @@ class_name Vertex
 extends GraphComponent
 
 
+
 #text label to be displayed if required
 @export var text : String = ""
 
@@ -10,51 +11,41 @@ extends GraphComponent
 var index : int = -1
 
 var mouse_offset = Vector2.ZERO
-var mouse_inside_area = false
+
+var draggable = false
+
+@onready var vertex_container
 
 
 func _ready():
-	label.text = str(index)
+	super._ready()
+	vertex_container = get_parent()
+	set_text()
 
 func _unhandled_input(_event):
+	if Input.is_action_just_pressed("select") and mouse_inside_area:
+		selected.emit()
+	
 	if editable:
-		if Input.is_action_just_pressed("drag") and mouse_inside_area:
+		if Input.is_action_just_pressed("select") and mouse_inside_area:
 			mouse_offset = global_position - get_global_mouse_position()
-			selected = true
-		if Input.is_action_just_released("drag"):
-			selected = false
-		if Input.is_action_just_pressed("delete") and mouse_inside_area:
-			remove()
-	else:
-		if Input.is_action_just_pressed("drag") and mouse_inside_area:
-			start_line()
-			print(1)
-		if Input.is_action_just_released("drag") and mouse_inside_area:
-			#end of new edge
-			print(2)
+			draggable = true
+		if Input.is_action_just_released("select"):
+			draggable = false
+#		if Input.is_action_just_pressed("delete") and mouse_inside_area:
+#			remove()
 
 
-func _process(_delta):
-	if editable:
-		if selected:
-			follow_mouse()
+func _process(delta):
+	set_text()
+	if draggable: follow_mouse()
 
 
 func follow_mouse():
 	global_position = get_global_mouse_position() + mouse_offset
-	global_position = snapped(global_position, Vector2(64,64))
+#	global_position = snapped(global_position, Vector2(64,64))
 
 
-func start_line():
-#	draw_line(global_position, get_global_mouse_position(), Color.BLUE)
-	pass
 
-func _on_area_2d_mouse_entered():
-	mouse_inside_area = true
-
-func _on_area_2d_mouse_exited():
-	mouse_inside_area = false
-
-
-func remove():
-	queue_free()
+func set_text():
+	label.text = str(index)

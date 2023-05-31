@@ -1,14 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxfpg5hjabu16"]
+[gd_scene load_steps=7 format=3 uid="uid://dxfpg5hjabu16"]
 
 [ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="1_h05kn"]
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_lfrgn"]
 [ext_resource type="PackedScene" uid="uid://p1gmq0pbvgk5" path="res://Scenes/Parts/graph.tscn" id="2_0sh65"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_h1i5s"]
+[ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/VertexSpawnPosition.gd" id="5_8jcdu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwcum"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_wwkv8"]
+radius = 16.2788
 
-[node name="GraphEditor" type="Node2D"]
+[node name="GraphEditor" type="Node2D" node_paths=PackedStringArray("graph", "vertex_spawn_position", "add_vertex_button", "selected_label")]
 script = ExtResource("1_lfrgn")
+graph = NodePath("Graph")
+vertex_spawn_position = NodePath("VertexSpawnPosition")
+add_vertex_button = NodePath("GUI/Control/HBoxContainer/Buttons/AddVertex")
+selected_label = NodePath("GUI/Control/HBoxContainer3/VBoxContainer/SelectedLabel")
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
@@ -37,6 +43,41 @@ layout_mode = 2
 layout_mode = 2
 text = "Add vertex"
 
+[node name="RefreshEdges" type="Button" parent="GUI/Control/HBoxContainer/Buttons"]
+layout_mode = 2
+text = "Refresh edges"
+
+[node name="PanelContainer" type="PanelContainer" parent="GUI/Control/HBoxContainer/Buttons/RefreshEdges"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -2.09402
+anchor_top = 6.35
+anchor_right = -2.09402
+anchor_bottom = 6.35
+offset_right = 132.0
+offset_bottom = 73.0
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="GUI/Control/HBoxContainer/Buttons/RefreshEdges/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Control/HBoxContainer/Buttons/RefreshEdges/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="GUI/Control/HBoxContainer/Buttons/RefreshEdges/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Graph display:"
+horizontal_alignment = 1
+
+[node name="GraphTextDisplay" type="Label" parent="GUI/Control/HBoxContainer/Buttons/RefreshEdges/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
 [node name="Control" type="Control" parent="GUI/Control/HBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -53,6 +94,7 @@ text = "Vertex mode"
 
 [node name="EdgeMode" type="Button" parent="GUI/Control/HBoxContainer/Mode"]
 layout_mode = 2
+size_flags_vertical = 3
 toggle_mode = true
 button_group = ExtResource("1_h05kn")
 text = "Edge mode"
@@ -87,19 +129,57 @@ text = "Go to Main Menu"
 script = ExtResource("3_h1i5s")
 scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
 
-[node name="Graph" parent="." instance=ExtResource("2_0sh65")]
-
-[node name="DragSelector" type="Node2D" parent="."]
-
-[node name="Area2D" type="Area2D" parent="DragSelector"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DragSelector/Area2D"]
-shape = SubResource("RectangleShape2D_kwcum")
-
-[node name="Panel" type="Panel" parent="DragSelector"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="GUI/Control"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[connection signal="pressed" from="GUI/Control/HBoxContainer/Buttons/AddVertex" to="Graph" method="add_vertex_in_editor"]
-[connection signal="pressed" from="GUI/Control/HBoxContainer/Mode/VertexMode" to="Graph" method="vertex_mode"]
-[connection signal="pressed" from="GUI/Control/HBoxContainer/Mode/EdgeMode" to="Graph" method="edge_mode"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Control/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GUI/Control/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+text = "Selected vertex:"
+
+[node name="SelectedLabel" type="Label" parent="GUI/Control/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("2_0sh65")]
+graph_data_display_label = NodePath("../GUI/Control/HBoxContainer/Buttons/RefreshEdges/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
+
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+position = Vector2i(300, 100)
+size = Vector2i(500, 400)
+content_scale_mode = 2
+content_scale_aspect = 1
+ok_button_text = "Save"
+access = 2
+root_subfolder = "Graphs"
+filters = PackedStringArray("*.csv", "*.tsv", "*.json")
+
+[node name="LoadFileDialog" type="FileDialog" parent="."]
+title = "Open a File or Directory"
+position = Vector2i(300, 100)
+size = Vector2i(500, 400)
+content_scale_mode = 2
+content_scale_aspect = 1
+ok_button_text = "Open"
+file_mode = 3
+access = 2
+root_subfolder = "Graphs"
+filters = PackedStringArray("*.csv", "*.tsv", "*.json")
+
+[node name="VertexSpawnPosition" type="Node2D" parent="."]
+position = Vector2(578, 354)
+script = ExtResource("5_8jcdu")
+
+[node name="Area2D" type="Area2D" parent="VertexSpawnPosition"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VertexSpawnPosition/Area2D"]
+shape = SubResource("CircleShape2D_wwkv8")
+
+[connection signal="pressed" from="GUI/Control/HBoxContainer/Buttons/AddVertex" to="." method="add_vertex"]
+[connection signal="pressed" from="GUI/Control/HBoxContainer/Buttons/RefreshEdges" to="Graph" method="refresh_edges"]
+[connection signal="pressed" from="GUI/Control/HBoxContainer/Mode/VertexMode" to="." method="set_vertex_mode"]
+[connection signal="pressed" from="GUI/Control/HBoxContainer/Mode/EdgeMode" to="." method="set_edge_mode"]

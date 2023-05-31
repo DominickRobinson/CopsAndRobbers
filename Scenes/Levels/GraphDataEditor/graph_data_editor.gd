@@ -1,4 +1,5 @@
-extends Control
+class_name GraphDataEditor
+extends Node
 
 
 @export var graph_data : GraphData
@@ -20,7 +21,7 @@ func _ready():
 	display_graph()
 	edits = [graph_data.graph.duplicate(true)]
 	
-	save_file_dialog.file_selected.connect(save_graph)
+	save_file_dialog.file_selected.connect(graph_data.save_graph)
 	load_file_dialog.file_selected.connect(load_graph)
 
 
@@ -41,29 +42,29 @@ func add_vertex():
 	graph_data.add_vertex()
 	display_graph()
 	edit_graph()
+	
+	vertex_index.max_value = graph_data.size() - 1
 
-func remove_vertex():
-	var vtx = vertex_index.value
+func remove_vertex(vtx = vertex_index.value):
 	graph_data.remove_vertex(vtx)
 	display_graph()
 	edit_graph()
+	
+	vertex_index.max_value = graph_data.size() - 1
 
-func retract_vertex():
-	var vtx = vertex_index.value
+
+func retract_vertex(vtx = vertex_index.value):
 	graph_data.retract_vertex(vtx)
 	display_graph()
 	edit_graph()
 
-func add_edge():
-	var start_vtx = edge_start_index.value
-	var end_vtx = edge_end_index.value
+func add_edge(start_vtx : int = edge_start_index.value, end_vtx : int = edge_end_index.value):
 	graph_data.add_edge(start_vtx, end_vtx)
 	display_graph()
 	edit_graph()
 
-func remove_edge():
-	var start_vtx = edge_start_index.value
-	var end_vtx = edge_end_index.value
+
+func remove_edge(start_vtx : int = edge_start_index.value, end_vtx : int = edge_end_index.value):
 	graph_data.remove_edge(start_vtx, end_vtx)
 	display_graph()
 	edit_graph()
@@ -107,54 +108,12 @@ func load_graph_button():
 	load_file_dialog.visible = true
 
 
-func save_graph(path : String):
-	var save_file = FileAccess.open(path, FileAccess.WRITE)
-	var array = graph_data.bool_to_int()
-#	var array = graph_data.graph
-	
-	for i in graph_data.graph.size():
-		var row = PackedStringArray(array[i])
-		match path.get_extension():
-			"csv":
-				print("saving .csv")
-				save_file.store_csv_line(row, ",")
-			"tsv":
-				print("saving .tsv")
-				save_file.store_csv_line(row, "\t")
 
-
-
-func load_graph(path : String):
-	var load_file = FileAccess.open(path, FileAccess.READ)
-	
-	var array = []
-	var i = 0
-	
-	while !load_file.eof_reached():
-		array.append([])
-		var row
-		match path.get_extension():
-			"csv":
-				row = load_file.get_csv_line(",")
-			"tsv":
-				row = load_file.get_csv_line("\t")
-#		print(row)
-		for j in row.size():
-#			print(str(int(row[j])))
-			array[i].append(int(row[j]))
-		i += 1
-	
-	array.pop_back()
-
-	
-	graph_data.graph = array
-	
-	edit_graph()
-	display_graph()
 
 
 
 func edit_graph():
+	set_spinbox_max()
 	var new_edit : Array = graph_data.graph.duplicate(true)
 	
 	#if first edit or if this edit is not same as last edit
@@ -203,11 +162,19 @@ func graphs_equal(g1 : Array, g2 : Array):
 	return true
 
 
+func set_spinbox_max(new_max : int = graph_data.size() - 1):
+	var spinboxes = [vertex_index, edge_start_index, edge_end_index]
+	
+	for s in spinboxes:
+		s = s as SpinBox
+		s.min_value = 0
+		s.max_value = new_max
 
 
-
-
-
+func load_graph(path : String):
+	graph_data.load_graph(path)
+	edit_graph()
+	display_graph()
 
 
 

@@ -1,13 +1,13 @@
 class_name GraphData
 extends Node
 
-@export var initial_size : int = 1
+@export var initial_size : int = 0
 
 var graph : Array
 
-func _init(s:int=1):
+func _init(s:int=initial_size):
 	initial_size = s
-	initial_size = clamp(initial_size, 1, 99)
+	initial_size = clamp(initial_size, 0, 99)
 	
 	for i in initial_size:
 		graph.append([])
@@ -49,7 +49,7 @@ func add_vertex():
 
 func remove_vertex(v : int):
 	#check for validity of vertex
-	if not is_valid_vertex(v) or graph.size() == 1: return
+	if not is_valid_vertex(v) or graph.size() == 0: return
 	#remove column
 	for i in graph.size():
 		graph[i].remove_at(v)
@@ -273,7 +273,51 @@ func multiply(g2 : GraphData = self, g1 : GraphData = self):
 func square():
 	return multiply(self, self)
 
-func create_identity(len : int):
-	var new_graph_data = GraphData.new(len)
+func create_identity(s : int):
+	var new_graph_data = GraphData.new(s)
 	new_graph_data.make_reflexive()
 	return new_graph_data
+
+
+
+func save_graph(path : String):
+	var save_file = FileAccess.open(path, FileAccess.WRITE)
+	var array = self.bool_to_int()
+#	var array = graph_data.graph
+	
+	for i in array.size():
+		var row = PackedStringArray(array[i])
+		match path.get_extension():
+			"csv":
+				print("saving .csv")
+				save_file.store_csv_line(row, ",")
+			"tsv":
+				print("saving .tsv")
+				save_file.store_csv_line(row, "\t")
+
+
+
+func load_graph(path : String):
+	var load_file = FileAccess.open(path, FileAccess.READ)
+	
+	var array = []
+	var i = 0
+	
+	while !load_file.eof_reached():
+		array.append([])
+		var row
+		match path.get_extension():
+			"csv":
+				row = load_file.get_csv_line(",")
+			"tsv":
+				row = load_file.get_csv_line("\t")
+#		print(row)
+		for j in row.size():
+#			print(str(int(row[j])))
+			array[i].append(int(row[j]))
+		i += 1
+	
+	array.pop_back()
+	
+	graph = array
+
