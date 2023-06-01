@@ -7,6 +7,10 @@ signal changed(old_graph:Array, new_graph:Array)
 
 var graph : Array
 
+var strict_corner_ranking : Array
+var corner_ranking : Array
+
+
 var old:Array = graph.duplicate(true)
 var new:Array
 
@@ -25,6 +29,7 @@ func _process(_delta):
 	
 	
 	if old != graph:
+#		strict_corner_ranking = get_strict_corner_ranking(self)
 		new = graph.duplicate(true)
 		changed.emit(old, new)
 		old = new.duplicate(true)
@@ -165,7 +170,6 @@ func get_strict_corners(v : int):
 
 
 func retract_vertex(v : int):
-	print(v)
 	#remove vertex without changing graph dimensions
 	for i in graph.size():
 		graph[i][v] = false
@@ -295,6 +299,62 @@ func create_identity(s : int):
 	return new_graph_data
 
 
+
+func get_strict_corner_ranking(g:GraphData=self) -> Array:
+	#initialize array
+	var ranking_array : Array = []
+	for i in g.size():
+		ranking_array.append(0)
+	
+	var current_ranking = 1
+	
+	for i in g.size():
+		if is_isolated_vertex(g.graph, i): ranking_array[i] = current_ranking
+	
+	var old_g : GraphData = g.dup()
+	var new_g  : GraphData = g.dup()
+	
+	while array_contains_zero(ranking_array):
+		old_g = new_g.dup()
+		new_g.retract_strict_corners()
+		
+		
+		#checks if no more strict corners
+		if graphs_equal(old_g.graph, new_g.graph): 
+			ranking_array = set_zeroes_in_array_to_val(ranking_array, -1)
+			break
+		
+		#checks if left with clique
+		if old_g.is_clique():
+			ranking_array = set_zeroes_in_array_to_val(ranking_array, current_ranking)
+			break
+		
+		#checks if a vertex was just retracted
+		for i in old_g.size():
+			if not is_isolated_vertex(old_g.graph, i) and is_isolated_vertex(new_g.graph, i):
+				ranking_array[i] = current_ranking
+		
+		current_ranking += 1
+	
+	return ranking_array
+
+func array_contains_zero(array:Array)->bool:
+	for a in array:
+		if a == 0:
+			return true
+	return false
+
+func set_zeroes_in_array_to_val(array:Array, val:int)->Array:
+	for a in array:
+		if a == 0: a = val
+	return array
+
+func is_isolated_vertex(array:Array = graph, vtx:int=0)->bool:
+	for i in array.size():
+		if vtx != i:
+			if array[vtx][i]: return false
+			if array[i][vtx]: return false
+	return true
 
 func save_graph(path : String):
 	print("saving ", path.get_extension())

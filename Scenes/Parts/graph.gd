@@ -108,6 +108,11 @@ func refresh():
 	refresh_vertices()
 	await get_tree().process_frame
 	refresh_edges()
+	
+	for v in vertex_container.vertices:
+		v = v as Vertex
+		v.strict_corner_ranking = graph_data.get_strict_corner_ranking(graph_data)[v.index]
+	
 	refreshed.emit()
 
 func refresh_vertices():
