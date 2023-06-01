@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://wfc5d7c5u2qc"]
+[gd_scene load_steps=4 format=3 uid="uid://cj1whubeev7ya"]
 
-[ext_resource type="Script" path="res://Scenes/Levels/GraphDataEditor/graph_data_editor.gd" id="1_nl6gu"]
-[ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="2_k5wwy"]
-[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_tgwf0"]
+[ext_resource type="Script" path="res://Scenes/Levels/GraphDataEditor/graph_data_editor.gd" id="1_wglko"]
+[ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="2_uf1l8"]
+[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_05nn6"]
 
 [node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "vertex_index", "edge_start_index", "edge_end_index", "save_file_dialog", "load_file_dialog")]
 layout_mode = 3
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_nl6gu")
+script = ExtResource("1_wglko")
 graph_data = NodePath("GraphData")
 graph_text_display = NodePath("MarginContainer/Control/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
 vertex_index = NodePath("MarginContainer/Control/VBoxContainer/VertexActions/VertexIndex")
@@ -20,7 +20,7 @@ edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/EdgeActions/HBo
 save_file_dialog = NodePath("SaveFileDialog")
 load_file_dialog = NodePath("LoadFileDialog")
 
-[node name="GraphData" parent="." instance=ExtResource("2_k5wwy")]
+[node name="GraphData" parent="." instance=ExtResource("2_uf1l8")]
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -84,7 +84,7 @@ text = "Pause"
 [node name="MainMenu" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 layout_mode = 2
 text = "Go to Main Menu"
-script = ExtResource("3_tgwf0")
+script = ExtResource("3_05nn6")
 scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
@@ -279,7 +279,6 @@ size = Vector2i(500, 400)
 content_scale_mode = 2
 content_scale_aspect = 1
 ok_button_text = "Save"
-access = 2
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv")
 
@@ -291,7 +290,6 @@ content_scale_mode = 2
 content_scale_aspect = 1
 ok_button_text = "Open"
 file_mode = 3
-access = 2
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv")
 

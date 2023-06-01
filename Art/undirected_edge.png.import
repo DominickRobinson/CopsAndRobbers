@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iyv5i1r41auk"
-path="res://.godot/imported/loop.png-0248033d6ef5790a94a41711e78ae69f.ctex"
+uid="uid://c1xx28fv6dklb"
+path="res://.godot/imported/undirected_edge.png-67a9a21feb05b2dae7264e1610462798.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/loop.png"
-dest_files=["res://.godot/imported/loop.png-0248033d6ef5790a94a41711e78ae69f.ctex"]
+source_file="res://Art/undirected_edge.png"
+dest_files=["res://.godot/imported/undirected_edge.png-67a9a21feb05b2dae7264e1610462798.ctex"]
 
 [params]
 

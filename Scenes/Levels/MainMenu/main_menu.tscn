@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b7jqxo4jy5gav"]
 
-[ext_resource type="FontFile" uid="uid://bsti1sjiaolqo" path="res://Assets/Fonts/Policía Secreta.ttf" id="2_ahlfx"]
-[ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://Art/logo.png" id="2_hndy6"]
-[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_wamn3"]
+[ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://Art/logo.png" id="1_0iej2"]
+[ext_resource type="FontFile" uid="uid://bsti1sjiaolqo" path="res://Assets/Fonts/Policía Secreta.ttf" id="2_k5cdb"]
+[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_f3unt"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -36,7 +36,7 @@ alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_hndy6")
+texture = ExtResource("1_0iej2")
 stretch_mode = 5
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -45,7 +45,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ahlfx")
+theme_override_fonts/font = ExtResource("2_k5cdb")
 theme_override_font_sizes/font_size = 75
 text = "Cops and Robbers"
 horizontal_alignment = 1
@@ -57,7 +57,7 @@ layout_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_hndy6")
+texture = ExtResource("1_0iej2")
 stretch_mode = 5
 flip_h = true
 
@@ -159,11 +159,11 @@ layout_mode = 2
 [node name="SceneButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 text = "Graph editor"
-script = ExtResource("3_wamn3")
+script = ExtResource("3_f3unt")
 scene_path = "res://Scenes/Levels/GraphEditor/graph_editor.tscn"
 
 [node name="SceneButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 text = "Graph data editor"
-script = ExtResource("3_wamn3")
+script = ExtResource("3_f3unt")
 scene_path = "res://Scenes/Levels/GraphDataEditor/graph_data_editor.tscn"

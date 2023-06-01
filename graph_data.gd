@@ -1,9 +1,14 @@
 class_name GraphData
 extends Node
 
+signal changed(old_graph:Array, new_graph:Array)
+
 @export var initial_size : int = 0
 
 var graph : Array
+
+var old:Array = graph.duplicate(true)
+var new:Array
 
 func _init(s:int=initial_size):
 	initial_size = s
@@ -13,6 +18,16 @@ func _init(s:int=initial_size):
 		graph.append([])
 		for j in initial_size:
 			graph[i].append(false)
+
+
+func _process(_delta):
+	#checks if graph data has changed
+	
+	
+	if old != graph:
+		new = graph.duplicate(true)
+		changed.emit(old, new)
+		old = new.duplicate(true)
 
 
 func display():
@@ -55,6 +70,7 @@ func remove_vertex(v : int):
 		graph[i].remove_at(v)
 	#remove row
 	graph.remove_at(v)
+
 
 
 func add_edge(v1:int, v2:int):
@@ -281,6 +297,7 @@ func create_identity(s : int):
 
 
 func save_graph(path : String):
+	print("saving ", path.get_extension())
 	var save_file = FileAccess.open(path, FileAccess.WRITE)
 	var array = self.bool_to_int()
 #	var array = graph_data.graph
@@ -289,10 +306,8 @@ func save_graph(path : String):
 		var row = PackedStringArray(array[i])
 		match path.get_extension():
 			"csv":
-				print("saving .csv")
 				save_file.store_csv_line(row, ",")
 			"tsv":
-				print("saving .tsv")
 				save_file.store_csv_line(row, "\t")
 
 
@@ -321,3 +336,21 @@ func load_graph(path : String):
 	
 	graph = array
 
+
+
+
+func graphs_equal(g1 : Array, g2 : Array):
+	#must have same number of columns
+	if g1.size() != g2.size(): return false
+	
+	for i in g1.size():
+		#each row must have same size
+#		print("Row i: ", g1[i], " vs. ", g2[i])
+		if g1[i] != g2[i]: return false
+#		if g1[i].size() != g2[i].size(): return false
+#		for j in g1.size():
+#			#must have same value within each cell
+#			if g1[i][j] != g2[i][j]: return false
+	
+#	print("graphs equal")
+	return true

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1xx28fv6dklb"
-path="res://.godot/imported/edge2.png-6f4ce8bd56b774c78287a4fc4dd2847b.ctex"
+uid="uid://wryqe0jivfct"
+path="res://.godot/imported/directed_edge.png-6e6c287cdd539ac8fd544c235ddfa98d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/edge2.png"
-dest_files=["res://.godot/imported/edge2.png-6f4ce8bd56b774c78287a4fc4dd2847b.ctex"]
+source_file="res://Art/directed_edge.png"
+dest_files=["res://.godot/imported/directed_edge.png-6e6c287cdd539ac8fd544c235ddfa98d.ctex"]
 
 [params]
 

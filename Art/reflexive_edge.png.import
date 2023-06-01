@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wryqe0jivfct"
-path="res://.godot/imported/edge.png-8bd81adf403c2fc29ce3d408dec9de55.ctex"
+uid="uid://iyv5i1r41auk"
+path="res://.godot/imported/reflexive_edge.png-60c7c532aa6d379a49c70fc07bc069fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/edge.png"
-dest_files=["res://.godot/imported/edge.png-8bd81adf403c2fc29ce3d408dec9de55.ctex"]
+source_file="res://Art/reflexive_edge.png"
+dest_files=["res://.godot/imported/reflexive_edge.png-60c7c532aa6d379a49c70fc07bc069fa.ctex"]
 
 [params]
 

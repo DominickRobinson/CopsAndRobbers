@@ -1,68 +1,39 @@
-[gd_scene load_steps=6 format=3 uid="uid://csuky2tuifwje"]
+[gd_scene load_steps=7 format=3 uid="uid://ri24hib3q64a"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/edge.gd" id="1_ifrx8"]
-[ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Art/edge2.png" id="2_am2tu"]
-[ext_resource type="Texture2D" uid="uid://bb4o50i5k87k3" path="res://Art/arrow.png" id="3_2b5w6"]
+[ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Art/undirected_edge.png" id="2_3370q"]
+[ext_resource type="Texture2D" uid="uid://wryqe0jivfct" path="res://Art/directed_edge.png" id="2_wo2aa"]
+[ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Art/reflexive_edge.png" id="4_tprx4"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_08b4o"]
+resource_local_to_scene = true
 
 [sub_resource type="Curve2D" id="Curve2D_262xl"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0)
-}
-point_count = 2
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rx77s"]
-radius = 17.0294
-
-[node name="Edge" type="Node2D" node_paths=PackedStringArray("line", "path", "path_follow", "label2D", "label", "area")]
+[node name="Edge" type="Node2D" node_paths=PackedStringArray("line", "loop_sprite", "area")]
 script = ExtResource("1_ifrx8")
+collision_thickness_px = 20
 line = NodePath("Line2D")
-path = NodePath("Path2D")
-path_follow = NodePath("Path2D/PathFollow2D")
-label2D = NodePath("Path2D/PathFollow2D/Label2D")
-label = NodePath("Path2D/PathFollow2D/Label2D/Label")
-area = NodePath("Path2D/PathFollow2D/Sprite2D/Area2D")
+loop_sprite = NodePath("LoopSprite")
+directed_edge_texture = ExtResource("2_wo2aa")
+undirected_edge_texture = ExtResource("2_3370q")
+reflexive_edge_texture = ExtResource("4_tprx4")
+area = NodePath("Area2D")
 
 [node name="Line2D" type="Line2D" parent="."]
 texture_repeat = 2
-points = PackedVector2Array(0, 0)
 width = 30.0
-texture = ExtResource("2_am2tu")
 texture_mode = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("ConvexPolygonShape2D_08b4o")
+debug_color = Color(0.290196, 0.631373, 0, 0.419608)
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_262xl")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D"]
-z_index = 1
-texture = ExtResource("3_2b5w6")
-
-[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D/Sprite2D"]
-position = Vector2(-4, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Sprite2D/Area2D"]
-position = Vector2(1, 0)
-shape = SubResource("CircleShape2D_rx77s")
-
-[node name="Label2D" type="Node2D" parent="Path2D/PathFollow2D"]
-
-[node name="Label" type="Label" parent="Path2D/PathFollow2D/Label2D"]
-z_index = 1
-z_as_relative = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -13.0
-offset_right = 20.0
-offset_bottom = 13.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-text = "a"
-horizontal_alignment = 1
-
 [node name="LoopSprite" type="Sprite2D" parent="."]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)

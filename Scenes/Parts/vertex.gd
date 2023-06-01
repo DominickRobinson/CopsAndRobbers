@@ -2,6 +2,8 @@ class_name Vertex
 extends GraphComponent
 
 
+signal moved
+
 
 #text label to be displayed if required
 @export var text : String = ""
@@ -23,15 +25,13 @@ func _ready():
 	set_text()
 
 func _unhandled_input(_event):
-	if Input.is_action_just_pressed("select") and mouse_inside_area:
-		selected.emit()
-	
 	if editable:
 		if Input.is_action_just_pressed("select") and mouse_inside_area:
 			mouse_offset = global_position - get_global_mouse_position()
-			draggable = true
 		if Input.is_action_just_released("select"):
 			draggable = false
+			deselected.emit()
+			moved.emit()
 #		if Input.is_action_just_pressed("delete") and mouse_inside_area:
 #			remove()
 
@@ -49,3 +49,4 @@ func follow_mouse():
 
 func set_text():
 	label.text = str(index)
+#	label.text = str(self)

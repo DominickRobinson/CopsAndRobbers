@@ -2,6 +2,9 @@ class_name Graph
 extends Node2D
 
 
+signal changed
+signal refreshed
+
 #graph data
 @export_group("data structures")
 @export var graph_data : GraphData
@@ -23,6 +26,22 @@ extends Node2D
 @export var graph_data_display_label : Label
 
 
+var vertices : Array :
+	get:
+		return vertex_container.vertices
+
+var edges : Array :
+	get:
+		return edge_container.edges
+
+func _ready():
+	graph_data.changed.connect(_on_graph_data_changed)
+
+func _on_graph_data_changed(old,new):
+	changed.emit()
+	refresh()
+
+
 
 func _process(delta):
 	if is_instance_valid(graph_data_display_label):
@@ -30,63 +49,96 @@ func _process(delta):
 
 
 
-func add_vertex(pos, editable=false):
-	graph_data.add_vertex()
-	
-	var new_vtx = vertex_resource.instantiate() as Vertex
-	new_vtx.position = pos
-	new_vtx.editable = editable
-	new_vtx.index = vertex_container.vertices.size()
-	new_vtx.editable = true
-	
-	vertex_container.add_child(new_vtx)
-	
-	return new_vtx
 
+func add_vertex(pos):
+#	var new_vtx = vertex_container.add_new_vertex(vertex_resource, pos)
+	positions.append(pos)
+	graph_data.add_vertex()
+#	return new_vtx
 
 func remove_vertex(vtx : Vertex):
+#	vertex_container.remove_vertex(vtx)
+	positions.remove_at(vtx.index)
 	graph_data.remove_vertex(vtx.index)
-	
-	vertex_container.remove_vertex(vtx)
-
 
 
 
 func add_edge(start_vtx : Vertex, end_vtx : Vertex):
-	if graph_data.graph[start_vtx.index][end_vtx.index]: 
-		print("Edge already exists...")
-		return
-	
 	graph_data.add_edge(start_vtx.index, end_vtx.index)
-	
-	var new_edge = edge_resource.instantiate()
-	edge_container.add_child(new_edge)
-	
-	new_edge.start_vertex = start_vtx
-	new_edge.end_vertex = end_vtx
-	
-	return new_edge
+
 
 func remove_edge(edge : Edge):
 	graph_data.remove_edge(edge.start_vertex.index, edge.end_vertex.index)
-	
-	edge_container.remove_edge(edge)
+
+func remove_edge_given_vertices(v1:Vertex, v2:Vertex):
+	graph_data.remove_edge(v1.index, v2.index)
+
+func make_reflexive():
+	graph_data.make_reflexive()
+
+func make_undirected():
+	graph_data.make_undirected()
+
+func fill():
+	graph_data.fill()
+
+func clear():
+	graph_data.clear()
+
+func invert():
+	graph_data.invert()
+
+func square():
+	graph_data.square()
+
+func retract_strict_corners():
+	graph_data.retract_strict_corners()
+
+func retract_corners():
+	graph_data.retract_corners()
+
 
 
 func clear_graph():
 	edge_container.remove_all()
 	vertex_container.remove_all()
 
+
+func refresh():
+	refresh_vertices()
+	await get_tree().process_frame
+	refresh_edges()
+	refreshed.emit()
+
+func refresh_vertices():
+	
+	vertex_container.remove_all()
+	
+	for i in graph_data.size():
+		var new_vtx = vertex_resource.instantiate() as Vertex
+		new_vtx.index = i
+		new_vtx.position = positions[i]
+		new_vtx.moved.connect(update_positions.bind(new_vtx))
+		
+		vertex_container.add_vertex(new_vtx)
+
 func refresh_edges():
 	edge_container.remove_all()
 	
 	for i in graph_data.size():
 		for j in graph_data.size():
-			if graph_data.graph[i][j]: 
-				var new_edge = edge_resource.instantiate()
-				edge_container.add_edge(new_edge)
+			if graph_data.graph[i][j]:
+				var new_edge = edge_resource.instantiate() as Edge
 				new_edge.start_vertex = vertex_container.get_vertex_with_index(i)
 				new_edge.end_vertex = vertex_container.get_vertex_with_index(j)
+				
+				new_edge.directed = not graph_data.graph[j][i]
+				
+				edge_container.add_edge(new_edge)
+
+
+func update_positions(vtx:Vertex):
+	positions[vtx.index] = vtx.position
 
 
 func set_vertex_mode():
@@ -101,79 +153,72 @@ func set_edge_mode():
 func save_graph(path : String):
 	var save_file = FileAccess.open(path, FileAccess.WRITE)
 	var array = graph_data.bool_to_int()
-#	var array = graph_data.graph
-	
-	for i in graph_data.graph.size():
-		var row = PackedStringArray(array[i])
-		match path.get_extension():
-			"csv":
-				print("saving .csv")
-				save_file.store_csv_line(row, ",")
-			"tsv":
-				print("saving .tsv")
-				save_file.store_csv_line(row, "\t")
 
+	var positions_string_array = []
+	for p in positions:
+		positions_string_array.append(var_to_str(p))
+	var positions_string = var_to_str(positions_string_array)
+
+	var dict : Dictionary = {
+		"adjacency_matrix" : array,
+		"positions" : positions_string
+	}
+	var json_string = JSON.stringify(dict)
+	save_file.store_string(json_string)
 
 
 func load_graph(path : String):
+	print("loading ", path.get_extension())
 	var load_file = FileAccess.open(path, FileAccess.READ)
 	
 	var adjacency_matrix = []
-	var positions = []
+	positions = []
 	
 	match path.get_extension():
-		"JSON":
+		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
+			print("json_as_text: ", json_as_text)
 			var json_as_dict = JSON.parse_string(json_as_text)
-			if json_as_dict:
-				print(json_as_dict)
-				
+			print("json_as_dict: ", json_as_dict)
 			adjacency_matrix = json_as_dict["adjacency_matrix"]
-			positions = json_as_dict["positions"]
+			print(str_to_var(json_as_dict["positions"]))
+			var positions_array = str_to_var(json_as_dict["positions"])
+			for p in positions_array:
+				positions.append(str_to_var(p))
+			
+			graph_data.graph = adjacency_matrix
 		"csv":
-			while !load_file.eof_reached():
-				adjacency_matrix.append([])
-				var row
-				row = load_file.get_csv_line(",")
-				
+			graph_data.load_graph(path)
+			
 		"tsv":
-			while !load_file.eof_reached():
-				adjacency_matrix.append([])
-				var row
-				row = load_file.get_csv_line("\t")
+			graph_data.load_graph(path)
+			
 	
 	if positions == []:
-		pass
-	
-	for i in graph_data.graph.size():
-		pass
-	
-	
-	
-	graph_data.graph = adjacency_matrix
+		positions = generate_default_positions(graph_data.size())
 	
 
 
 
-
-func generate_default_positions() -> Array:
-	positions = []
+func generate_default_positions(num:int) -> Array:
+	var array = []
 	var center = get_viewport_rect().size / 2
 	var radius = min(get_viewport_rect().size.x, get_viewport_rect().size.y) / 3
-	for i in vertex_container.vertices.size():
-		var radians = 2 * PI * i / vertex_container.vertices.size()
+	for i in num:
+		var radians = 2 * PI * i / num
 		var pos = Vector2(cos(radians), sin(radians)) * radius + center
-		positions.append(pos)
-	return positions
+		array.append(pos)
+	
+	return array
 
 
 func get_positions() -> Array:
-	positions = []
+	var array = []
 	for v in vertex_container.vertices:
-		positions.append(v.position)
-	return positions
+		array.append(v.position)
+	return array
 
-func set_positions():
-	assert(positions.size() == vertex_container.vertices.size())
+func set_positions(array:Array):
+	assert(array.size() == vertex_container.vertices.size())
 	for i in vertex_container.vertices.size():
-		vertex_container.vertices[i].position = positions[i]
+		vertex_container.vertices[i].position = array[i]

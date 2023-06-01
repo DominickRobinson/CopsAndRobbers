@@ -2,6 +2,7 @@ class_name VertexContainer
 extends GraphComponentContainer
 
 
+
 var vertices :
 	get:
 		return get_children()
@@ -9,6 +10,13 @@ var vertices :
 
 func add_vertex(vtx:Vertex):
 	add_child(vtx)
+
+func add_new_vertex(vtx_resource: Resource, pos:Vector2):
+	var new_vtx = vtx_resource.instantiate()
+	new_vtx.index = vertices.size()
+	new_vtx.position = pos
+	add_vertex(new_vtx)
+	return new_vtx
 
 func remove_vertex(vtx:Vertex):
 	for v in vertices:

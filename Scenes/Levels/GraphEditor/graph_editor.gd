@@ -9,6 +9,13 @@ extends Node2D
 @export_group("Some control nodes")
 @export var add_vertex_button : Button
 @export var selected_label : Label
+@export var vertex_mode_button : Button
+@export var edge_mode_button : Button
+@export var new_edge_line : Line2D
+
+@export_group("Save and load nodes")
+@export var save_file_dialog : FileDialog
+@export var load_file_dialog : FileDialog
 
 enum Modes {VertexMode, EdgeMode}
 
@@ -31,50 +38,118 @@ var clicked_on_edge = false
 
 var click_global_position : Vector2
 
+var edits : Array
 
+
+func _ready():
+	graph.changed.connect(_on_graph_changed)
+	graph.refreshed.connect(refresh)
+	
+	save_file_dialog.file_selected.connect(graph.save_graph)
+	load_file_dialog.file_selected.connect(graph.load_graph)
+
+
+func _on_graph_changed():
+	pass
 
 func _unhandled_input(event):
-	if Input.is_action_just_released("select") and mode == Modes.EdgeMode and hovering_vertex != null and selected_vertex != null:
-		add_edge()
+	if Input.is_action_just_pressed("select") and hovering_vertex != null:
+		hovering_vertex.selected.emit()
 	
-	if Input.is_action_just_released("delete") and mode == Modes.VertexMode and hovering_vertex != null:
-		remove_vertex()
+	match mode:
+		Modes.VertexMode:
+			if Input.is_action_just_released("delete") and hovering_vertex != null:
+				remove_vertex()
+		Modes.EdgeMode:
+			if Input.is_action_just_released("select") and hovering_vertex != null and selected_vertex != null:
+				add_edge()
+			
+			if Input.is_action_just_released("delete") and hovering_vertex != null:
+				remove_edge_given_vertex(hovering_vertex)
+			elif Input.is_action_just_released("delete") and hovering_edge != null:
+				remove_edge()
 	
-	if Input.is_action_just_released("delete") and mode == Modes.EdgeMode and hovering_edge != null:
-		print(2)
-		remove_edge()
-	
+	if Input.is_action_just_released("select"):
+		selected_vertex = null
 
 func _process(delta):
 	display_selected_vertex()
+	
+	if mode == Modes.EdgeMode and selected_vertex != null:
+		new_edge_line.points = PackedVector2Array([selected_vertex.position, get_global_mouse_position()])
+	else:
+		new_edge_line.clear_points()
 
 
 
 
 func add_vertex():
 	var pos = await vertex_spawn_position.find_open_position()
+	var v = graph.add_vertex(pos) as Vertex
 	
-	var v = graph.add_vertex(pos, true) as Vertex
-	
-	
-	v.selected.connect(set_selected_vertex.bind(v))
-	v.mouse_entered.connect(set_hovering_vertex.bind(v))
-	v.mouse_exited.connect(set_hovering_vertex.bind(null))
+	set_vertex_mode()
+
 
 
 func remove_vertex():
 	graph.remove_vertex(hovering_vertex)
+	
 
 
 func add_edge():
-	var e = graph.add_edge(selected_vertex, hovering_vertex) as Edge
-	if is_instance_valid(e):
+	graph.add_edge(selected_vertex, hovering_vertex)
+
+
+func remove_edge(edge : Edge = hovering_edge):
+	if not edge.directed:
+		graph.remove_edge_given_vertices(edge.end_vertex, edge.start_vertex)
+	graph.remove_edge(edge)
+
+
+func remove_edge_given_vertex(vtx:Vertex):
+	graph.remove_edge_given_vertices(vtx,vtx)
+
+
+func make_reflexive():
+	graph.make_reflexive()
+
+func make_undirected():
+	graph.make_undirected()
+
+func fill():
+	graph.fill()
+
+func clear():
+	graph.clear()
+
+func invert():
+	graph.invert()
+
+func square():
+	graph.square()
+
+func retract_strict_corners():
+	graph.retract_strict_corners()
+
+func retract_corners():
+	graph.retract_corners()
+
+
+func refresh():
+	for e in graph.edges:
 		e.mouse_entered.connect(set_hovering_edge.bind(e))
 		e.mouse_exited.connect(set_hovering_edge.bind(null))
-
-func remove_edge():
-	graph.remove_edge(hovering_edge)
-
+	
+	for v in graph.vertices:
+		v.selected.connect(set_selected_vertex.bind(v))
+		v.deselected.connect(set_selected_vertex.bind(null))
+		v.mouse_entered.connect(set_hovering_vertex.bind(v))
+		v.mouse_exited.connect(set_hovering_vertex.bind(null))
+	
+	if mode == Modes.VertexMode:
+		set_vertex_mode()
+	elif mode == Modes.EdgeMode:
+		set_edge_mode()
 
 
 func set_vertex_mode():
@@ -83,7 +158,9 @@ func set_vertex_mode():
 	mode = Modes.VertexMode
 	
 	graph.set_vertex_mode()
-	add_vertex_button.disabled = false 
+	
+	vertex_mode_button.button_pressed = true
+	
 
 func set_edge_mode():
 	clear_selections()
@@ -91,7 +168,9 @@ func set_edge_mode():
 	mode = Modes.EdgeMode
 	
 	graph.set_edge_mode()
-	add_vertex_button.disabled = true
+	
+	edge_mode_button.button_pressed = true
+
 
 
 func set_hovering_vertex(v:Vertex):
@@ -101,26 +180,26 @@ func set_hovering_edge(e:Edge):
 	hovering_edge = e
 
 func set_selected_vertex(v:Vertex):
-	print("Selected: ", v)
 	selected_vertex = v
+	if is_instance_valid(v) and mode == Modes.VertexMode: v.draggable = true
 
 
 
 func display_selected_vertex():
 	var t = ""
-	t += "Selected vertex: "
+	t += "Selected vertex: \n  "
 	if is_instance_valid(selected_vertex):
 		t += str(selected_vertex)
 	else:
 		t += "None"
 	
-	t += "\nHovering vertex: "
+	t += "\nHovering vertex: \n  "
 	if is_instance_valid(hovering_vertex):
 		t += str(hovering_vertex)
 	else:
 		t += "None"
 	
-	t += "\nHovering edge: "
+	t += "\nHovering edge: \n  "
 	if is_instance_valid(hovering_edge):
 		t += str(hovering_edge)
 	else:
@@ -205,3 +284,4 @@ func remove_edges():
 		e = e as Edge
 		graph.remove_edge(e)
 	clear_selections()
+
