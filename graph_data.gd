@@ -485,9 +485,8 @@ func set_zeroes_in_array_to_val(array:Array, val:int)->Array:
 
 func is_isolated_vertex(array:Array = graph, vtx:int=0)->bool:
 	for i in array.size():
-		if vtx != i:
-			if array[vtx][i]: return false
-			if array[i][vtx]: return false
+		if array[vtx][i]: return false
+		if array[i][vtx]: return false
 	return true
 
 func save_graph(path : String):

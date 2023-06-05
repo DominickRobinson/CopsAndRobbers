@@ -138,7 +138,7 @@ text = "Mode:"
 [node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 7
+item_count = 8
 popup/item_0/text = "Cops and robbers"
 popup/item_0/id = 0
 popup/item_1/text = "Zombies and survivors"
@@ -153,6 +153,8 @@ popup/item_5/text = "Ghosts and ghostbusters"
 popup/item_5/id = 5
 popup/item_6/text = "Battle royale"
 popup/item_6/id = 6
+popup/item_7/text = "Ranchers and cattle"
+popup/item_7/id = 7
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer"]
 layout_mode = 2
@@ -191,9 +193,18 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="LinkButton" type="LinkButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/References"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/References"]
 layout_mode = 2
-text = "source"
+
+[node name="LinkButton" type="LinkButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/References/VBoxContainer"]
+layout_mode = 2
+text = "D. Offner and K. Ojakian, Cop-Win Graphs: Optimal Strategies and Corner Rank, preprint."
+uri = "https://davidoffner.files.wordpress.com/2016/05/copwinstrategiescurrent.pdf"
+
+[node name="LinkButton2" type="LinkButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/References/VBoxContainer"]
+layout_mode = 2
+text = "Graphical Examples of cop-win graphs"
+uri = "https://davidoffner.files.wordpress.com/2019/03/graphicalexamples.pdf"
 
 [node name="Credits" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 visible = false
