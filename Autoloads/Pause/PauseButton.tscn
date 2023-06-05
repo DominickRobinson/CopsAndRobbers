@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://drysmthmgro6c"]
+
+[ext_resource type="Script" path="res://Autoloads/Pause/PauseButton.gd" id="1_t5ob3"]
+
+[node name="PauseButton" type="Button"]
+text = "Pause"
+script = ExtResource("1_t5ob3")
+
+[connection signal="pressed" from="." to="." method="pause"]
+[connection signal="toggled" from="." to="." method="toggle"]

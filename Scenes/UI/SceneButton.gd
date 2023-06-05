@@ -15,4 +15,6 @@ func _on_pressed():
 	if scene_path == "":
 		return
 		
+	PauseManager.unpause()
+	
 	get_tree().change_scene_to_file(scene_path)

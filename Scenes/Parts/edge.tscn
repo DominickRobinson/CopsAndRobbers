@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://ri24hib3q64a"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/edge.gd" id="1_ifrx8"]
-[ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Art/undirected_edge.png" id="2_3370q"]
-[ext_resource type="Texture2D" uid="uid://wryqe0jivfct" path="res://Art/directed_edge.png" id="2_wo2aa"]
-[ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Art/reflexive_edge.png" id="4_tprx4"]
+[ext_resource type="Texture2D" uid="uid://wryqe0jivfct" path="res://Assets/Art/directed_edge.png" id="2_qnxoy"]
+[ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Assets/Art/undirected_edge.png" id="3_5c4nn"]
+[ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Assets/Art/reflexive_edge.png" id="4_coc45"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_08b4o"]
 resource_local_to_scene = true
@@ -15,14 +15,14 @@ script = ExtResource("1_ifrx8")
 collision_thickness_px = 20
 line = NodePath("Line2D")
 loop_sprite = NodePath("LoopSprite")
-directed_edge_texture = ExtResource("2_wo2aa")
-undirected_edge_texture = ExtResource("2_3370q")
-reflexive_edge_texture = ExtResource("4_tprx4")
+directed_edge_texture = ExtResource("2_qnxoy")
+undirected_edge_texture = ExtResource("3_5c4nn")
+reflexive_edge_texture = ExtResource("4_coc45")
 area = NodePath("Area2D")
 
 [node name="Line2D" type="Line2D" parent="."]
 texture_repeat = 2
-width = 30.0
+width = 20.0
 texture_mode = 1
 
 [node name="Area2D" type="Area2D" parent="."]

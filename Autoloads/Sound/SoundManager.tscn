@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bouw03ee5qjso"]
+
+[ext_resource type="Script" path="res://Autoloads/Sound/SoundManager.gd" id="1_v15bf"]
+[ext_resource type="PackedScene" uid="uid://ct2obcn4nkfbf" path="res://Autoloads/Sound/AudioQueue.tscn" id="2_vn83v"]
+[ext_resource type="PackedScene" uid="uid://gt60ti8hkr6i" path="res://Autoloads/Sound/AudioPool.tscn" id="3_lyaei"]
+
+[node name="SoundManager" type="Node" node_paths=PackedStringArray("sound_queue", "ui_sound_queue", "music_player", "audio_pool")]
+script = ExtResource("1_v15bf")
+sound_queue = NodePath("SoundQueue")
+ui_sound_queue = NodePath("UISoundQueue")
+music_player = NodePath("MusicPlayer")
+audio_pool = NodePath("AudioPool")
+
+[node name="SoundQueue" parent="." instance=ExtResource("2_vn83v")]
+
+[node name="UISoundQueue" parent="." instance=ExtResource("2_vn83v")]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
+[node name="AudioPool" parent="." instance=ExtResource("3_lyaei")]

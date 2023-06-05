@@ -14,6 +14,7 @@ var index : int = -1
 
 var strict_corner_ranking : int = 0
 
+
 var mouse_offset = Vector2.ZERO
 
 var draggable = false
@@ -50,7 +51,7 @@ func follow_mouse():
 
 
 func set_text():
-#	label.text = "Index: " + str(index) + "\n"
-#	label.text += "SCR: " + str(strict_corner_ranking) 
+	label.text = "Index: " + str(index) + "\n"
+	label.text += "SCR: " + str(strict_corner_ranking) 
 #	label.text = str(self)
-	label.text = str(index)
+#	label.text = str(index)

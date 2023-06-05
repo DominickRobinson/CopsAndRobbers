@@ -49,6 +49,8 @@ func display():
 			output += str(int(graph[i][j])) + " "
 		output += "]\n"
 	
+	output += "SCR: " + str(get_strict_corner_ranking())
+	
 #	print(output)
 	return output
 
@@ -131,17 +133,21 @@ func make_undirected():
 
 func strictly_corners(v1 : int, v2 : int):
 	#checks if a neighbors of v1 does not neighbor v2 
-	print("Does ", v1, " strictly corner ", v2, "?")
+#	print("Does ", v1, " strictly corner ", v2, "?")
 	for i in graph.size():
 		if not graph[v1][i] and graph[v2][i]: 
-			print("No")
+#			print("No")
 			return false
 	#checks if v1 and v2 have exact same neighbors
 	if graph[v1] == graph[v2]: 
-		print("No")
+#		print("No")
+		return false
+	#vertex v1 must go to vertex v2
+	if not graph[v1][v2]:
 		return false
 	#v1 must strictly corner v2
-	print("yes")
+#	print("yes")
+#	print(v1, " strictly corners ", v2)
 	return true
 
 func are_twins(v1 : int, v2 : int):
@@ -266,7 +272,7 @@ func int_to_bool(int_graph : Array):
 	return int_graph
 
 func dup():
-	var new_graph_data = GraphData.new(size())
+	var new_graph_data = GraphData.new()
 	new_graph_data.graph = graph.duplicate(true)
 	return new_graph_data
 
@@ -298,36 +304,64 @@ func create_identity(s : int):
 	new_graph_data.make_reflexive()
 	return new_graph_data
 
+func get_max_ranking(G:GraphData=self):
+	#strict corner ranking
+	var scr = G.get_strict_corner_ranking()
+	
+	#number of graphs in our result
+	var max_ranking = scr.max()
+	#add one more graph if it is robber win
+	if scr.has(-1):
+		max_ranking += 1
+	
+	return max_ranking
 
-
-func get_strict_corner_ranking(g:GraphData=self) -> Array:
+func get_strict_corner_ranking() -> Array:
 	#initialize array
 	var ranking_array : Array = []
-	for i in g.size():
+	
+	for i in graph.size():
 		ranking_array.append(0)
 	
+	
+#	if not is_connected_graph() or not is_reflexive() or not is_undirected():
+#		ranking_array = set_zeroes_in_array_to_val(ranking_array, -1)
+#		return ranking_array
+	
 	var current_ranking = 1
+		
+	var old_g : GraphData = dup()
+	var new_g  : GraphData = dup()
 	
-	for i in g.size():
-		if is_isolated_vertex(g.graph, i): ranking_array[i] = current_ranking
-	
-	var old_g : GraphData = g.dup()
-	var new_g  : GraphData = g.dup()
+	for i in old_g.size():
+		if is_isolated_vertex(old_g.graph, i):
+			ranking_array[i] = -1
 	
 	while array_contains_zero(ranking_array):
 		old_g = new_g.dup()
 		new_g.retract_strict_corners()
 		
+#		print("Current SCR: ", current_ranking)
+#		print("Current ranking array: ", ranking_array)
+#		print("Old: ", old_g.display())
+#		print("New: ", new_g.display())
 		
-		#checks if no more strict corners
-		if graphs_equal(old_g.graph, new_g.graph): 
-			ranking_array = set_zeroes_in_array_to_val(ranking_array, -1)
-			break
 		
 		#checks if left with clique
 		if old_g.is_clique():
+#			print("clique!")
+#			print(ranking_array)
 			ranking_array = set_zeroes_in_array_to_val(ranking_array, current_ranking)
+#			print(ranking_array)
 			break
+		
+		#checks if no more strict corners
+		if graphs_equal(old_g.graph, new_g.graph): 
+#			print("not clique, but no strict corners")
+			ranking_array = set_zeroes_in_array_to_val(ranking_array, -1)
+			break
+		
+
 		
 		#checks if a vertex was just retracted
 		for i in old_g.size():
@@ -336,7 +370,107 @@ func get_strict_corner_ranking(g:GraphData=self) -> Array:
 		
 		current_ranking += 1
 	
+#	print(ranking_array)
 	return ranking_array
+
+func get_strict_corner_retractions() -> Array:
+	#output, beginning with the identity
+	var Gk_s = []
+	
+	#start at first graph
+	var current_k = 1
+	
+	#get max corner ranking
+	var max_ranking = get_max_ranking()
+	
+	print(2)
+	print(max_ranking)
+	
+	var g = dup()
+	
+	while current_k < max_ranking:
+		Gk_s.append(g.dup())
+		g.retract_strict_corners()
+		current_k += 1
+	
+	return Gk_s
+
+
+func get_G_k(k:int, G: GraphData = self):
+	if k == 1:
+		return G
+	else:
+		assert(k>1)
+		return get_G_k(k-1, G.retract_strict_corners())
+
+func array_to_set(array:Array)->Array:
+	var result = []
+	for a in array:
+		if not result.has(a): result.append(a)
+	result.sort()
+	return result
+
+func f_k(vtxs:Array, G_k:GraphData=self) -> Array:
+	var result = []
+	
+	for v in vtxs:
+		for i in G_k.size():
+			if G_k.strictly_corners(i, v):
+				result.append(i)
+	
+	if result.size() == 0:
+		return vtxs
+	
+	return result
+	
+
+func F_k(k:int, vtxs:Array, G:GraphData = self) -> Array:
+	#base case: k = 1
+	if k == 1:
+		return array_to_set(vtxs)
+	else:
+		var G_retracted = G.dup()
+		G_retracted.retract_strict_corners()
+		var output = G_retracted.F_k(k-1, f_k(vtxs, G))
+		return array_to_set(output)
+
+func get_F_k_mapping(k:int, G:GraphData=self) -> Dictionary:
+	var result = {}
+	for i in G.size():
+		result[i] = G.F_k(k, [i])
+	return result
+
+func get_F_k_mappings(G:GraphData=self) -> Array:
+	if G.size() == 0:
+		return []
+	var result = []
+	var max_ranking = get_max_ranking()
+	for k in range(1, max_ranking+1):
+		var mapping = G.get_F_k_mapping(k)
+		result.append(mapping)
+	return result
+
+func print_F_k_mappings(G:GraphData=self):
+	
+	if G.size() == 0:
+		print("The empty graph does not have a retraction mapping...")
+		return
+	
+	var mappings = get_F_k_mappings(G)
+	for i in mappings.size():
+		print("F(", i+1, "): ", mappings[i])
+
+
+
+
+
+func is_cop_win():
+	var scr = get_strict_corner_ranking()
+	for i in scr.size():
+		if scr[i] == -1:
+			return false
+	return true
+
 
 func array_contains_zero(array:Array)->bool:
 	for a in array:
@@ -345,8 +479,8 @@ func array_contains_zero(array:Array)->bool:
 	return false
 
 func set_zeroes_in_array_to_val(array:Array, val:int)->Array:
-	for a in array:
-		if a == 0: a = val
+	for i in array.size():
+		if array[i] == 0: array[i] = val
 	return array
 
 func is_isolated_vertex(array:Array = graph, vtx:int=0)->bool:
@@ -357,7 +491,7 @@ func is_isolated_vertex(array:Array = graph, vtx:int=0)->bool:
 	return true
 
 func save_graph(path : String):
-	print("saving ", path.get_extension())
+#	print("saving ", path.get_extension())
 	var save_file = FileAccess.open(path, FileAccess.WRITE)
 	var array = self.bool_to_int()
 #	var array = graph_data.graph

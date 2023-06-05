@@ -209,7 +209,8 @@ func display_selected_vertex():
 
 
 
-
+func print_mappings():
+	graph.graph_data.print_F_k_mappings(graph.graph_data)
 
 
 
@@ -284,4 +285,5 @@ func remove_edges():
 		e = e as Edge
 		graph.remove_edge(e)
 	clear_selections()
+
 

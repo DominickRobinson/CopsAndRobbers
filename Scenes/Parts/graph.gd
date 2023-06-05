@@ -109,9 +109,11 @@ func refresh():
 	await get_tree().process_frame
 	refresh_edges()
 	
+	var scr = graph_data.get_strict_corner_ranking()
+	
 	for v in vertex_container.vertices:
 		v = v as Vertex
-		v.strict_corner_ranking = graph_data.get_strict_corner_ranking(graph_data)[v.index]
+		v.strict_corner_ranking = scr[v.index]
 	
 	refreshed.emit()
 
@@ -173,7 +175,7 @@ func save_graph(path : String):
 
 
 func load_graph(path : String):
-	print("loading ", path.get_extension())
+#	print("loading ", path.get_extension())
 	var load_file = FileAccess.open(path, FileAccess.READ)
 	
 	var adjacency_matrix = []
@@ -182,11 +184,11 @@ func load_graph(path : String):
 	match path.get_extension():
 		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
-			print("json_as_text: ", json_as_text)
+#			print("json_as_text: ", json_as_text)
 			var json_as_dict = JSON.parse_string(json_as_text)
-			print("json_as_dict: ", json_as_dict)
+#			print("json_as_dict: ", json_as_dict)
 			adjacency_matrix = json_as_dict["adjacency_matrix"]
-			print(str_to_var(json_as_dict["positions"]))
+#			print(str_to_var(json_as_dict["positions"]))
 			var positions_array = str_to_var(json_as_dict["positions"])
 			for p in positions_array:
 				positions.append(str_to_var(p))

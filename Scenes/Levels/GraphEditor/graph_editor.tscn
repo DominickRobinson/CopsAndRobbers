@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_8o4cl"]
 [ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_mtsu3"]
-[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_cnyjf"]
+[ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_fkwqj"]
 [ext_resource type="PackedScene" uid="uid://p1gmq0pbvgk5" path="res://Scenes/Parts/graph.tscn" id="4_lemyg"]
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/VertexSpawnPosition.gd" id="5_3ulu6"]
 
@@ -98,11 +98,8 @@ text = "Load Graph"
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="MainMenu" type="Button" parent="GUI/MarginContainer/HBoxContainer"]
+[node name="PauseButton" parent="GUI/MarginContainer/HBoxContainer" instance=ExtResource("3_fkwqj")]
 layout_mode = 2
-text = "Go to Main Menu"
-script = ExtResource("3_cnyjf")
-scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer"]
 layout_mode = 2
@@ -176,6 +173,28 @@ text = "Retract strict corners"
 [node name="RetractCorners" type="Button" parent="GUI/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Retract corners"
+
+[node name="Misc" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GUI/MarginContainer/VBoxContainer/Misc"]
+layout_mode = 2
+text = "Misc"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/Misc"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="GUI/MarginContainer/VBoxContainer/Misc/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="GraphActions" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/Misc/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PrintMappings" type="Button" parent="GUI/MarginContainer/VBoxContainer/Misc/HBoxContainer/GraphActions"]
+layout_mode = 2
+text = "Print mappings"
 
 [node name="PanelContainer" type="PanelContainer" parent="GUI/MarginContainer"]
 layout_mode = 2
@@ -251,3 +270,4 @@ default_color = Color(0.192157, 0.639216, 1, 1)
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/GraphActions/Square" to="." method="square"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/GraphActions/RetractStrictCorners" to="." method="retract_strict_corners"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/GraphActions/RetractCorners" to="." method="retract_corners"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/Misc/HBoxContainer/GraphActions/PrintMappings" to="." method="print_mappings"]

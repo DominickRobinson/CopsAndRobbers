@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://degepda22sxbs"]
+[gd_scene load_steps=4 format=3 uid="uid://daf044eyid212"]
 
-[ext_resource type="Texture2D" uid="uid://bk56yi56pgoem" path="res://Art/vertex.png" id="1_6ack5"]
 [ext_resource type="Script" path="res://Scenes/Parts/vertex.gd" id="1_cri6f"]
+[ext_resource type="Texture2D" uid="uid://bk56yi56pgoem" path="res://Assets/Art/vertex.png" id="2_qu2d6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6iyr1"]
 radius = 34.0588
@@ -11,7 +11,7 @@ script = ExtResource("1_cri6f")
 area = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_6ack5")
+texture = ExtResource("2_qu2d6")
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 8

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphDataEditor/graph_data_editor.gd" id="1_wglko"]
 [ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="2_uf1l8"]
-[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_05nn6"]
+[ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_usybr"]
 
 [node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "vertex_index", "edge_start_index", "edge_end_index", "save_file_dialog", "load_file_dialog")]
 layout_mode = 3
@@ -76,16 +76,8 @@ text = "Load Graph"
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="Pause" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-visible = false
+[node name="PauseButton" parent="MarginContainer/Control/HBoxContainer" instance=ExtResource("3_usybr")]
 layout_mode = 2
-text = "Pause"
-
-[node name="MainMenu" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-layout_mode = 2
-text = "Go to Main Menu"
-script = ExtResource("3_05nn6")
-scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 0

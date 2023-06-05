@@ -98,7 +98,7 @@ func erase():
 
 func vertices_exist():
 	var result =  (start_vertex != null) and (end_vertex != null)
-	print("Vertices exist: ", result)
+#	print("Vertices exist: ", result)
 	return result
 
 func contains_vertex(vertex : Vertex):

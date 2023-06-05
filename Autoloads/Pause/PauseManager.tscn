@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://vyf6ngr5gikf"]
+
+[ext_resource type="Script" path="res://Autoloads/Pause/PauseManager.gd" id="1_fdy4f"]
+[ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="2_bfudg"]
+[ext_resource type="Texture2D" uid="uid://cd07o6bwhhmwt" path="res://Assets/Art/UI/home-button.svg" id="7_e5myp"]
+[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="8_pxl0a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o3wjm"]
+bg_color = Color(0, 0, 0, 0.25098)
+
+[node name="PauseManager" type="CanvasLayer" node_paths=PackedStringArray("pause_menu")]
+layer = 99
+script = ExtResource("1_fdy4f")
+pause_menu = NodePath("PanelContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o3wjm")
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pause menu"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="VSeparator3" type="VSeparator" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="Settings" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_bfudg")]
+layout_mode = 2
+use_hidden_tabs_for_min_size = true
+
+[node name="VSeparator2" type="VSeparator" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SceneButton" type="Button" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Go to main menu"
+icon = ExtResource("7_e5myp")
+script = ExtResource("8_pxl0a")
+scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
+
+[connection signal="pressed" from="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="unpause"]

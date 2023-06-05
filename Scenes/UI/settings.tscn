@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://bus8m1x10u3y4"]
+
+[ext_resource type="Script" path="res://Scenes/UI/settings.gd" id="1_1q0iq"]
+[ext_resource type="Texture2D" uid="uid://bxic21e825tvp" path="res://Assets/Art/UI/Sound/muted-speaker.svg" id="1_gddea"]
+[ext_resource type="Script" path="res://Autoloads/Pause/SoundIcon.gd" id="2_vossc"]
+[ext_resource type="Texture2D" uid="uid://hb7pim4kmdpt" path="res://Assets/Art/UI/Sound/speaker-low-volume.svg" id="3_84qcp"]
+[ext_resource type="Texture2D" uid="uid://duti78xfrtoou" path="res://Assets/Art/UI/Sound/speaker-medium-volume.svg" id="4_qbl4b"]
+[ext_resource type="Texture2D" uid="uid://dwsv4w30iersa" path="res://Assets/Art/UI/Sound/speaker-high-volume.svg" id="5_crkl4"]
+[ext_resource type="Texture2D" uid="uid://cnqnu2v02mgiq" path="res://Assets/Art/UI/Sound/megaphone.svg" id="6_f4uqg"]
+[ext_resource type="Script" path="res://Scenes/UI/VolumeSlider.gd" id="8_j535b"]
+
+[node name="Settings" type="TabContainer"]
+script = ExtResource("1_1q0iq")
+
+[node name="Audio" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="Audio"]
+layout_mode = 2
+columns = 4
+
+[node name="SoundLabel" type="Label" parent="Audio/GridContainer"]
+layout_mode = 2
+text = "Sound"
+
+[node name="SoundIcon" type="TextureRect" parent="Audio/GridContainer" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+texture = ExtResource("1_gddea")
+script = ExtResource("2_vossc")
+slider = NodePath("../SoundSlider")
+muted = ExtResource("1_gddea")
+low = ExtResource("3_84qcp")
+medium = ExtResource("4_qbl4b")
+high = ExtResource("5_crkl4")
+max = ExtResource("6_f4uqg")
+
+[node name="HSeparator" type="Control" parent="Audio/GridContainer"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="SoundSlider" type="HSlider" parent="Audio/GridContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("8_j535b")
+audio_bus_name = "Sound"
+
+[node name="MusicLabel" type="Label" parent="Audio/GridContainer"]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicIcon" type="TextureRect" parent="Audio/GridContainer" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+texture = ExtResource("1_gddea")
+script = ExtResource("2_vossc")
+slider = NodePath("../MusicSlider")
+muted = ExtResource("1_gddea")
+low = ExtResource("3_84qcp")
+medium = ExtResource("4_qbl4b")
+high = ExtResource("5_crkl4")
+max = ExtResource("6_f4uqg")
+
+[node name="HSeparator2" type="Control" parent="Audio/GridContainer"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="MusicSlider" type="HSlider" parent="Audio/GridContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("8_j535b")
+audio_bus_name = "Music"
+
+[node name="Misc" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
