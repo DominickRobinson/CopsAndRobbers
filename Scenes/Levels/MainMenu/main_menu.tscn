@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://Assets/Art/logo.png" id="1_pq47r"]
 [ext_resource type="FontFile" uid="uid://bsti1sjiaolqo" path="res://Assets/Fonts/Policía Secreta.ttf" id="2_k5cdb"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_f3unt"]
-[ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]
-[ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]
+[ext_resource type="PackedScene" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
