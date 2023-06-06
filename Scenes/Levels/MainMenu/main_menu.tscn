@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7jqxo4jy5gav"]
+[gd_scene load_steps=7 format=3 uid="uid://b7jqxo4jy5gav"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://Assets/Art/logo.png" id="1_pq47r"]
+[ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
 [ext_resource type="FontFile" uid="uid://bsti1sjiaolqo" path="res://Assets/Fonts/Policía Secreta.ttf" id="2_k5cdb"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_f3unt"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]
-[ext_resource type="PackedScene" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
+[ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]
+[ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -45,13 +46,13 @@ stretch_mode = 5
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Title" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_fhouu")]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_k5cdb")
 theme_override_font_sizes/font_size = 75
 text = "Cops and Robbers"
-horizontal_alignment = 1
-vertical_alignment = 1
+flat = true
+audio_name = "cops_and_robbers"
 
 [node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 0)

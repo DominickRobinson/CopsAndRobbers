@@ -18,8 +18,14 @@ extends Node
 
 func play_sound(audio_name:String, vol:float=0.0, loop:bool=false, pitch:float=1.0) -> AudioStreamPlayer:
 	var audio = audio_pool.get_audio(audio_name)
-	return sound_queue.play_audio(audio, vol, loop, pitch)
-
+	#type is audiostream
+	if is_instance_of(audio, AudioStream):
+		return sound_queue.play_audio(audio, vol, loop, pitch)
+	#type is array
+	else:
+		assert( typeof(audio) == 28 )
+		return sound_queue.play_random_audio(audio, vol, loop, pitch)
+	
 func play_ui_sound(audio_name:String, vol:float=0.0, loop:bool=false, pitch:float=1.0) -> AudioStreamPlayer:
 	var audio = audio_pool.get_audio(audio_name)
 	return ui_sound_queue.play_audio(audio, vol, loop, pitch)
@@ -52,11 +58,11 @@ func stop_music(fade:float=1.0) -> AudioStreamPlayer:
 
 func change_volume_sound(new_value):
 	var sound_bus = AudioServer.get_bus_index("Sound")
-	AudioServer.set_bus_volume_db(sound_bus, new_value)
+	AudioServer.set_bus_volume_db(sound_bus, linear_to_db(new_value))
 
 func change_volume_music(new_value):
 	var music_bus = AudioServer.get_bus_index("Music")
-	AudioServer.set_bus_volume_db(music_bus, new_value)
+	AudioServer.set_bus_volume_db(music_bus, linear_to_db(new_value))
 
 func change_volume(bus, new_value):
 	pass

@@ -10,6 +10,7 @@ extends HSlider
 
 func _ready() -> void:
 	value = db_to_linear(AudioServer.get_bus_volume_db(_bus))
+	value_changed.connect(_on_value_changed)
 
 
 func _on_value_changed(value: float) -> void:
