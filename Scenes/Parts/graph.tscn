@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ri24hib3q64a" path="res://Scenes/Parts/edge.tscn" id="2_un6rm"]
 [ext_resource type="PackedScene" uid="uid://daf044eyid212" path="res://Scenes/Parts/vertex.tscn" id="3_t7qd1"]
 [ext_resource type="Script" path="res://Scenes/Parts/EdgeContainer.gd" id="4_5lpg6"]
-[ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="4_e23mg"]
+[ext_resource type="PackedScene" uid="uid://chvd74xrcpj6" path="res://Scenes/Parts/graph_data.tscn" id="4_e23mg"]
 [ext_resource type="Script" path="res://Scenes/Parts/VertexContainer.gd" id="5_p56fu"]
 
 [node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container")]

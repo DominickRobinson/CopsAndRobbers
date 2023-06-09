@@ -8,7 +8,8 @@ signal moved
 #text label to be displayed if required
 @export var text : String = ""
 
-@onready var label = $Label
+@export var label : Label
+@export var anim : AnimationPlayer
 
 var index : int = -1
 
@@ -21,11 +22,27 @@ var draggable = false
 
 @onready var vertex_container
 
+var neighbors : Array = []
+
+var selectable :
+	set(value):
+		if value:
+			anim.play("selectable")
+		else:
+			anim.play("RESET")
+		selectable = value
+
+var occupents : Array = []
+
 
 func _ready():
 	super._ready()
 	vertex_container = get_parent()
 	set_text()
+	
+	selected.connect(anim.play.bind("selected"))
+	deselected.connect(anim.play.bind("RESET"))
+
 
 func _unhandled_input(_event):
 	if editable:
@@ -35,6 +52,11 @@ func _unhandled_input(_event):
 			draggable = false
 			deselected.emit()
 			moved.emit()
+	
+	if mouse_inside_area and Input.is_action_just_pressed("select") and selectable:
+		print(self.name, " selected")
+		selected.emit()
+	
 #		if Input.is_action_just_pressed("delete") and mouse_inside_area:
 #			remove()
 
@@ -55,3 +77,9 @@ func set_text():
 	label.text += "SCR: " + str(strict_corner_ranking) 
 #	label.text = str(self)
 #	label.text = str(index)
+
+func get_neighbors():
+	return neighbors
+
+func get_occupents():
+	return occupents
