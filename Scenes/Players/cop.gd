@@ -10,11 +10,12 @@ func _ready():
 
 
 func capture(robber:Robber):
-	print(5)
+	await play_final_animation("capture")
+	
+	await anim.animation_finished
+	
 	robber.get_captured()
 	
-	print(6)
-	anim.play("capture")
 
 
 
@@ -24,5 +25,5 @@ func check_for_robbers():
 	for o in current_vertex.get_occupents():
 		if o is Robber:
 			o = o as Robber
-			if o.captured:
+			if not o.captured:
 				capture(o)

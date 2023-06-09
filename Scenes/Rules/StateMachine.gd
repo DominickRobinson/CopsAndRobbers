@@ -47,15 +47,12 @@ func end():
 	curr_state.deactivate()
 	game_over_screen.show()
 	game_over.emit()
-	print("end")
 
 
 func cop_win():
 	end()
 	cop_win_screen.show()
-	print("copwin")
 
 func robber_win():
 	end()
 	robber_win_screen.show()
-	print("robberwin")

@@ -54,7 +54,7 @@ func _unhandled_input(_event):
 			moved.emit()
 	
 	if mouse_inside_area and Input.is_action_just_pressed("select") and selectable:
-		print(self.name, " selected")
+#		print(self.name, " selected")
 		selected.emit()
 	
 #		if Input.is_action_just_pressed("delete") and mouse_inside_area:

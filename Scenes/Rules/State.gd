@@ -31,9 +31,9 @@ func go_to_next_state(new_state:State = next_state):
 	new_state.activate()
 
 func _on_state_entered():
-	print(name, " entered")
+#	print(name, " entered")
 	pass
 
 func _on_state_exited():
-	print(name, " exited")
+#	print(name, " exited")
 	pass

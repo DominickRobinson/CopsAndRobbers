@@ -60,12 +60,10 @@ func _on_animation_started(anim_name):
 	anim.play(anim_name)
 	anim.animation_started.connect(_on_animation_started)
 
-func play_last_animation(anim_name):
+
+func play_final_animation(anim_name):
 	anim.play("RESET")
 	anim.animation_started.disconnect(_on_animation_started)
 	await anim.animation_finished
 	anim.play(anim_name)
-	
-	await anim.animation_finished
-	
 	return true

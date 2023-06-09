@@ -11,7 +11,7 @@ func _ready():
 
 func get_captured():
 	captured = true
-	await play_last_animation("captured")
+	await play_final_animation("captured")
 	
 	await anim.animation_finished
 	

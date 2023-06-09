@@ -4,12 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://cpkwvbpnnoybl" path="res://Scenes/Players/player.tscn" id="2_cqxi2"]
 [ext_resource type="Script" path="res://Scenes/Players/cop.gd" id="3_a0kqn"]
 [ext_resource type="PackedScene" uid="uid://bc6k3dwiyonyw" path="res://Scenes/Rules/state_machine.tscn" id="3_r6bh0"]
-[ext_resource type="Texture2D" uid="uid://t72tjaqr3rob" path="res://Assets/Art/Characters/cop-m.svg" id="4_3n7n2"]
 [ext_resource type="Script" path="res://Scenes/Players/robber.gd" id="4_k38t3"]
-[ext_resource type="Script" path="res://Scenes/Rules/CheckForCapture.gd" id="5_338qb"]
+[ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="4_mrx67"]
 [ext_resource type="Script" path="res://Scenes/Rules/Move.gd" id="5_i5by4"]
 [ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="6_c7dq5"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="10_jbejo"]
+[ext_resource type="Script" path="res://Scenes/Rules/CaptureRobbers.gd" id="10_tv7pv"]
 [ext_resource type="PackedScene" uid="uid://btuqhupbnwq6" path="res://Scenes/Rules/check_for_cop_win.tscn" id="12_6t3r2"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="13_pvtq7"]
 
@@ -42,7 +42,9 @@ position = Vector2(320, 120)
 
 [node name="Cop" parent="Cops" instance=ExtResource("2_cqxi2")]
 script = ExtResource("3_a0kqn")
-skin = ExtResource("4_3n7n2")
+travel_time = null
+skin = ExtResource("4_mrx67")
+character = null
 
 [node name="Robbers" type="Node2D" parent="."]
 position = Vector2(769, 135)
@@ -61,24 +63,19 @@ game_over_screen = NodePath("../CanvasLayer/GameOverScreen")
 [node name="CopMove" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "next_state")]
 script = ExtResource("5_i5by4")
 player = NodePath("../../Cops/Cop")
-next_state = NodePath("../CheckForCapture")
-
-[node name="CheckForCapture" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_state")]
-script = ExtResource("5_338qb")
 next_state = NodePath("../RobberMove")
 
 [node name="RobberMove" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "next_state")]
 script = ExtResource("5_i5by4")
 player = NodePath("../../Robbers/Robber")
-next_state = NodePath("../CheckForCapture2")
-
-[node name="CheckForCapture2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_state")]
-script = ExtResource("5_338qb")
 next_state = NodePath("../CopMove")
 
 [node name="GameOverConditions" type="Node" parent="StateMachine"]
 
 [node name="CheckForCopWin" parent="StateMachine/GameOverConditions" instance=ExtResource("12_6t3r2")]
+
+[node name="CaptureRobbers" type="Node" parent="StateMachine/GameOverConditions"]
+script = ExtResource("10_tv7pv")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
