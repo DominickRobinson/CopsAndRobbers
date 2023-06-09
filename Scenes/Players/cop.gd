@@ -10,11 +10,13 @@ func _ready():
 
 
 func capture(robber:Robber):
-	await play_final_animation("capture")
+	play_final_animation("capture")
 	
-	await anim.animation_finished
+#	await anim.animation_finished
 	
 	robber.get_captured()
+	
+#	await robber.caught
 	
 
 

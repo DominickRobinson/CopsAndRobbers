@@ -22,4 +22,5 @@ func _ready():
 func check_for_robbers():
 	for c in cops:
 		c = c as Cop
-		c.check_for_robbers()
+		await c.check_for_robbers()
+		

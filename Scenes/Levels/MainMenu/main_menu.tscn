@@ -55,6 +55,9 @@ alignment = 2
 clip_contents = true
 layout_mode = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.917647, 0.917647, 0.917647, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_k5cdb")
 theme_override_font_sizes/font_size = 75
 text = "Cops and Robbers"
@@ -167,7 +170,7 @@ popup/item_0/id = 0
 layout_mode = 2
 text = "Begin!"
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 

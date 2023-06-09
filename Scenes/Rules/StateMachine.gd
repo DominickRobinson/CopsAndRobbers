@@ -45,6 +45,9 @@ func _process(delta):
 
 func end():
 	curr_state.deactivate()
+	
+	await get_tree().create_timer(3.0).timeout
+	
 	game_over_screen.show()
 	game_over.emit()
 

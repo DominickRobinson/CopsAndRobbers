@@ -21,14 +21,22 @@ signal arrived
 
 var moving = false
 
+var movement_tween : Tween
 
 func _ready():
+	
 	anim.animation_started.connect(_on_animation_started)
 	anim.play("idle")
 	
 	if skin != null:
 		sprite.texture = skin
 
+
+func _unhandled_input(event):
+	if moving and Input.is_action_just_pressed("select"):
+		movement_tween.set_speed_scale(2)
+		await movement_tween.finished
+		movement_tween.set_speed_scale(1)
 
 func move_to(new_vertex:Vertex):
 	if moving: return
@@ -38,12 +46,12 @@ func move_to(new_vertex:Vertex):
 	
 	current_vertex = new_vertex
 	
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "global_position", new_vertex.global_position, travel_time)
+	movement_tween = get_tree().create_tween()
+	movement_tween.tween_property(self, "global_position", new_vertex.global_position, travel_time)
 	anim.play("move")
 	departed.emit()
 	
-	await tween.finished
+	await movement_tween.finished
 	anim.play("idle")
 	current_vertex.occupents.append(self)
 	

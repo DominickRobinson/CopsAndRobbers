@@ -42,9 +42,7 @@ position = Vector2(320, 120)
 
 [node name="Cop" parent="Cops" instance=ExtResource("2_cqxi2")]
 script = ExtResource("3_a0kqn")
-travel_time = null
 skin = ExtResource("4_mrx67")
-character = null
 
 [node name="Robbers" type="Node2D" parent="."]
 position = Vector2(769, 135)
