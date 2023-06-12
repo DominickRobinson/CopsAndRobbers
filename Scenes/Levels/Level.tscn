@@ -1,13 +1,148 @@
-[gd_scene load_steps=2 format=3 uid="uid://chpkxraf7p13q"]
+[gd_scene load_steps=12 format=3 uid="uid://chpkxraf7p13q"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_55e2u"]
+[ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="2_7d7am"]
+[ext_resource type="PackedScene" uid="uid://p1gmq0pbvgk5" path="res://Scenes/Parts/graph.tscn" id="2_kuov2"]
+[ext_resource type="Script" path="res://Scenes/Rules/game_manager.gd" id="3_cjnp4"]
+[ext_resource type="PackedScene" uid="uid://bc6k3dwiyonyw" path="res://Scenes/Rules/state_machine.tscn" id="3_d6yj3"]
+[ext_resource type="Script" path="res://Scenes/Rules/move_player.gd" id="4_lx74n"]
+[ext_resource type="PackedScene" uid="uid://btuqhupbnwq6" path="res://Scenes/Rules/check_for_cop_win.tscn" id="4_r5mjt"]
+[ext_resource type="Script" path="res://Scenes/Rules/capture_robbers.gd" id="5_4hjs4"]
+[ext_resource type="Script" path="res://Scenes/Rules/move_drunk.gd" id="5_jqvj0"]
+[ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="6_6iha4"]
+[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="7_g64p5"]
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" node_paths=PackedStringArray("graph", "agents", "cops", "robbers", "game_manager", "state_machine")]
 script = ExtResource("1_55e2u")
-graph_resource = "res://Scenes/Parts/graph.tscn"
-player_resource = "res://Scenes/Players/player.tscn"
-cop_script = "res://Scenes/Players/cop.gd"
-robber_script = "res://Scenes/Players/robber.gd"
-move_state = "res://Scenes/Rules/Move.gd"
-check_for_captures = "res://Scenes/Rules/CheckForCapture.gd"
-check_for_cop_win = "res://Scenes/Rules/check_for_cop_win.gd"
+graph_path = "res://Graphs/chordal7.json"
+number_of_cops = 2
+number_of_robbers = 3
+cop_strategy = "drunk"
+robber_strategy = "drunk"
+cop_character = "cop"
+robber_character = "robber"
+agent_resource = ExtResource("2_7d7am")
+player_script = ExtResource("4_lx74n")
+drunk_script = ExtResource("5_jqvj0")
+cop_sprite = "res://Assets/Art/Characters/cop.svg"
+robber_sprite = "res://Assets/Art/Characters/ninja.svg"
+empty_vertex_sprite = "res://Assets/Art/vertex.png"
+occupied_vertex_sprite = "res://Assets/Art/vertex.png"
+directed_edge_sprite = "res://Assets/Art/directed_edge.png"
+undirected_edge_sprite = "res://Assets/Art/undirected_edge.png"
+reflexive_edge_sprite = "res://Assets/Art/reflexive_edge.png"
+graph = NodePath("Graph")
+agents = NodePath("Agents")
+cops = NodePath("Agents/Cops")
+robbers = NodePath("Agents/Robbers")
+game_manager = NodePath("GameManager")
+state_machine = NodePath("GameManager/StateMachine")
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "cop_win_screen", "robber_win_screen", "game_over_screen")]
+script = ExtResource("3_cjnp4")
+state_machine = NodePath("StateMachine")
+graph = NodePath("../Graph")
+cop_win_screen = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/CopsWin")
+robber_win_screen = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/RobbersWin")
+game_over_screen = NodePath("../CanvasLayer/GameOverScreen")
+
+[node name="StateMachine" parent="GameManager" node_paths=PackedStringArray("label") instance=ExtResource("3_d6yj3")]
+label = NodePath("../../CanvasLayer/MarginContainer/VBoxContainer/Label")
+
+[node name="CheckForCopWin" parent="GameManager" instance=ExtResource("4_r5mjt")]
+
+[node name="CaptureRobbers" type="Node" parent="GameManager"]
+script = ExtResource("5_4hjs4")
+
+[node name="Graph" parent="." instance=ExtResource("2_kuov2")]
+graph_filepath = "res://Graphs/chordal7.json"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+alignment = 2
+
+[node name="PauseButton" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("6_6iha4")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GameOverScreen" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameOverScreen/CenterContainer"]
+layout_mode = 2
+
+[node name="Gameover" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Game over..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CopsWin" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Cops win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RobbersWin" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Robbers win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Retry" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play again"
+script = ExtResource("7_g64p5")
+
+[node name="MainMenu" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Go to main menu"
+script = ExtResource("7_g64p5")
+scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
+
+[node name="Agents" type="Node2D" parent="."]
+
+[node name="Cops" type="Node2D" parent="Agents"]
+
+[node name="Robbers" type="Node2D" parent="Agents"]
+
+[connection signal="cop_win" from="GameManager/CheckForCopWin" to="GameManager" method="cop_win"]

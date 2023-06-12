@@ -138,11 +138,22 @@ func retract_strict_corners():
 func retract_corners():
 	graph_data.retract_corners()
 
-
-
 func clear_graph():
 	edge_container.remove_all()
 	vertex_container.remove_all()
+
+
+func get_Fk_mapping(k:int) -> Dictionary:
+	var mapping : Dictionary = {}
+	var graph_data_mapping = graph_data.get_F_k_mapping(k, graph_data)
+	
+	for i in graph_data_mapping.keys():
+		mapping[vertex_container.get_vertex_from_index(i)] = []
+		for j in graph_data_mapping[i]:
+			var new_vtx = mapping[vertex_container.get_vertex_from_index(j)]
+			mapping[vertex_container.get_vertex_from_index(i)].append(new_vtx)
+	
+	return mapping
 
 
 func refresh():
@@ -239,7 +250,7 @@ func load_graph(path : String):
 			for p in positions_array:
 				positions.append(str_to_var(p))
 			
-			print(graph_data)
+#			print(graph_data)
 			graph_data.graph = adjacency_matrix
 		"csv":
 			graph_data.load_graph(path)

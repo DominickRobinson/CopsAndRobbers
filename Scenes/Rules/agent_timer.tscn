@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2q6t2bh0npci"]
+
+[ext_resource type="Script" path="res://Scenes/Rules/agent_timer.gd" id="1_tb0kk"]
+
+[node name="AgentTimer" type="Timer"]
+wait_time = 60.0
+script = ExtResource("1_tb0kk")

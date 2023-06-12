@@ -1,79 +1,48 @@
-[gd_scene load_steps=15 format=3 uid="uid://c7c62rdub8c45"]
+[gd_scene load_steps=11 format=3 uid="uid://cxlg4qbrp1wvl"]
 
 [ext_resource type="PackedScene" uid="uid://p1gmq0pbvgk5" path="res://Scenes/Parts/graph.tscn" id="1_wsh8s"]
-[ext_resource type="PackedScene" uid="uid://cpkwvbpnnoybl" path="res://Scenes/Players/player.tscn" id="2_duro6"]
-[ext_resource type="Script" path="res://Scenes/Players/cop.gd" id="3_atq2o"]
-[ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="4_v64jg"]
-[ext_resource type="Script" path="res://Scenes/Players/robber.gd" id="5_afhd3"]
-[ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="6_fuue7"]
+[ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="2_duro6"]
+[ext_resource type="Script" path="res://Scenes/Rules/game_manager.gd" id="2_kab88"]
+[ext_resource type="Script" path="res://Scenes/Rules/move_drunk.gd" id="4_fan12"]
 [ext_resource type="PackedScene" uid="uid://bc6k3dwiyonyw" path="res://Scenes/Rules/state_machine.tscn" id="7_h2pee"]
-[ext_resource type="Script" path="res://Scenes/Rules/Move.gd" id="8_4py68"]
+[ext_resource type="Script" path="res://Scenes/Rules/move_player.gd" id="8_tnybf"]
 [ext_resource type="PackedScene" uid="uid://btuqhupbnwq6" path="res://Scenes/Rules/check_for_cop_win.tscn" id="9_pispv"]
-[ext_resource type="Script" path="res://Scenes/Rules/CaptureRobbers.gd" id="10_b8qhn"]
+[ext_resource type="Script" path="res://Scenes/Rules/capture_robbers.gd" id="10_vysbl"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="11_c8gd1"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="12_bn543"]
-
-[sub_resource type="Gradient" id="Gradient_ghs34"]
-offsets = PackedFloat32Array(0, 0.509677, 1)
-colors = PackedColorArray(0, 0.709804, 0.105882, 1, 0.0787582, 0.544922, 0.113356, 1, 0, 0.709804, 0.105882, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_sdehe"]
-gradient = SubResource("Gradient_ghs34")
-repeat = 1
 
 [node name="test" type="Node2D"]
 
 [node name="Graph" parent="." instance=ExtResource("1_wsh8s")]
-graph_filepath = "res://Graphs/h7.json"
+graph_filepath = "res://Graphs/chordal7.json"
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-visible = false
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0, 0)
-motion_mirroring = Vector2(64, 64)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-texture_repeat = 2
-texture = SubResource("GradientTexture2D_sdehe")
-
-[node name="Cops" type="Node2D" parent="."]
-position = Vector2(320, 120)
-
-[node name="Cop" parent="Cops" instance=ExtResource("2_duro6")]
-script = ExtResource("3_atq2o")
-skin = ExtResource("4_v64jg")
-
-[node name="Robbers" type="Node2D" parent="."]
-position = Vector2(769, 135)
-
-[node name="Robber" parent="Robbers" instance=ExtResource("2_duro6")]
-script = ExtResource("5_afhd3")
-skin = ExtResource("6_fuue7")
-
-[node name="StateMachine" parent="." node_paths=PackedStringArray("graph", "first_state", "cop_win_screen", "robber_win_screen", "game_over_screen") instance=ExtResource("7_h2pee")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "cop_win_screen", "robber_win_screen", "game_over_screen")]
+script = ExtResource("2_kab88")
+state_machine = NodePath("StateMachine")
 graph = NodePath("../Graph")
-first_state = NodePath("CopMove")
 cop_win_screen = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/CopsWin")
 robber_win_screen = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/RobbersWin")
 game_over_screen = NodePath("../CanvasLayer/GameOverScreen")
 
-[node name="CopMove" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "next_state")]
-script = ExtResource("8_4py68")
-player = NodePath("../../Cops/Cop")
-next_state = NodePath("../RobberMove")
+[node name="StateMachine" parent="GameManager" node_paths=PackedStringArray("first_state") instance=ExtResource("7_h2pee")]
+first_state = NodePath("CopMove")
 
-[node name="RobberMove" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "next_state")]
-script = ExtResource("8_4py68")
-player = NodePath("../../Robbers/Robber")
+[node name="CopMove" type="Node" parent="GameManager/StateMachine" node_paths=PackedStringArray("agent", "next_state")]
+script = ExtResource("8_tnybf")
+agent = NodePath("../../../Agents/Cops/Cop")
+next_state = NodePath("../DrunkRobberMove")
+
+[node name="DrunkRobberMove" type="Node" parent="GameManager/StateMachine" node_paths=PackedStringArray("agent", "next_state")]
+script = ExtResource("4_fan12")
+agent = NodePath("../../../Agents/Robbers/Robber")
 next_state = NodePath("../CopMove")
 
-[node name="GameOverConditions" type="Node" parent="StateMachine"]
+[node name="GameOverConditions" type="Node" parent="GameManager"]
 
-[node name="CheckForCopWin" parent="StateMachine/GameOverConditions" instance=ExtResource("9_pispv")]
+[node name="CheckForCopWin" parent="GameManager/GameOverConditions" instance=ExtResource("9_pispv")]
 
-[node name="CaptureRobbers" type="Node" parent="StateMachine/GameOverConditions"]
-script = ExtResource("10_b8qhn")
+[node name="CaptureRobbers" type="Node" parent="GameManager/GameOverConditions"]
+script = ExtResource("10_vysbl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -157,4 +126,19 @@ text = "Go to main menu"
 script = ExtResource("12_bn543")
 scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
 
-[connection signal="cop_win" from="StateMachine/GameOverConditions/CheckForCopWin" to="StateMachine" method="cop_win"]
+[node name="Agents" type="Node2D" parent="."]
+
+[node name="Cops" type="Node2D" parent="Agents"]
+position = Vector2(320, 120)
+
+[node name="Cop" parent="Agents/Cops" instance=ExtResource("2_duro6")]
+position = Vector2(20, 2)
+
+[node name="Robbers" type="Node2D" parent="Agents"]
+position = Vector2(769, 135)
+
+[node name="Robber" parent="Agents/Robbers" instance=ExtResource("2_duro6")]
+position = Vector2(7, -11)
+mode = "Robber"
+
+[connection signal="cop_win" from="GameManager/GameOverConditions/CheckForCopWin" to="GameManager" method="cop_win"]

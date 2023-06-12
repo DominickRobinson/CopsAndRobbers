@@ -1,7 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpkwvbpnnoybl"]
+[gd_scene load_steps=14 format=3 uid="uid://dqbdvl6orfadx"]
 
-[ext_resource type="Script" path="res://Scenes/Players/player.gd" id="1_7sqdv"]
-[ext_resource type="Texture2D" uid="uid://j6vgutrsfypo" path="res://Assets/Art/Characters/person.svg" id="2_vn2ol"]
+[ext_resource type="Script" path="res://Scenes/Agents/agent.gd" id="1_kpjln"]
+[ext_resource type="Texture2D" uid="uid://j6vgutrsfypo" path="res://Assets/Art/Characters/person.svg" id="2_geaao"]
+[ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="3_shyxh"]
+[ext_resource type="Texture2D" uid="uid://t72tjaqr3rob" path="res://Assets/Art/Characters/cop-m.svg" id="4_23ybu"]
+[ext_resource type="Texture2D" uid="uid://cf3v8qp1b83lo" path="res://Assets/Art/Characters/cop-f.svg" id="5_ioq7w"]
+[ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="6_gedw3"]
+[ext_resource type="Texture2D" uid="uid://vw2ngclv7jt3" path="res://Assets/Art/Characters/zombie.svg" id="7_o7tlt"]
 
 [sub_resource type="Animation" id="Animation_vh7pb"]
 length = 0.001
@@ -167,14 +172,20 @@ _data = {
 "move": SubResource("Animation_ibhqf")
 }
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("sprite", "anim", "label") groups=["Players"]]
-script = ExtResource("1_7sqdv")
+[node name="Agent" type="Node2D" node_paths=PackedStringArray("sprite", "anim", "label") groups=["Agents"]]
+script = ExtResource("1_kpjln")
+person_skin = ExtResource("2_geaao")
+cop_skin = ExtResource("3_shyxh")
+cop_m_skin = ExtResource("4_23ybu")
+cop_f_skin = ExtResource("5_ioq7w")
+robber_skin = ExtResource("6_gedw3")
+zombie_skin = ExtResource("7_o7tlt")
 sprite = NodePath("Sprite2D")
 anim = NodePath("AnimationPlayer")
 label = NodePath("Sprite2D/Label")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_vn2ol")
+texture = ExtResource("2_geaao")
 
 [node name="Label" type="Label" parent="Sprite2D"]
 anchors_preset = 8

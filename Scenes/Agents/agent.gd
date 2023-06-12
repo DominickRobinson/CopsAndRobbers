@@ -1,18 +1,33 @@
 @tool
-class_name Player
+class_name Agent
 extends Node2D
 
 signal departed
 signal arrived
 
+signal caught
 
+
+@export_enum("Cop", "Robber") var mode : String = "Cop"
 
 @export var travel_time: float = 1.0
 @export var current_vertex : Vertex = null
 
-@export var skin : Texture2D
+
+
 @export_enum("person", "cop", "cop-m", "cop-f", "robber", 
 				"zombie", "zombie-m", "zombie-f") var character : String = "person"
+
+@export_group("Skins")
+@export var person_skin : Texture2D
+@export var cop_skin : Texture2D
+@export var cop_m_skin : Texture2D
+@export var cop_f_skin : Texture2D
+@export var robber_skin : Texture2D
+@export var zombie_skin : Texture2D
+@export var zombie_m_skin : Texture2D
+@export var zombie_f_skin : Texture2D
+
 
 @export_group("Nodes")
 @export var sprite : Sprite2D
@@ -20,16 +35,42 @@ signal arrived
 @export var label : Label
 
 var moving = false
+var captured = false
 
 var movement_tween : Tween
 
+
 func _ready():
+	match mode:
+		"Cop":
+			add_to_group("Cops")
+		"Robber":
+			add_to_group("Robbers")
+	
+	match character:
+		"person":
+			sprite.texture = person_skin
+		"cop":
+			sprite.texture = cop_skin
+		"cop-m":
+			sprite.texture = cop_m_skin	
+		"cop-f":
+			sprite.texture = cop_f_skin
+		"robber":
+			sprite.texture = robber_skin
+		"zombie":
+			sprite.texture = zombie_skin
+		"zombie-m":
+			sprite.texture = zombie_m_skin
+		"zombie-f":
+			sprite.texture = zombie_f_skin
+	
+	print(self.name, ": ", get_groups())
 	
 	anim.animation_started.connect(_on_animation_started)
 	anim.play("idle")
+
 	
-	if skin != null:
-		sprite.texture = skin
 
 
 func _unhandled_input(event):
@@ -38,7 +79,35 @@ func _unhandled_input(event):
 		await movement_tween.finished
 		movement_tween.set_speed_scale(1)
 
+
+func get_captured():
+	captured = true
+	caught.emit()
+	play_final_animation("captured")
+
+
+func capture(robber:Agent):
+	play_final_animation("capture")
+	
+#	await anim.animation_finished
+	
+	robber.get_captured()
+	
+#	await robber.caught
+	
+
+func check_for_robbers():
+	if not is_instance_valid(current_vertex): return
+	
+	for o in current_vertex.get_occupents():
+		print(o.name, ": ", o.is_robber())
+		if o.is_robber():
+			if not o.captured:
+				capture(o)
+
+
 func move_to(new_vertex:Vertex):
+	
 	if moving: return
 	moving = true
 	if is_instance_valid(current_vertex):
@@ -57,6 +126,8 @@ func move_to(new_vertex:Vertex):
 	
 	arrived.emit()
 	moving = false
+	
+	print("Just moved... ", self.name, ": ", get_groups())
 
 
 func _on_animation_started(anim_name):
@@ -75,3 +146,10 @@ func play_final_animation(anim_name):
 	await anim.animation_finished
 	anim.play(anim_name)
 	return true
+
+
+func is_cop():
+	return (mode == "Cop")
+
+func is_robber():
+	return (mode == "Robber")
