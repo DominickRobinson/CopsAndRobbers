@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bj1hljmpg2j0m"
+path="res://.godot/imported/Cops and Robbers_Deep_Intro.mp3-45632a6d02b3dce2970e85e2e2c51b43.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Cops and Robbers_Deep_Intro.mp3"
+dest_files=["res://.godot/imported/Cops and Robbers_Deep_Intro.mp3-45632a6d02b3dce2970e85e2e2c51b43.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
