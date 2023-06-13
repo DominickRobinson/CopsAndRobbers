@@ -87,12 +87,16 @@ func add_vertex():
 	var pos = await vertex_spawn_position.find_open_position()
 	var v = graph.add_vertex(pos) as Vertex
 	
+	SoundManager.play_sound("sound_vertex_add")
+	
 	set_vertex_mode()
 
 
 
 func remove_vertex():
 	graph.remove_vertex(hovering_vertex)
+	
+	SoundManager.play_sound("sound_vertex_remove")
 	
 
 

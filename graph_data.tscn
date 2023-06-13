@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://w8a8hsf43n8g"]
-
-[ext_resource type="Script" path="res://graph_data.gd" id="1_5nadm"]
-
-[node name="GraphData" type="Node"]
-script = ExtResource("1_5nadm")

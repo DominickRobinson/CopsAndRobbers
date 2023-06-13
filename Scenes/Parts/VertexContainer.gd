@@ -32,7 +32,7 @@ func make_vertices_editable(editable:bool=true):
 		v = v as Vertex
 		v.editable = editable
 
-func get_vertex_with_index(index:int):
+func get_vertex_from_index(index:int):
 	for v in vertices:
 		if v.index == index:
 			return v

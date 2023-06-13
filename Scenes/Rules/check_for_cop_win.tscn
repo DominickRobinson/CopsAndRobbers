@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btuqhupbnwq6"]
+
+[ext_resource type="Script" path="res://Scenes/Rules/check_for_cop_win.gd" id="1_um77c"]
+
+[node name="CheckForCopWin" type="Node"]
+script = ExtResource("1_um77c")

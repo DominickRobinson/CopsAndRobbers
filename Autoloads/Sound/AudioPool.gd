@@ -3,8 +3,10 @@ extends Node
 
 
 @export_group("Sound")
+@export_subgroup("Title")
+@export var cops_and_robbers : Array[AudioStream]
 @export_subgroup("Editor")
-@export var sound_vertex_add : AudioStream
+@export var sound_vertex_add : Array[AudioStream]
 @export var sound_vertex_remove : AudioStream
 @export var sound_edge_add : AudioStream
 @export var sound_edge_remove : AudioStream
@@ -39,6 +41,7 @@ func _ready():
 		
 	for v in export_variables:
 		audio_dict[v] = get(v)
+	
 
 
 func get_audio(key:String = ""):

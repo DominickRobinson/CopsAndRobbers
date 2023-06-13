@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://33fc1plwegbb"]
+
+[ext_resource type="Script" path="res://Scenes/Rules/check_for_robber_win.gd" id="1_8etvv"]
+
+[node name="CheckForRobberWin" type="Node"]
+script = ExtResource("1_8etvv")

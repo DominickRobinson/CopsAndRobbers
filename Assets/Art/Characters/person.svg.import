@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t72tjaqr3rob"
-path="res://.godot/imported/man-police-officer.svg-9aa1e2a44e1550afc8acdeed35282a56.ctex"
+uid="uid://j6vgutrsfypo"
+path="res://.godot/imported/person.svg-c3a57257d2536e9d6b4cff83f476c9ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Characters/man-police-officer.svg"
-dest_files=["res://.godot/imported/man-police-officer.svg-9aa1e2a44e1550afc8acdeed35282a56.ctex"]
+source_file="res://Assets/Art/Characters/person.svg"
+dest_files=["res://.godot/imported/person.svg-c3a57257d2536e9d6b4cff83f476c9ca.ctex"]
 
 [params]
 

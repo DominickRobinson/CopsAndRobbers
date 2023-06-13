@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf3v8qp1b83lo"
-path="res://.godot/imported/woman-police-officer.svg-f795163050e7eb91fda9bcea59076165.ctex"
+uid="uid://vw2ngclv7jt3"
+path="res://.godot/imported/zombie.svg-ba45d13df88f7be1ade16870218ed3ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Characters/woman-police-officer.svg"
-dest_files=["res://.godot/imported/woman-police-officer.svg-f795163050e7eb91fda9bcea59076165.ctex"]
+source_file="res://Assets/Art/Characters/zombie.svg"
+dest_files=["res://.godot/imported/zombie.svg-ba45d13df88f7be1ade16870218ed3ce.ctex"]
 
 [params]
 
