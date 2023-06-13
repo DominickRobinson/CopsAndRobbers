@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://beyai2q1y4o1b"]
-
-[ext_resource type="Script" path="res://Autoloads/SceneTransition.gd" id="1_ffc4j"]
-
-[node name="SceneTransition" type="Node"]
-script = ExtResource("1_ffc4j")

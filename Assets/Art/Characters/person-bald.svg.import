@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bj5p1jieart5"
-path="res://.godot/imported/play-button.svg-09f004451228e670b93ff85efe5c375d.ctex"
+uid="uid://j6vgutrsfypo"
+path="res://.godot/imported/person-bald.svg-e4394daa9c64f1b6930f3847a1814c2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/UI/play-button.svg"
-dest_files=["res://.godot/imported/play-button.svg-09f004451228e670b93ff85efe5c375d.ctex"]
+source_file="res://Assets/Art/Characters/person-bald.svg"
+dest_files=["res://.godot/imported/person-bald.svg-e4394daa9c64f1b6930f3847a1814c2e.ctex"]
 
 [params]
 

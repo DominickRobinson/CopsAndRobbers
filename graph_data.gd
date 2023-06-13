@@ -1,4 +1,3 @@
-@tool
 class_name GraphData
 extends Node
 
@@ -6,7 +5,7 @@ signal changed(old_graph:Array, new_graph:Array)
 
 @export var initial_size : int = 0
 
-var graph : Array = []
+var graph : Array
 
 var strict_corner_ranking : Array
 var corner_ranking : Array

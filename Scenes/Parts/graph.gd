@@ -1,22 +1,13 @@
-@tool
 class_name Graph
 extends Node2D
+
 
 signal changed
 signal refreshed
 
-signal created
-
-signal vertex_selected(vtx:Vertex)
-
-
 #graph data
 @export_group("data structures")
 @export var graph_data : GraphData
-@export_file("*.json") var graph_filepath
-#	set(value):
-#		graph_filepath = value
-#		load_graph(graph_filepath)
 @export var positions : Array
 
 
@@ -45,48 +36,16 @@ var edges : Array :
 
 func _ready():
 	graph_data.changed.connect(_on_graph_data_changed)
-	
-	if graph_filepath != null:
-		load_graph(graph_filepath)
-	
-	await refreshed
-	created.emit()
-	
-
 
 func _on_graph_data_changed(old,new):
 	changed.emit()
 	refresh()
 
-func get_vertices():
-	return vertex_container.vertices
-
-func get_edges():
-	return edge_container.edges
 
 
 func _process(delta):
 	if is_instance_valid(graph_data_display_label):
 		graph_data_display_label.text = graph_data.display()
-
-
-
-func get_neighbors_from_vertex(vtx:Vertex) -> Array:
-	var nbors = []
-	var i = vtx.index
-	for j in graph_data.size():
-		if graph_data.graph[i][j]:
-			var nbor = vertex_container.get_vertex_from_index(j)
-			nbors.append(nbor)
-	return nbors
-
-
-func get_neighbors_from_index(index:int) -> Array:
-	var nbors = []
-	for j in graph_data.size():
-		if graph_data.graph[index][j]: nbors.append(j)
-	return nbors
-
 
 
 
@@ -138,22 +97,11 @@ func retract_strict_corners():
 func retract_corners():
 	graph_data.retract_corners()
 
+
+
 func clear_graph():
 	edge_container.remove_all()
 	vertex_container.remove_all()
-
-
-func get_Fk_mapping(k:int) -> Dictionary:
-	var mapping : Dictionary = {}
-	var graph_data_mapping = graph_data.get_F_k_mapping(k, graph_data)
-	
-	for i in graph_data_mapping.keys():
-		mapping[vertex_container.get_vertex_from_index(i)] = []
-		for j in graph_data_mapping[i]:
-			var new_vtx = mapping[vertex_container.get_vertex_from_index(j)]
-			mapping[vertex_container.get_vertex_from_index(i)].append(new_vtx)
-	
-	return mapping
 
 
 func refresh():
@@ -178,13 +126,8 @@ func refresh_vertices():
 		new_vtx.index = i
 		new_vtx.position = positions[i]
 		new_vtx.moved.connect(update_positions.bind(new_vtx))
-		new_vtx.selected.connect(emit_signal.bind("vertex_selected", new_vtx))
 		
 		vertex_container.add_vertex(new_vtx)
-	
-	for v in vertices:
-		v = v as Vertex
-		v.neighbors = get_neighbors_from_vertex(v)
 
 func refresh_edges():
 	edge_container.remove_all()
@@ -193,8 +136,8 @@ func refresh_edges():
 		for j in graph_data.size():
 			if graph_data.graph[i][j]:
 				var new_edge = edge_resource.instantiate() as Edge
-				new_edge.start_vertex = vertex_container.get_vertex_from_index(i)
-				new_edge.end_vertex = vertex_container.get_vertex_from_index(j)
+				new_edge.start_vertex = vertex_container.get_vertex_with_index(i)
+				new_edge.end_vertex = vertex_container.get_vertex_with_index(j)
 				
 				new_edge.directed = not graph_data.graph[j][i]
 				
@@ -250,7 +193,6 @@ func load_graph(path : String):
 			for p in positions_array:
 				positions.append(str_to_var(p))
 			
-#			print(graph_data)
 			graph_data.graph = adjacency_matrix
 		"csv":
 			graph_data.load_graph(path)

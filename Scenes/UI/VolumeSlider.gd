@@ -10,12 +10,9 @@ extends HSlider
 
 func _ready() -> void:
 	value = db_to_linear(AudioServer.get_bus_volume_db(_bus))
-	value_changed.connect(_on_value_changed)
 
 
 func _on_value_changed(value: float) -> void:
-	if value == 1.00:
-		value *= 100
 	if audio_bus_name == "Sound":
 		SoundManager.change_volume_sound(value)
 	elif audio_bus_name == "Music":

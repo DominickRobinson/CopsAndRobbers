@@ -1,17 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://gt60ti8hkr6i"]
+[gd_scene load_steps=2 format=3 uid="uid://gt60ti8hkr6i"]
 
 [ext_resource type="Script" path="res://Autoloads/Sound/AudioPool.gd" id="1_7y3od"]
-[ext_resource type="AudioStream" uid="uid://cll6vg385jx7b" path="res://Assets/Music/Start Up.mp3" id="2_im7go"]
-[ext_resource type="AudioStream" uid="uid://c3hn1ckaqpiqo" path="res://Assets/Music/Cops and Robbers_Regular_Intro.mp3" id="2_iyavv"]
-[ext_resource type="AudioStream" uid="uid://c5gvutihyue2i" path="res://Assets/Music/Cops and Robbers_Deep_Intro.mp3" id="3_tm38a"]
-[ext_resource type="AudioStream" uid="uid://cr1kk04l6bvoe" path="res://Assets/Music/Cops and Robbers_Robotic Intro.mp3" id="4_fjp63"]
-[ext_resource type="AudioStream" uid="uid://hl8htdg3y5n0" path="res://Assets/Music/bong1mp3.mp3" id="5_251pd"]
-[ext_resource type="AudioStream" uid="uid://bpmufjggni2bv" path="res://Assets/Music/thump1.mp3" id="5_pcbhb"]
-[ext_resource type="AudioStream" uid="uid://b6dsgvjfkumhs" path="res://Assets/Music/deepthump.mp3" id="6_a1s4l"]
 
 [node name="AudioPool" type="Node"]
 script = ExtResource("1_7y3od")
-cops_and_robbers = Array[AudioStream]([ExtResource("2_iyavv"), ExtResource("3_tm38a"), ExtResource("4_fjp63")])
-sound_vertex_add = Array[AudioStream]([ExtResource("6_a1s4l"), ExtResource("5_pcbhb")])
-sound_vertex_remove = ExtResource("5_251pd")
-music_title = ExtResource("2_im7go")

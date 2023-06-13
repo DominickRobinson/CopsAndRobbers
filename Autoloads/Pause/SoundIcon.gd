@@ -18,13 +18,13 @@ func _process(_delta):
 	change_icon(slider.value)
 
 func change_icon(new_value):
-	if new_value == 0.00:
+	if new_value == 0:
 		texture = muted
-	elif new_value < .34:
+	elif new_value < 34:
 		texture = low
-	elif new_value < .67:
+	elif new_value < 67:
 		texture = medium
-	elif new_value < 1.00:
+	elif new_value < 100:
 		texture = high
-	elif new_value == 1.00:
+	elif new_value == 100:
 		texture = max

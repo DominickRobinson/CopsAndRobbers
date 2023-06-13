@@ -12,12 +12,11 @@ var editable = false
 var mouse_inside_area = false
 
 
-
-
 func _ready():
 	area.mouse_entered.connect(_on_area_2d_mouse_entered)
 	area.mouse_exited.connect(_on_area_2d_mouse_exited)
-
+	
+	
 
 
 
