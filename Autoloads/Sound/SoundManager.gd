@@ -49,7 +49,7 @@ func play_music(audio_name:String, fade:float=1.0, vol:float=0.0, loop:bool=true
 	return music_player
 
 func stop_music(fade:float=1.0) -> AudioStreamPlayer:
-	var tween = Tween.new()
+	var tween = create_tween()
 	tween.tween_property(music_player, "volume_db", -99, fade).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	tween.play()
 	

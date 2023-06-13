@@ -10,9 +10,4 @@ func _ready():
 
 
 func _on_pressed():
-	if scene_path == null:
-		get_tree().reload_current_scene()
-		PauseManager.unpause()
-	else:
-		PauseManager.unpause()
-		get_tree().change_scene_to_file(scene_path)
+	SceneManager.change_scene(scene_path)

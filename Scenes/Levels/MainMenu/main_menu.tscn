@@ -181,7 +181,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Play Cops and Robbers demo"
 script = ExtResource("3_f3unt")
-scene_path = "res://Scenes/Levels/test_level.tscn"
+scene_path = "res://Scenes/Levels/level.tscn"
 
 [node name="Create" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 visible = false

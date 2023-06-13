@@ -21,6 +21,7 @@ Controls="*res://Autoloads/Controls.gd"
 SoundManager="*res://Autoloads/Sound/SoundManager.tscn"
 Mouse="*res://Autoloads/Mouse.tscn"
 PauseManager="*res://Autoloads/Pause/PauseManager.tscn"
+SceneManager="*res://Autoloads/SceneManager.tscn"
 
 [display]
 
