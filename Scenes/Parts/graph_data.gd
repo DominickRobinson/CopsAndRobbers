@@ -427,28 +427,41 @@ func f_k(vtxs:Array, G_k:GraphData=self) -> Array:
 
 func F_k(k:int, vtxs:Array, G:GraphData = self) -> Array:
 	#base case: k = 1
+	print("k = ", k)
 	if k == 1:
+		print(9.1)
 		return array_to_set(vtxs)
 	else:
+		print(9.2)
 		var G_retracted = G.dup()
+		print("9.2.1")
 		G_retracted.retract_strict_corners()
+		print("9.2.2")
 		var output = G_retracted.F_k(k-1, f_k(vtxs, G))
+		print("9.2.3")
 		return array_to_set(output)
 
 func get_F_k_mapping(k:int, G:GraphData=self) -> Dictionary:
 	var result = {}
 	for i in G.size():
+		print(7)
 		result[i] = G.F_k(k, [i])
+	print(8)
 	return result
 
 func get_F_k_mappings(G:GraphData=self) -> Array:
+	print(3)
 	if G.size() == 0:
 		return []
 	var result = []
+	print(4)
 	var max_ranking = get_max_ranking()
+	print(5)
 	for k in range(1, max_ranking+1):
+		print(6)
 		var mapping = G.get_F_k_mapping(k)
 		result.append(mapping)
+	print(10)
 	return result
 
 func print_F_k_mappings(G:GraphData=self):

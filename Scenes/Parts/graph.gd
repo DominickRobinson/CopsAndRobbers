@@ -143,18 +143,45 @@ func clear_graph():
 	vertex_container.remove_all()
 
 
-func get_Fk_mapping(k:int) -> Dictionary:
-	var mapping : Dictionary = {}
-	var graph_data_mapping = graph_data.get_F_k_mapping(k, graph_data)
-	
-	for i in graph_data_mapping.keys():
-		mapping[vertex_container.get_vertex_from_index(i)] = []
-		for j in graph_data_mapping[i]:
-			var new_vtx = mapping[vertex_container.get_vertex_from_index(j)]
-			mapping[vertex_container.get_vertex_from_index(i)].append(new_vtx)
-	
-	return mapping
+#func get_Fk_mapping(k:int) -> Dictionary:
+#	var mapping : Dictionary = {}
+#	var graph_data_mapping = graph_data.get_F_k_mapping(k, graph_data)
+#
+#	for i in graph_data_mapping.keys():
+#		mapping[vertex_container.get_vertex_from_index(i)] = []
+#		for j in graph_data_mapping[i]:
+#			var new_vtx = mapping[vertex_container.get_vertex_from_index(j)]
+#			mapping[vertex_container.get_vertex_from_index(i)].append(new_vtx)
+#
+#	print("k = ", k, ": ", mapping)
+#	return mapping
 
+#func get_Fk_mappings() -> Array:
+#	print(2)
+#	var mappings : Array = []
+#	var graph_data_mappings : Array = graph_data.get_F_k_mappings(graph_data)
+#
+#	for k in range(1, graph_data_mappings.size()+1):
+#		mappings.append(get_Fk_mapping(k))
+#
+#	return mappings
+
+
+func get_Fk_mappings() -> Array:
+	var mappings : Array
+	var graph_data_mappings : Array = graph_data.get_F_k_mappings(graph_data)
+	for m in graph_data_mappings:
+		print(m)
+		var mapping : Dictionary = {}
+		for a in m.keys():
+			var vtx_a = vertex_container.get_vertex_from_index(a)
+			mapping[vtx_a] = []
+			for b in m[a]:
+				var vtx_b = vertex_container.get_vertex_from_index(b)
+				mapping[vtx_a].append(vtx_b)
+		mappings.append(mapping)
+		print(mapping)
+	return mappings
 
 func refresh():
 	refresh_vertices()
@@ -287,3 +314,12 @@ func set_positions(array:Array):
 	assert(array.size() == vertex_container.vertices.size())
 	for i in vertex_container.vertices.size():
 		vertex_container.vertices[i].position = array[i]
+
+
+func is_copwin():
+	for v in vertices:
+		v = v as Vertex
+		if v.strict_corner_ranking < 1:
+			return false
+	
+	return true

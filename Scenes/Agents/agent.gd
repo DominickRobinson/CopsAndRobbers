@@ -65,7 +65,7 @@ func _ready():
 		"zombie-f":
 			sprite.texture = zombie_f_skin
 	
-	print(self.name, ": ", get_groups())
+#	print(self.name, ": ", get_groups())
 	
 	anim.animation_started.connect(_on_animation_started)
 	anim.play("idle")
@@ -100,7 +100,7 @@ func check_for_robbers():
 	if not is_instance_valid(current_vertex): return
 	
 	for o in current_vertex.get_occupents():
-		print(o.name, ": ", o.is_robber())
+#		print(o.name, ": ", o.is_robber())
 		if o.is_robber():
 			if not o.captured:
 				capture(o)
@@ -127,7 +127,7 @@ func move_to(new_vertex:Vertex):
 	arrived.emit()
 	moving = false
 	
-	print("Just moved... ", self.name, ": ", get_groups())
+#	print("Just moved... ", self.name, ": ", get_groups())
 
 
 func _on_animation_started(anim_name):

@@ -52,12 +52,12 @@ func increment_turn():
 func _process(delta):
 	
 	if is_instance_valid(label):
-#		label.text = "State: "
-#		if is_instance_valid(curr_state): 
-#			label.text += str(curr_state.name)
-#		else:
-#			label.text += "none"
-		label.text = "Turn: " + str(turn)
+		label.text = "State: "
+		if is_instance_valid(curr_state): 
+			label.text += str(curr_state.name)
+		else:
+			label.text += "none"
+		label.text = "\nTurn: " + str(turn)
 
 
 func end():

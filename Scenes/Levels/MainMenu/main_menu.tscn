@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b7jqxo4jy5gav"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://Assets/Art/logo.png" id="1_pq47r"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
+[ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
 [ext_resource type="FontFile" uid="uid://bsti1sjiaolqo" path="res://Assets/Fonts/Policía Secreta.ttf" id="2_k5cdb"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_f3unt"]
 [ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]

@@ -112,5 +112,7 @@ func get_move_script(strategy:String) -> Script:
 			return player_script
 		"drunk":
 			return drunk_script
+		"lower way":
+			return cop_lower_way_script
 	
 	return drunk_script
