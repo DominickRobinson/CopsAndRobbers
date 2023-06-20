@@ -10,13 +10,13 @@ signal caught
 
 @export_enum("Cop", "Robber") var mode : String = "Cop"
 
-@export var travel_time: float = 1.0
+@export var travel_time: float = 0.5
 @export var current_vertex : Vertex = null
 
 
 
 @export_enum("person", "cop", "cop-m", "cop-f", "robber", 
-				"zombie", "zombie-m", "zombie-f") var character : String = "person"
+				"zombie", "zombie-m", "zombie-f") var skin : String = "person"
 
 @export_group("Skins")
 @export var person_skin : Texture2D
@@ -47,7 +47,7 @@ func _ready():
 		"Robber":
 			add_to_group("Robbers")
 	
-	match character:
+	match skin:
 		"person":
 			sprite.texture = person_skin
 		"cop":
@@ -153,3 +153,12 @@ func is_cop():
 
 func is_robber():
 	return (mode == "Robber")
+
+func get_neighbors():
+	if is_instance_valid(current_vertex):
+		return current_vertex.get_neighbors()
+	else:
+		return []
+
+func get_vertex():
+	return current_vertex

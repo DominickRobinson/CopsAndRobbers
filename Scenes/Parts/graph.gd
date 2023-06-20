@@ -43,6 +43,8 @@ var edges : Array :
 	get:
 		return edge_container.edges
 
+var mappings
+
 func _ready():
 	graph_data.changed.connect(_on_graph_data_changed)
 	
@@ -61,9 +63,11 @@ func _on_graph_data_changed(old,new):
 func get_vertices():
 	return vertex_container.vertices
 
+func get_vertex_from_index(index:int):
+	return get_vertices()[index]
+
 func get_edges():
 	return edge_container.edges
-
 
 func _process(delta):
 	if is_instance_valid(graph_data_display_label):
@@ -153,11 +157,9 @@ func clear_graph():
 #			var new_vtx = mapping[vertex_container.get_vertex_from_index(j)]
 #			mapping[vertex_container.get_vertex_from_index(i)].append(new_vtx)
 #
-#	print("k = ", k, ": ", mapping)
 #	return mapping
 
 #func get_Fk_mappings() -> Array:
-#	print(2)
 #	var mappings : Array = []
 #	var graph_data_mappings : Array = graph_data.get_F_k_mappings(graph_data)
 #
@@ -171,7 +173,6 @@ func get_Fk_mappings() -> Array:
 	var mappings : Array
 	var graph_data_mappings : Array = graph_data.get_F_k_mappings(graph_data)
 	for m in graph_data_mappings:
-		print(m)
 		var mapping : Dictionary = {}
 		for a in m.keys():
 			var vtx_a = vertex_container.get_vertex_from_index(a)
@@ -180,7 +181,6 @@ func get_Fk_mappings() -> Array:
 				var vtx_b = vertex_container.get_vertex_from_index(b)
 				mapping[vtx_a].append(vtx_b)
 		mappings.append(mapping)
-		print(mapping)
 	return mappings
 
 func refresh():
@@ -193,6 +193,8 @@ func refresh():
 	for v in vertex_container.vertices:
 		v = v as Vertex
 		v.strict_corner_ranking = scr[v.index]
+	
+	mappings = get_Fk_mappings()
 	
 	refreshed.emit()
 
@@ -259,7 +261,6 @@ func save_graph(path : String):
 
 
 func load_graph(path : String):
-#	print("loading ", path.get_extension())
 	var load_file = FileAccess.open(path, FileAccess.READ)
 	
 	var adjacency_matrix = []
@@ -268,16 +269,12 @@ func load_graph(path : String):
 	match path.get_extension():
 		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
-#			print("json_as_text: ", json_as_text)
 			var json_as_dict = JSON.parse_string(json_as_text)
-#			print("json_as_dict: ", json_as_dict)
 			adjacency_matrix = json_as_dict["adjacency_matrix"]
-#			print(str_to_var(json_as_dict["positions"]))
 			var positions_array = str_to_var(json_as_dict["positions"])
 			for p in positions_array:
 				positions.append(str_to_var(p))
 			
-#			print(graph_data)
 			graph_data.graph = adjacency_matrix
 		"csv":
 			graph_data.load_graph(path)
@@ -323,3 +320,7 @@ func is_copwin():
 			return false
 	
 	return true
+
+
+func get_mappings():
+	return mappings

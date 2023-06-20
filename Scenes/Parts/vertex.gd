@@ -73,9 +73,9 @@ func follow_mouse():
 
 
 func set_text():
-#	label.text = "Index: " + str(index) + "\n"
-#	label.text += "SCR: " + str(strict_corner_ranking) 
-	label.text = str(strict_corner_ranking)
+	label.text = "Index: " + str(index) + "\n"
+	label.text += "SCR: " + str(strict_corner_ranking) 
+#	label.text = str(strict_corner_ranking)
 #	label.text = str(self)
 #	label.text = str(index)
 

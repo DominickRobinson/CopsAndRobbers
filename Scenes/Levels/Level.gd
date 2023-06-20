@@ -6,13 +6,15 @@ signal level_ready
 @export_file("*") var graph_path
 @export var number_of_cops : int = 1
 @export var number_of_robbers : int = 1
+@export var cop_speed : int = 1
+@export var robber_speed : int = 1
 @export_enum("player", "drunk", "lower way", "zombie") var cop_strategy : String = "player"
 @export_enum("player", "drunk", "higher way") var robber_strategy : String = "player"
 
 @export_enum("person", "cop", "cop-m", "cop-f", "robber", 
-				"zombie", "zombie-m", "zombie-f") var cop_character : String = "person"
+				"zombie", "zombie-m", "zombie-f") var cop_skin : String = "person"
 @export_enum("person", "cop", "cop-m", "cop-f", "robber", 
-				"zombie", "zombie-m", "zombie-f") var robber_character : String = "person"
+				"zombie", "zombie-m", "zombie-f") var robber_skin : String = "person"
 
 @export_category("Custom games")
 @export_group("Resources")
@@ -21,7 +23,7 @@ signal level_ready
 @export var drunk_script : Script
 @export var cop_lower_way_script : Script
 @export var robber_higher_way_script : Script
-@export var cop_zombie_script : Script
+@export var zombie_lower_way_script : Script
 
 
 @export_group("Assets")
@@ -60,13 +62,13 @@ func _ready():
 		var new_cop = agent_resource.instantiate() as Agent
 		new_cop.name = "Cop" + str(i)
 		new_cop.mode = "Cop"
-		new_cop.character = cop_character
+		new_cop.skin = cop_skin
 		cops.add_child(new_cop)
 	for i in number_of_robbers:
 		var new_robber = agent_resource.instantiate() as Agent
 		new_robber.name = "Robber" + str(i)
 		new_robber.mode = "Robber"
-		new_robber.character = robber_character
+		new_robber.skin = robber_skin
 		robbers.add_child(new_robber)
 	
 	#tracks states
@@ -75,24 +77,28 @@ func _ready():
 
 	#creates all cop movement scripts
 	for i in number_of_cops:
-		var new_state = create_state(cop_script)
-		new_state.name = "CopMove" + str(i)
-		if is_instance_valid(prev_state):
-			prev_state.next_state = new_state
-		else:
-			first_state = new_state
-		new_state.agent = cops.get_children()[i]
-		state_machine.add_child(new_state)
-		prev_state = new_state
+		#duplicates if speed is greater
+		for j in cop_speed:
+			var new_state = create_state(cop_script)
+			new_state.name = "CopMove" + str(i)
+			if is_instance_valid(prev_state):
+				prev_state.next_state = new_state
+			else:
+				first_state = new_state
+			new_state.agent = cops.get_children()[i]
+			state_machine.add_child(new_state)
+			prev_state = new_state
 	
 	#creates all robber movement scripts
 	for i in number_of_robbers:
-		var new_state = create_state(robber_script)
-		new_state.name = "RobberMove" + str(i)
-		prev_state.next_state = new_state
-		new_state.agent = robbers.get_children()[i]
-		state_machine.add_child(new_state)
-		prev_state = new_state
+		#duplicates if speed is greater
+		for j in robber_speed:
+			var new_state = create_state(robber_script)
+			new_state.name = "RobberMove" + str(i)
+			prev_state.next_state = new_state
+			new_state.agent = robbers.get_children()[i]
+			state_machine.add_child(new_state)
+			prev_state = new_state
 
 	#loops the state machine
 	prev_state.next_state = first_state
@@ -114,5 +120,7 @@ func get_move_script(strategy:String) -> Script:
 			return drunk_script
 		"lower way":
 			return cop_lower_way_script
+		"higher way":
+			return robber_higher_way_script
 	
 	return drunk_script

@@ -32,8 +32,23 @@ func go_to_next_state(new_state:State = next_state):
 
 func _on_state_entered():
 #	print(name, " entered")
-	pass
+	await get_tree().create_timer(.5)
 
 func _on_state_exited():
 #	print(name, " exited")
 	pass
+
+
+func print_mapping(mapping:Dictionary):
+	var output = "Mapping:\n"
+	for vtx in mapping:
+		output += str(vtx.index) + ":"
+		for vm in mapping[vtx]:
+			output += str(vm.index) + ","
+		
+		output = output.left(-1)
+		output += "  "
+	
+	output += "\n"
+	
+	print(output)

@@ -33,14 +33,14 @@ func _ready():
 	reflexive = start_vertex == end_vertex
 	
 	if reflexive:
-#		loop_sprite.texture = reflexive_edge_texture
-		loop_line.hide()
+		loop_sprite.texture = reflexive_edge_texture
+#		loop_line.hide()
 		line.hide()
 #		path.hide()
-#		loop_sprite.show()
+		loop_sprite.show()
 	else:
-#		loop_sprite.hide()
-		loop_line.hide()
+		loop_sprite.hide()
+#		loop_line.hide()
 		line.show()
 #		path.show()
 		if directed:

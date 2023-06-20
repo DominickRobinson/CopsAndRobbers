@@ -52,7 +52,6 @@ func display():
 	
 	output += "SCR: " + str(get_strict_corner_ranking())
 	
-#	print(output)
 	return output
 
 func size():
@@ -134,21 +133,16 @@ func make_undirected():
 
 func strictly_corners(v1 : int, v2 : int):
 	#checks if a neighbors of v1 does not neighbor v2 
-#	print("Does ", v1, " strictly corner ", v2, "?")
 	for i in graph.size():
 		if not graph[v1][i] and graph[v2][i]: 
-#			print("No")
 			return false
 	#checks if v1 and v2 have exact same neighbors
 	if graph[v1] == graph[v2]: 
-#		print("No")
 		return false
 	#vertex v1 must go to vertex v2
 	if not graph[v1][v2]:
 		return false
 	#v1 must strictly corner v2
-#	print("yes")
-#	print(v1, " strictly corners ", v2)
 	return true
 
 func are_twins(v1 : int, v2 : int):
@@ -251,7 +245,6 @@ func is_connected_graph():
 		product = product.multiply(sum)
 	#check each entry
 	for i in product.size(): for j in product.size():
-#		print(product.graph[i][j])
 		if not product.graph[i][j]: return false
 	#must be connected
 	return true
@@ -342,23 +335,13 @@ func get_strict_corner_ranking() -> Array:
 		old_g = new_g.dup()
 		new_g.retract_strict_corners()
 		
-#		print("Current SCR: ", current_ranking)
-#		print("Current ranking array: ", ranking_array)
-#		print("Old: ", old_g.display())
-#		print("New: ", new_g.display())
-		
-		
 		#checks if left with clique
 		if old_g.is_clique():
-#			print("clique!")
-#			print(ranking_array)
 			ranking_array = set_zeroes_in_array_to_val(ranking_array, current_ranking)
-#			print(ranking_array)
 			break
 		
 		#checks if no more strict corners
 		if graphs_equal(old_g.graph, new_g.graph): 
-#			print("not clique, but no strict corners")
 			ranking_array = set_zeroes_in_array_to_val(ranking_array, -1)
 			break
 		
@@ -371,7 +354,6 @@ func get_strict_corner_ranking() -> Array:
 		
 		current_ranking += 1
 	
-#	print(ranking_array)
 	return ranking_array
 
 func get_strict_corner_retractions() -> Array:
@@ -383,9 +365,6 @@ func get_strict_corner_retractions() -> Array:
 	
 	#get max corner ranking
 	var max_ranking = get_max_ranking()
-	
-	print(2)
-	print(max_ranking)
 	
 	var g = dup()
 	
@@ -427,47 +406,33 @@ func f_k(vtxs:Array, G_k:GraphData=self) -> Array:
 
 func F_k(k:int, vtxs:Array, G:GraphData = self) -> Array:
 	#base case: k = 1
-	print("k = ", k)
 	if k == 1:
-		print(9.1)
 		return array_to_set(vtxs)
 	else:
-		print(9.2)
 		var G_retracted = G.dup()
-		print("9.2.1")
 		G_retracted.retract_strict_corners()
-		print("9.2.2")
 		var output = G_retracted.F_k(k-1, f_k(vtxs, G))
-		print("9.2.3")
 		return array_to_set(output)
 
 func get_F_k_mapping(k:int, G:GraphData=self) -> Dictionary:
 	var result = {}
 	for i in G.size():
-		print(7)
 		result[i] = G.F_k(k, [i])
-	print(8)
 	return result
 
 func get_F_k_mappings(G:GraphData=self) -> Array:
-	print(3)
 	if G.size() == 0:
 		return []
 	var result = []
-	print(4)
 	var max_ranking = get_max_ranking()
-	print(5)
 	for k in range(1, max_ranking+1):
-		print(6)
 		var mapping = G.get_F_k_mapping(k)
 		result.append(mapping)
-	print(10)
 	return result
 
 func print_F_k_mappings(G:GraphData=self):
 	
 	if G.size() == 0:
-		print("The empty graph does not have a retraction mapping...")
 		return
 	
 	var mappings = get_F_k_mappings(G)
