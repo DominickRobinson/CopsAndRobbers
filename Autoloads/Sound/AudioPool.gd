@@ -45,4 +45,7 @@ func _ready():
 
 
 func get_audio(key:String = ""):
-	return audio_dict[key]
+	if key in audio_dict.keys():
+		return audio_dict[key]
+	else:
+		return null

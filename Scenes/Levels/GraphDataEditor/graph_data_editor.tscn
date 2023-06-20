@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj1whubeev7ya"]
+[gd_scene load_steps=5 format=3 uid="uid://dcn6ms0i1e81s"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphDataEditor/graph_data_editor.gd" id="1_wglko"]
-[ext_resource type="PackedScene" uid="uid://w8a8hsf43n8g" path="res://graph_data.tscn" id="2_uf1l8"]
+[ext_resource type="PackedScene" uid="uid://bd6nyi2cnfc0w" path="res://Scenes/Parts/graph_data.tscn" id="2_uf1l8"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_usybr"]
+[ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ga8o0"]
 
 [node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "vertex_index", "edge_start_index", "edge_end_index", "save_file_dialog", "load_file_dialog")]
 layout_mode = 3
@@ -284,6 +285,9 @@ ok_button_text = "Open"
 file_mode = 3
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv")
+
+[node name="MusicPlayer" parent="." instance=ExtResource("4_ga8o0")]
+music_track_name = "music_editor"
 
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/Undo" to="." method="undo"]
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SaveLoad/SaveGraph" to="." method="save_graph_button"]

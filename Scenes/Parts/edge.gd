@@ -16,6 +16,7 @@ var reflexive : bool = false
 @export_group("Nodes")
 @export var line : Line2D
 @export var loop_sprite : Sprite2D
+@export var loop_line : Line2D
 #@export var path :Path2D
 var area_shape 
 
@@ -32,12 +33,14 @@ func _ready():
 	reflexive = start_vertex == end_vertex
 	
 	if reflexive:
-		loop_sprite.texture = reflexive_edge_texture
+#		loop_sprite.texture = reflexive_edge_texture
+		loop_line.hide()
 		line.hide()
 #		path.hide()
-		loop_sprite.show()
+#		loop_sprite.show()
 	else:
-		loop_sprite.hide()
+#		loop_sprite.hide()
+		loop_line.hide()
 		line.show()
 #		path.show()
 		if directed:

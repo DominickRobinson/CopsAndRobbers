@@ -10,11 +10,11 @@ resource_local_to_scene = true
 
 [sub_resource type="Curve2D" id="Curve2D_262xl"]
 
-[node name="Edge" type="Node2D" node_paths=PackedStringArray("line", "loop_sprite", "area")]
+[node name="Edge" type="Node2D" node_paths=PackedStringArray("line", "loop_sprite", "loop_line", "area")]
 script = ExtResource("1_ifrx8")
-collision_thickness_px = 20
 line = NodePath("Line2D")
-loop_sprite = NodePath("LoopSprite")
+loop_sprite = NodePath("LoopSprite2")
+loop_line = NodePath("LoopLine2D")
 directed_edge_texture = ExtResource("2_qnxoy")
 undirected_edge_texture = ExtResource("3_5c4nn")
 reflexive_edge_texture = ExtResource("4_coc45")
@@ -34,6 +34,15 @@ debug_color = Color(0.290196, 0.631373, 0, 0.419608)
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_262xl")
 
-[node name="LoopSprite" type="Sprite2D" parent="."]
+[node name="LoopSprite2" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-19, -21)
 scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_coc45")
+
+[node name="LoopLine2D" type="Line2D" parent="."]
+points = PackedVector2Array(-2, -4, -9, 0, -18, 2, -26, 1, -31, -2, -37, -7, -40, -13, -42, -20, -41, -28, -37, -34, -31, -40, -25, -43, -17, -44, -12, -43, -6, -40, -2, -37, 1, -33, 4, -27, 5, -22, 5, -16, 4, -11, 2, -8, -2, -4)
+default_color = Color(0.380392, 0.698039, 0.894118, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

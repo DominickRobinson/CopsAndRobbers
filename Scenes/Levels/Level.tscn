@@ -16,8 +16,9 @@
 
 [node name="Level" type="Node2D" node_paths=PackedStringArray("graph", "agents", "cops", "robbers", "game_manager", "state_machine")]
 script = ExtResource("1_55e2u")
-graph_path = "res://Graphs/k4.json"
-cop_strategy = "lower way"
+graph_path = "res://Graphs/chordal7.json"
+number_of_cops = 2
+number_of_robbers = 3
 cop_character = "cop"
 robber_character = "robber"
 agent_resource = ExtResource("2_7d7am")
@@ -144,6 +145,5 @@ scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
 [node name="Robbers" type="Node2D" parent="Agents"]
 
 [node name="MusicPlayer" parent="." instance=ExtResource("12_mnp18")]
-music_track_name = "music_editor"
 
 [connection signal="cop_win" from="GameManager/CheckForCopWin" to="GameManager" method="cop_win"]

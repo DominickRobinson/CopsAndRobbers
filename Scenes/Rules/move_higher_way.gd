@@ -32,7 +32,7 @@ func _on_state_entered():
 	#chooses random neighbor to move to
 	var move : Vertex
 	
-
+	
 
 func _on_state_exited():
 	super._on_state_exited()

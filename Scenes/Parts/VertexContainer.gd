@@ -11,7 +11,7 @@ var vertices :
 func add_vertex(vtx:Vertex):
 	add_child(vtx)
 
-func add_new_vertex(vtx_resource: Resource, pos:Vector2):
+func add_new_vertex(vtx_resource: Resource, pos:Vector2=Vector2(0,0)):
 	var new_vtx = vtx_resource.instantiate()
 	new_vtx.index = vertices.size()
 	new_vtx.position = pos
