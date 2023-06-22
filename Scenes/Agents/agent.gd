@@ -10,7 +10,9 @@ signal caught
 
 @export_enum("Cop", "Robber") var mode : String = "Cop"
 
-@export var travel_time: float = 0.5
+@export var is_arsonist : bool = false
+
+@export var travel_time: float = 1.0
 @export var current_vertex : Vertex = null
 
 
@@ -108,6 +110,8 @@ func check_for_robbers():
 
 func move_to(new_vertex:Vertex):
 	
+	var old_vtx = current_vertex
+	
 	if moving: return
 	moving = true
 	if is_instance_valid(current_vertex):
@@ -126,6 +130,10 @@ func move_to(new_vertex:Vertex):
 	
 	arrived.emit()
 	moving = false
+	
+	#check whether to burn previously occupied vertex
+	if is_arsonist and is_instance_valid(old_vtx) and old_vtx.get_occupents().size() == 0:
+		old_vtx.burn()
 	
 #	print("Just moved... ", self.name, ": ", get_groups())
 

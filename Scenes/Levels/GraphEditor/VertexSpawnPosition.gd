@@ -18,6 +18,9 @@ func find_open_position():
 	
 	position = initial_position
 	
+	print(1)
+	print(new_position)
+	
 	return new_position
 
 

@@ -87,7 +87,9 @@ func _on_state_entered():
 	#once capture target
 	if target in move.get_occupents():
 		target = null
-	
+
+#	await get_tree().create_timer(0.5).timeout
+
 	agent.move_to(move)
 
 

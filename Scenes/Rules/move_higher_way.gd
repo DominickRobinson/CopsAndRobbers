@@ -83,7 +83,7 @@ func _on_state_entered():
 		while move in cop_vertices:
 			move = neighbors[randi() % neighbors.size()]
 	
-	
+#	await get_tree().create_timer(0.5).timeout
 	
 	agent.move_to(move)
 

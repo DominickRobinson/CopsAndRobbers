@@ -84,3 +84,7 @@ func get_neighbors():
 
 func get_occupents():
 	return occupents
+
+
+func burn():
+	pass

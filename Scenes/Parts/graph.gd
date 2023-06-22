@@ -17,7 +17,7 @@ signal vertex_selected(vtx:Vertex)
 #	set(value):
 #		graph_filepath = value
 #		load_graph(graph_filepath)
-@export var positions : Array
+#var positions : Array
 
 
 #sets of vertices and edges
@@ -97,26 +97,118 @@ func get_neighbors_from_index(index:int) -> Array:
 
 func add_vertex(pos):
 #	var new_vtx = vertex_container.add_new_vertex(vertex_resource, pos)
-	positions.append(pos)
+
+	var new_vtx = vertex_resource.instantiate() as Vertex
+	new_vtx.index = vertices.size()
+	new_vtx.position = pos
+#	new_vtx.position = positions[i]
+#	new_vtx.moved.connect(update_positions.bind(new_vtx))
+	new_vtx.selected.connect(emit_signal.bind("vertex_selected", new_vtx))
+	
+	vertex_container.add_vertex(new_vtx)
+	
+#	positions.append(pos)
 	graph_data.add_vertex()
 #	return new_vtx
 
+func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
+	if vertices.size() == 0:
+		add_vertex(pos)
+		await changed
+		make_reflexive()
+		return
+	
+	var old_vtx
+	var new_vtx
+	
+	if vertices.size() == 1:
+		add_vertex(pos)
+		await changed
+		make_reflexive()
+		await changed
+		old_vtx  = vertices[0] as Vertex
+		new_vtx = vertices[-1]
+	else:
+		add_vertex(pos)
+		await changed
+		make_reflexive()
+		await changed
+		old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
+		new_vtx = vertices[-1]
+	
+	#add edges
+	add_edge(old_vtx, new_vtx, true)
+	add_edge(new_vtx, new_vtx)
+	
+	var rng = RandomNumberGenerator.new()
+	for nbor in old_vtx.get_neighbors():
+		var my_random_number = rng.randf_range(0.0, 1.0)
+		if my_random_number <= probability:
+			add_edge(new_vtx, nbor, true)
+
+func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
+	if vertices.size() == 0:
+		add_vertex(pos)
+		await changed
+		make_reflexive()
+		return
+	
+	var old_vtx
+	var new_vtx
+	
+	if vertices.size() == 1:
+		add_vertex(pos)
+		await changed
+		make_reflexive()
+		await changed
+		old_vtx  = vertices[0] as Vertex
+		new_vtx = vertices[-1]
+	else:
+		add_vertex(pos)
+		await changed
+		make_reflexive()
+		await changed
+		old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
+		new_vtx = vertices[-1]
+	
+	#add edges
+	add_edge(old_vtx, new_vtx, true)
+	add_edge(new_vtx, new_vtx)
+	
+	var rng = RandomNumberGenerator.new()
+	for nbor in old_vtx.get_neighbors():
+		var my_random_number = rng.randf_range(0.0, 1.0)
+		if my_random_number <= probability:
+			add_edge(new_vtx, nbor, true)
+	
+	await changed
+	var vtxs = new_vtx.neighbors as Array
+	vtxs.erase(old_vtx)
+	vtxs.erase(new_vtx)
+	if vtxs.size() > 0:
+		remove_edge_given_vertices(new_vtx, vtxs[randi() % vtxs.size()], true)
+
 func remove_vertex(vtx : Vertex):
-#	vertex_container.remove_vertex(vtx)
-	positions.remove_at(vtx.index)
+#	positions.remove_at(vtx.index)
+	vertex_container.remove_vertex(vtx)
 	graph_data.remove_vertex(vtx.index)
 
 
-
-func add_edge(start_vtx : Vertex, end_vtx : Vertex):
+func add_edge(start_vtx : Vertex, end_vtx : Vertex, reflexive : bool = false):
 	graph_data.add_edge(start_vtx.index, end_vtx.index)
+	if reflexive:
+		graph_data.add_edge(end_vtx.index, start_vtx.index)
 
 
-func remove_edge(edge : Edge):
+func remove_edge(edge : Edge, reflexive : bool = false):
 	graph_data.remove_edge(edge.start_vertex.index, edge.end_vertex.index)
+	if reflexive:
+		graph_data.remove_edge(edge.end_vertex.index, edge.start_vertex.indez)
 
-func remove_edge_given_vertices(v1:Vertex, v2:Vertex):
+func remove_edge_given_vertices(v1:Vertex, v2:Vertex, reflexive:bool=false):
 	graph_data.remove_edge(v1.index, v2.index)
+	if reflexive:
+		graph_data.remove_edge(v2.index, v1.index)
 
 func make_reflexive():
 	graph_data.make_reflexive()
@@ -199,20 +291,9 @@ func refresh():
 	refreshed.emit()
 
 func refresh_vertices():
-	
-	vertex_container.remove_all()
-	
-	for i in graph_data.size():
-		var new_vtx = vertex_resource.instantiate() as Vertex
-		new_vtx.index = i
-		new_vtx.position = positions[i]
-		new_vtx.moved.connect(update_positions.bind(new_vtx))
-		new_vtx.selected.connect(emit_signal.bind("vertex_selected", new_vtx))
-		
-		vertex_container.add_vertex(new_vtx)
-	
-	for v in vertices:
-		v = v as Vertex
+	for i in vertices.size():
+		var v = vertices[i] as Vertex
+		v.index = i
 		v.neighbors = get_neighbors_from_vertex(v)
 
 func refresh_edges():
@@ -231,7 +312,8 @@ func refresh_edges():
 
 
 func update_positions(vtx:Vertex):
-	positions[vtx.index] = vtx.position
+#	positions[vtx.index] = vtx.position
+	pass
 
 
 func set_vertex_mode():
@@ -248,7 +330,8 @@ func save_graph(path : String):
 	var array = graph_data.bool_to_int()
 
 	var positions_string_array = []
-	for p in positions:
+	for v in vertices:
+		var p = v.position
 		positions_string_array.append(var_to_str(p))
 	var positions_string = var_to_str(positions_string_array)
 
@@ -261,10 +344,13 @@ func save_graph(path : String):
 
 
 func load_graph(path : String):
+	for v in vertices:
+		remove_vertex(v)
+	
 	var load_file = FileAccess.open(path, FileAccess.READ)
 	
 	var adjacency_matrix = []
-	positions = []
+	var positions = []
 	
 	match path.get_extension():
 		"json":
@@ -275,16 +361,47 @@ func load_graph(path : String):
 			for p in positions_array:
 				positions.append(str_to_var(p))
 			
+			for i in adjacency_matrix.size():
+				add_vertex(positions[i])
+			
 			graph_data.graph = adjacency_matrix
+		
 		"csv":
-			graph_data.load_graph(path)
+			var array = []
+			var i = 0
+			while !load_file.eof_reached():
+				array.append([])
+				var row = load_file.get_csv_line(",")
+		#		print(row)
+				for j in row.size():
+		#			print(str(int(row[j])))
+					array[i].append(int(row[j]))
+				i += 1
+			array.pop_back()
+			positions = generate_default_positions(array.size())
+			for j in array.size():
+				add_vertex(positions[j])
+			graph_data.graph = array
 			
 		"tsv":
-			graph_data.load_graph(path)
-			
+			var array = []
+			var i = 0
+			while !load_file.eof_reached():
+				array.append([])
+				var row = load_file.get_csv_line("\t")
+		#		print(row)
+				for j in row.size():
+		#			print(str(int(row[j])))
+					array[i].append(int(row[j]))
+				i += 1
+			array.pop_back()
+			positions = generate_default_positions(array.size())
+			for j in array.size():
+				add_vertex(positions[j])
+			graph_data.graph = array
 	
-	if positions == []:
-		positions = generate_default_positions(graph_data.size())
+#	if positions == []:
+#		positions = generate_default_positions(graph_data.size())
 	
 
 
