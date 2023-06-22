@@ -12,8 +12,7 @@ extends Node2D
 @export var vertex_mode_button : Button
 @export var edge_mode_button : Button
 @export var new_edge_line : Line2D
-@export var add_corner_spinbox : SpinBox
-@export var add_strict_corner_spinbox : SpinBox
+@export var corner_spinbox : SpinBox
 
 @export_group("Save and load nodes")
 @export var save_file_dialog : FileDialog
@@ -96,7 +95,7 @@ func add_vertex():
 
 func add_corner():
 	var pos = await vertex_spawn_position.find_open_position()
-	graph.add_corner(pos, add_corner_spinbox.value)
+	graph.add_corner(pos, corner_spinbox.value)
 	
 	SoundManager.play_sound("sound_vertex_add")
 	
@@ -104,7 +103,7 @@ func add_corner():
 
 func add_strict_corner():
 	var pos = await vertex_spawn_position.find_open_position()
-	graph.add_strict_corner(pos, add_strict_corner_spinbox.value)
+	graph.add_strict_corner(pos, corner_spinbox.value)
 	
 	SoundManager.play_sound("sound_vertex_add")
 	
