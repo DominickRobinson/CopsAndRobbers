@@ -62,13 +62,20 @@ func _unhandled_input(event):
 			if Input.is_action_just_released("delete") and hovering_vertex != null:
 				remove_vertex()
 		Modes.EdgeMode:
+			
+			if Input.is_action_just_pressed("select") and hovering_vertex != null and selected_vertex == null:
+				SoundManager.play_sound("sound_edge_add_start")
+			
 			if Input.is_action_just_released("select") and hovering_vertex != null and selected_vertex != null:
 				add_edge()
+				SoundManager.play_sound("sound_edge_add")
 			
 			if Input.is_action_just_released("delete") and hovering_vertex != null:
 				remove_edge_given_vertex(hovering_vertex)
+				SoundManager.play_sound("sound_edge_remove")
 			elif Input.is_action_just_released("delete") and hovering_edge != null:
 				remove_edge()
+				SoundManager.play_sound("sound_edge_remove")
 	
 	if Input.is_action_just_released("select"):
 		selected_vertex = null
@@ -307,3 +314,5 @@ func remove_edges():
 	clear_selections()
 
 
+func organize_by_ranking():
+	graph.set_positions_by_ranking()

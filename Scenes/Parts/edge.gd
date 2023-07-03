@@ -53,16 +53,14 @@ func _ready():
 	#anchor edge at origin for consistency
 	position = Vector2(0,0)
 	
-
-
-
-
+#	if is_instance_valid(start_vertex):
+#		start_vertex.moved.connect(draw)
+#	if is_instance_valid(end_vertex):
+#		end_vertex.moved.connect(draw)
 
 func _process(delta):
-	
 	if can_draw():
 		draw()
-		
 	else:
 		erase()
 	

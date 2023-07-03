@@ -177,11 +177,19 @@ text = "Add"
 layout_mode = 2
 text = "Remove"
 
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="AddStrictCorner" type="Button" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
+layout_mode = 2
+text = "Add Strict Corner"
+
 [node name="RetractVertex" type="Button" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
 layout_mode = 2
 text = "Retract"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Control/VBoxContainer/VertexActions"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
@@ -264,7 +272,6 @@ horizontal_alignment = 1
 
 [node name="GraphTextDisplay" type="Label" parent="MarginContainer/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-horizontal_alignment = 1
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
 position = Vector2i(300, 100)
@@ -302,6 +309,7 @@ music_track_name = "music_editor"
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphActions/HBoxContainer2/RetractCorners" to="." method="retract_corners"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/AddVertex" to="." method="add_vertex"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/RemoveVertex" to="." method="remove_vertex"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/AddStrictCorner" to="." method="add_strict_corner"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/VertexActions/RetractVertex" to="." method="retract_vertex"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/AddEdge" to="." method="add_edge"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/RemoveEdge" to="." method="remove_edge"]

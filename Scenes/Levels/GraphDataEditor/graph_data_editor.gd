@@ -52,6 +52,12 @@ func remove_vertex(vtx = vertex_index.value):
 	
 	vertex_index.max_value = graph_data.size() - 1
 
+func add_strict_corner():
+	graph_data.add_strict_corner()
+	display_graph()
+	edit_graph()
+	
+	vertex_index.max_value = graph_data.size() - 1
 
 func retract_vertex(vtx = vertex_index.value):
 	graph_data.retract_vertex(vtx)

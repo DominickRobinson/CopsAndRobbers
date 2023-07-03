@@ -174,7 +174,7 @@ _data = {
 
 [node name="Agent" type="Node2D" node_paths=PackedStringArray("sprite", "anim", "label") groups=["Agents"]]
 script = ExtResource("1_kpjln")
-is_arsonist = null
+arsonist = null
 travel_time = 0.5
 person_skin = ExtResource("2_geaao")
 cop_skin = ExtResource("3_shyxh")

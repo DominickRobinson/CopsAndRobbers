@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Autoloads/Sound/SoundManager.gd" id="1_v15bf"]
 [ext_resource type="PackedScene" uid="uid://ct2obcn4nkfbf" path="res://Autoloads/Sound/AudioQueue.tscn" id="2_vn83v"]
-[ext_resource type="PackedScene" uid="uid://gt60ti8hkr6i" path="res://Autoloads/Sound/AudioPool.tscn" id="3_lyaei"]
+[ext_resource type="PackedScene" uid="uid://c2d00elijl2jm" path="res://Autoloads/Sound/AudioPool.tscn" id="3_lyaei"]
 
 [node name="SoundManager" type="Node" node_paths=PackedStringArray("sound_queue", "ui_sound_queue", "music_player", "audio_pool")]
 script = ExtResource("1_v15bf")
@@ -19,3 +19,4 @@ audio_pool = NodePath("AudioPool")
 bus = &"Music"
 
 [node name="AudioPool" parent="." instance=ExtResource("3_lyaei")]
+sound_vertex_add = Array[AudioStream]([])

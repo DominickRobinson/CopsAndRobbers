@@ -8,6 +8,7 @@ extends Node
 @export_subgroup("Editor")
 @export var sound_vertex_add : Array[AudioStream]
 @export var sound_vertex_remove : AudioStream
+@export var sound_edge_add_start : AudioStream
 @export var sound_edge_add : AudioStream
 @export var sound_edge_remove : AudioStream
 @export_subgroup("Gameplay")
@@ -42,6 +43,7 @@ func _ready():
 	for v in export_variables:
 		audio_dict[v] = get(v)
 	
+	print(audio_dict)
 
 
 func get_audio(key:String = ""):

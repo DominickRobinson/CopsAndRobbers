@@ -118,58 +118,18 @@ func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 		make_reflexive()
 		return
 	
-	var old_vtx
-	var new_vtx
-	
 	if vertices.size() == 1:
 		add_vertex(pos)
 		await changed
-		make_reflexive()
-		await changed
-		old_vtx  = vertices[0] as Vertex
-		new_vtx = vertices[-1]
-	else:
-		add_vertex(pos)
-		await changed
-		make_reflexive()
-		await changed
-		old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
-		new_vtx = vertices[-1]
-	
-	#add edges
-	add_edge(old_vtx, new_vtx, true)
-	add_edge(new_vtx, new_vtx)
-	
-	var rng = RandomNumberGenerator.new()
-	for nbor in old_vtx.get_neighbors():
-		var my_random_number = rng.randf_range(0.0, 1.0)
-		if my_random_number <= probability:
-			add_edge(new_vtx, nbor, true)
-
-func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
-	if vertices.size() == 0:
-		add_vertex(pos)
-		await changed
-		make_reflexive()
+		fill()
 		return
 	
-	var old_vtx
-	var new_vtx
-	
-	if vertices.size() == 1:
-		add_vertex(pos)
-		await changed
-		make_reflexive()
-		await changed
-		old_vtx  = vertices[0] as Vertex
-		new_vtx = vertices[-1]
-	else:
-		add_vertex(pos)
-		await changed
-		make_reflexive()
-		await changed
-		old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
-		new_vtx = vertices[-1]
+	add_vertex(pos)
+	await changed
+	make_reflexive()
+	await changed
+	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
+	var new_vtx = vertices[-1]
 	
 	#add edges
 	add_edge(old_vtx, new_vtx, true)
@@ -182,11 +142,49 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 			add_edge(new_vtx, nbor, true)
 	
 	await changed
-	var vtxs = new_vtx.neighbors as Array
-	vtxs.erase(old_vtx)
-	vtxs.erase(new_vtx)
-	if vtxs.size() > 0:
+	set_positions_by_ranking()
+	
+
+
+func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
+	if vertices.size() == 0:
+		add_vertex(pos)
+		await changed
+		make_reflexive()
+		return
+	
+	if vertices.size() == 1:
+		add_vertex(pos)
+		await changed
+		fill()
+		return
+	
+	add_vertex(pos)
+	await changed
+	make_reflexive()
+	await changed
+	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
+	var new_vtx = vertices[-1]
+	
+	#add edges
+	add_edge(old_vtx, new_vtx, true)
+	add_edge(new_vtx, new_vtx)
+	
+	var rng = RandomNumberGenerator.new()
+	for nbor in old_vtx.get_neighbors():
+		var my_random_number = rng.randf_range(0.0, 1.0)
+		if my_random_number <= probability:
+			add_edge(new_vtx, nbor, true)
+	
+	await changed
+	if new_vtx.neighbors.size() == old_vtx.neighbors.size():
+		var vtxs = new_vtx.neighbors
+		vtxs.erase(old_vtx)
+		vtxs.erase(new_vtx)
 		remove_edge_given_vertices(new_vtx, vtxs[randi() % vtxs.size()], true)
+	
+	set_positions_by_ranking()
+	make_reflexive()
 
 func remove_vertex(vtx : Vertex):
 #	positions.remove_at(vtx.index)
@@ -194,9 +192,9 @@ func remove_vertex(vtx : Vertex):
 	graph_data.remove_vertex(vtx.index)
 
 
-func add_edge(start_vtx : Vertex, end_vtx : Vertex, reflexive : bool = false):
+func add_edge(start_vtx : Vertex, end_vtx : Vertex, undirected : bool = false):
 	graph_data.add_edge(start_vtx.index, end_vtx.index)
-	if reflexive:
+	if undirected:
 		graph_data.add_edge(end_vtx.index, start_vtx.index)
 
 
@@ -205,9 +203,9 @@ func remove_edge(edge : Edge, reflexive : bool = false):
 	if reflexive:
 		graph_data.remove_edge(edge.end_vertex.index, edge.start_vertex.indez)
 
-func remove_edge_given_vertices(v1:Vertex, v2:Vertex, reflexive:bool=false):
+func remove_edge_given_vertices(v1:Vertex, v2:Vertex, undirected:bool=false):
 	graph_data.remove_edge(v1.index, v2.index)
-	if reflexive:
+	if undirected:
 		graph_data.remove_edge(v2.index, v1.index)
 
 func make_reflexive():
@@ -315,6 +313,27 @@ func update_positions(vtx:Vertex):
 #	positions[vtx.index] = vtx.position
 	pass
 
+func set_positions_by_ranking():
+	var start_pos = Vector2(150,100)
+	var row_sep = 100
+	var col_sep = 100
+	var ranking = 0
+	
+	for v in vertices:
+		v = v as Vertex
+		if v.strict_corner_ranking > ranking: ranking = v.strict_corner_ranking
+	
+	for i in range(-1, ranking+1):
+		var vtxs = []
+		for v in vertices: 
+			if v.strict_corner_ranking == i:
+				vtxs.append(v)
+		var y_pos_offset : float = (ranking+1-i) * row_sep
+		var x_pos_offset : float = 1
+		for j in vtxs.size():
+			var v = vtxs[j] as Vertex
+			x_pos_offset = abs(x_pos_offset) + col_sep
+			v.position = start_pos + Vector2(x_pos_offset, y_pos_offset)
 
 func set_vertex_mode():
 	vertex_container.make_vertices_editable(true)

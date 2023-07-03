@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://daf044eyid212"]
+[gd_scene load_steps=9 format=3 uid="uid://daf044eyid212"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/vertex.gd" id="1_cri6f"]
 [ext_resource type="Texture2D" uid="uid://bk56yi56pgoem" path="res://Assets/Art/vertex.png" id="2_qu2d6"]
+[ext_resource type="Texture2D" uid="uid://c0ysay55dwxi2" path="res://Assets/Art/Objects/fire.svg" id="3_3y557"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6iyr1"]
 radius = 34.0588
@@ -85,11 +86,11 @@ _data = {
 "selected": SubResource("Animation_i3lfj")
 }
 
-[node name="Vertex" type="Node2D" node_paths=PackedStringArray("label", "anim", "area")]
-self_modulate = Color(0.0352941, 0.0352941, 0.0352941, 1)
+[node name="Vertex" type="Node2D" node_paths=PackedStringArray("label", "anim", "fire_sprite", "area")]
 script = ExtResource("1_cri6f")
 label = NodePath("Sprite2D/Label")
 anim = NodePath("AnimationPlayer")
+fire_sprite = NodePath("FireSprite")
 area = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -109,6 +110,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Area2D" type="Area2D" parent="." groups=["vertex_area"]]
 
@@ -120,3 +122,8 @@ debug_color = Color(0.94902, 0, 0.580392, 0.419608)
 libraries = {
 "": SubResource("AnimationLibrary_wc4cp")
 }
+
+[node name="FireSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("3_3y557")

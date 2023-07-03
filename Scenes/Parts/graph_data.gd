@@ -38,6 +38,8 @@ func _process(_delta):
 
 func display():
 	var output = "Number of vertices = " + str(graph.size()) + "\n"
+	output += "SCR: " + str(get_max_ranking()) + "\n"
+	output += "Ranking array: " + str(get_strict_corner_ranking()) + "\n" 
 	output += "Reflexive: " + str(is_reflexive()) + "\n"
 	output += "Undirected: " + str(is_undirected()) + "\n"
 	output += "Clique: " + str(is_clique()) + "\n"
@@ -50,7 +52,6 @@ func display():
 			output += str(int(graph[i][j])) + " "
 		output += "]\n"
 	
-	output += "SCR: " + str(get_strict_corner_ranking())
 	
 	return output
 
@@ -67,6 +68,37 @@ func add_vertex():
 	#add last row
 	for i in graph.size():
 		graph[graph.size()-1].append(false)
+
+func add_strict_corner(probability:float=0.5, dom_vtx:int = -1):
+	#when empty
+	if size() == 0:
+		add_vertex()
+		make_reflexive()
+		return
+	
+	if size() == 1:
+		dom_vtx = 0
+	else:
+		#randomly select a vertex
+		if dom_vtx == -1:
+			dom_vtx = randi() % size()
+	
+	add_vertex()
+	var new_vtx = size() - 1
+	
+	#new vtx connected to corner, reflexive, and undirected
+	add_edge(dom_vtx, new_vtx)
+	add_edge(new_vtx, dom_vtx)
+	add_edge(new_vtx, new_vtx)
+	
+	var rng = RandomNumberGenerator.new()
+	for vtx in size():
+		if not neighborhood(dom_vtx)[vtx]: continue
+		
+		var my_random_number = rng.randf_range(0.0, 1.0)
+		if my_random_number <= probability:
+			add_edge(new_vtx, vtx)
+			add_edge(vtx, new_vtx)
 
 
 func remove_vertex(v : int):
@@ -186,11 +218,21 @@ func retract_strict_corners():
 			if old_graph.strictly_corners(j, i): 
 				retract_vertex(i)
 
-func retract_corners():
+func retract_strict_corner():
 	var old_graph : GraphData = dup()
 	#check each vertex for corners
 	for i in old_graph.size():
 		for j in old_graph.size():
+			#if i is strictly cornered by j
+			if old_graph.strictly_corners(j, i): 
+				retract_vertex(i)
+				return
+
+func retract_corners():
+	var old_graph : GraphData = dup()
+	#check each vertex for corners
+	for i in old_graph.size():
+		for j in i:
 			#if i is cornered by j
 			if old_graph.corners(j, i): 
 				retract_vertex(i)
@@ -216,7 +258,7 @@ func is_reflexive():
 func is_undirected():
 	for i in graph.size():
 		for j in i:
-			if graph[j][i] != graph[i][j]: return false
+			if bool(graph[j][i]) != bool(graph[i][j]): return false
 	return true
 
 func is_clique():

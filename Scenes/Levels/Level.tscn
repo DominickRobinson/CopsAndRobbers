@@ -17,10 +17,10 @@
 
 [node name="Level" type="Node2D" node_paths=PackedStringArray("graph", "agents", "cops", "robbers", "game_manager", "state_machine")]
 script = ExtResource("1_55e2u")
-graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/12533221.json"
+graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/126421.json"
+robber_arsonist = true
 robber_strategy = "higher way"
-cop_skin = "cop"
-robber_skin = "robber"
+cop_skin = "zombie"
 agent_resource = ExtResource("2_7d7am")
 player_script = ExtResource("4_lx74n")
 drunk_script = ExtResource("5_jqvj0")

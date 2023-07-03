@@ -11,6 +11,8 @@ signal moved
 @export var label : Label
 @export var anim : AnimationPlayer
 
+@export var fire_sprite : Sprite2D
+
 var index : int = -1
 
 var strict_corner_ranking : int = 0
@@ -42,6 +44,8 @@ func _ready():
 	
 	selected.connect(anim.play.bind("selected"))
 	deselected.connect(anim.play.bind("RESET"))
+	
+	fire_sprite.hide()
 
 
 func _unhandled_input(_event):
@@ -73,8 +77,8 @@ func follow_mouse():
 
 
 func set_text():
-	label.text = "Index: " + str(index) + "\n"
-	label.text += "SCR: " + str(strict_corner_ranking) 
+#	label.text = "Index: " + str(index) + "\n"
+	label.text = "SCR: " + str(strict_corner_ranking) 
 #	label.text = str(strict_corner_ranking)
 #	label.text = str(self)
 #	label.text = str(index)
@@ -87,4 +91,8 @@ func get_occupents():
 
 
 func burn():
-	pass
+	var graph = get_tree().get_first_node_in_group("Graphs") as Graph
+	for nbor in neighbors:
+		graph.remove_edge_given_vertices(self, nbor, true)
+	
+	fire_sprite.show()

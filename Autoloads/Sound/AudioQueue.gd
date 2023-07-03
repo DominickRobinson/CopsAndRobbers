@@ -45,6 +45,8 @@ func play_audio(audio:AudioStream, vol:float=0.0, loop:bool=false, pitch:float=1
 
 func play_random_audio(audio_list:Array[AudioStream], vol:float=0.0, loop:bool=false, pitch:float=1.0) -> AudioStreamPlayer:
 	#gets random audio from list
+	if audio_list.size() == 0:
+		return null
 	var audio = audio_list[randi() % audio_list.size()]
 	#play audio like normal
 	return play_audio(audio, vol, loop, pitch)

@@ -227,6 +227,10 @@ step = 0.05
 value = 0.5
 prefix = "Prob = "
 
+[node name="OrganizeByRankingButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/Sidebar/VBoxContainer3/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Organize by ranking"
+
 [node name="Misc" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/Sidebar"]
 visible = false
 layout_mode = 2
@@ -253,7 +257,7 @@ text = "Print mappings"
 [node name="PanelContainer" type="PanelContainer" parent="GUI/MarginContainer"]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
 size_flags_vertical = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="GUI/MarginContainer/PanelContainer"]
@@ -321,6 +325,9 @@ default_color = Color(0.192157, 0.639216, 1, 1)
 [node name="MusicPlayer" parent="." instance=ExtResource("6_vbmlc")]
 music_track_name = "music_editor"
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(638, 334)
+
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Buttons/AddVertex" to="." method="add_vertex"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Buttons/Refresh" to="." method="refresh"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Mode/VertexMode" to="." method="set_vertex_mode"]
@@ -338,4 +345,5 @@ music_track_name = "music_editor"
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/Sidebar/VBoxContainer2/HBoxContainer/GraphActions/RetractCorners" to="." method="retract_corners"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/Sidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/Button" to="." method="add_corner"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/Sidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/Button2" to="." method="add_strict_corner"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/Sidebar/VBoxContainer3/HBoxContainer/VBoxContainer/OrganizeByRankingButton" to="." method="organize_by_ranking"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/Sidebar/Misc/HBoxContainer/GraphActions/PrintMappings" to="." method="print_mappings"]

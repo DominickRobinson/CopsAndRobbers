@@ -8,6 +8,8 @@ signal level_ready
 @export var number_of_robbers : int = 1
 @export var cop_speed : int = 1
 @export var robber_speed : int = 1
+@export var cop_arsonist : bool = false
+@export var robber_arsonist : bool = false
 @export_enum("player", "drunk", "lower way", "zombie") var cop_strategy : String = "player"
 @export_enum("player", "drunk", "higher way") var robber_strategy : String = "player"
 
@@ -63,12 +65,18 @@ func _ready():
 		new_cop.name = "Cop" + str(i)
 		new_cop.mode = "Cop"
 		new_cop.skin = cop_skin
+		
+		if cop_arsonist: new_cop.arsonist = true
+		
 		cops.add_child(new_cop)
 	for i in number_of_robbers:
 		var new_robber = agent_resource.instantiate() as Agent
 		new_robber.name = "Robber" + str(i)
 		new_robber.mode = "Robber"
 		new_robber.skin = robber_skin
+		
+		if robber_arsonist: new_robber.arsonist = true
+		
 		robbers.add_child(new_robber)
 	
 	#tracks states
