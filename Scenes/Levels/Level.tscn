@@ -21,7 +21,7 @@ ruleset_resource = ExtResource("2_exihu")
 vertex_style_resource = ExtResource("3_fht8e")
 edge_style_resource = ExtResource("4_wuub3")
 theme_style_resource = ExtResource("5_xo0h2")
-graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/12533221.json"
+graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/1254321.json"
 agent_resource = ExtResource("2_7d7am")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "cop_win_screen", "robber_win_screen", "game_over_screen")]

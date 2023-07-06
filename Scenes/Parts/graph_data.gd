@@ -345,10 +345,10 @@ func get_capture_time()->int:
 		return 1
 	
 	if is_one_top():
-		return scr - 2
+		return scr - 1
 	else:
 		assert(is_zero_top())
-		return scr - 1
+		return scr
 	
 
 func bool_to_int(bool_graph : Array = graph):

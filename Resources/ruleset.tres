@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=6 format=3 uid="uid://bs544mu5et3ho"]
 
-[ext_resource type="Texture2D" uid="uid://cg8rw4rylybln" path="res://Assets/Art/Backgrounds/concrete1_1152x648.jpeg" id="1_mivui"]
+[ext_resource type="Texture2D" uid="uid://tya4k5ue3owt" path="res://Assets/Art/Backgrounds/grass3_1152x648.jpg" id="1_4cphv"]
 [ext_resource type="Script" path="res://Scenes/Rules/move_player.gd" id="2_k67f5"]
-[ext_resource type="Texture2D" uid="uid://c13fwk2qsb1we" path="res://Assets/Art/Characters/farmer.svg" id="3_taiqr"]
-[ext_resource type="Texture2D" uid="uid://dfpdmweki0qy7" path="res://Assets/Art/Characters/pig.svg" id="4_ha5fb"]
+[ext_resource type="Texture2D" uid="uid://ck2tximmbnkrs" path="res://Assets/Art/Characters/firefighter.svg" id="3_y8emt"]
+[ext_resource type="Texture2D" uid="uid://xp74jlbc7rsd" path="res://Assets/Art/Characters/arsonist.svg" id="5_xj1p6"]
 
 [sub_resource type="GDScript" id="GDScript_0b81t"]
 script/source = "extends Resource
@@ -32,9 +32,9 @@ number_of_robbers = 1
 cop_speed = 1
 robber_speed = 1
 cop_arsonist = false
-robber_arsonist = false
+robber_arsonist = true
 cop_script = ExtResource("2_k67f5")
 robber_script = ExtResource("2_k67f5")
-cop_skin = ExtResource("3_taiqr")
-robber_skin = ExtResource("4_ha5fb")
-background_skin = ExtResource("1_mivui")
+cop_skin = ExtResource("3_y8emt")
+robber_skin = ExtResource("5_xj1p6")
+background_skin = ExtResource("1_4cphv")

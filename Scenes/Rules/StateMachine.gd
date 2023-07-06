@@ -51,13 +51,10 @@ func increment_turn():
 
 func _process(delta):
 	
-	if is_instance_valid(label):
-		label.text = "State: "
-		if is_instance_valid(curr_state): 
-			label.text += str(curr_state.name) + "\n"
-		else:
-			label.text += "none\n"
-		label.text = "Turn: " + str(turn) + "\n"
+	label.text = "Capture time: " + str(graph.capture_time) + "\n"
+	
+	
+	label.text += "Turn: " + str(turn) + "\n"
 	
 	var vertices = graph.vertices
 	var burnt = 0

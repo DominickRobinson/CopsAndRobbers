@@ -6,6 +6,8 @@ extends State
 func _on_state_entered():
 	super._on_state_entered()
 	
+	agent.play_idle()
+	
 	if agent.captured:
 		go_to_next_state()
 		return
@@ -36,6 +38,8 @@ func _on_vertex_selected(vtx:Vertex):
 
 func _on_state_exited():
 	super._on_state_exited()
+	
+	agent.stop_animation()
 	
 	for v in graph.vertices:
 		v = v as Vertex

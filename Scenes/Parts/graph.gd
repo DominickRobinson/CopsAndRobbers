@@ -36,7 +36,7 @@ signal vertex_selected(vtx:Vertex)
 @export_group("Debug")
 @export var graph_data_display_label : Label
 
-
+var capture_time = -1
 
 var vertices : Array :
 	get:
@@ -246,6 +246,8 @@ func clear_graph():
 	edge_container.remove_all()
 	vertex_container.remove_all()
 
+func get_capture_time():
+	return graph_data.get_capture_time()
 
 #func get_Fk_mapping(k:int) -> Dictionary:
 #	var mapping : Dictionary = {}
@@ -295,6 +297,7 @@ func refresh():
 		v.strict_corner_ranking = scr[v.index]
 	
 	mappings = get_Fk_mappings()
+	capture_time = get_capture_time()
 	
 	refreshed.emit()
 

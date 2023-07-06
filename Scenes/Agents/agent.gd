@@ -97,7 +97,7 @@ func move_to(new_vertex:Vertex):
 	#check whether to burn previously occupied vertex
 	
 	await movement_tween.finished
-	anim.play("idle")
+	anim.play("RESET")
 	if not (self in current_vertex.occupents): 
 		current_vertex.occupents.append(self)
 	
@@ -127,6 +127,12 @@ func play_final_animation(anim_name):
 	await anim.animation_finished
 	anim.play(anim_name)
 	return true
+
+func play_idle():
+	anim.play("idle")
+
+func stop_animation():
+	anim.stop()
 
 
 func is_cop():
