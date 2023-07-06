@@ -1,11 +1,16 @@
 class_name EdgeContainer
 extends GraphComponentContainer
 
+
+var edge_style_resource : Resource
+
 var edges:
 	get:
 		return get_children()
 
 func add_edge(e:Edge):
+	if is_instance_valid(edge_style_resource):
+		e.style_resource = edge_style_resource
 	add_child(e)
 
 func remove_edge(e:Edge):

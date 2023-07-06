@@ -55,6 +55,8 @@ func _on_state_entered():
 	output = output.left(-1)
 	output += "\n"
 	
+	var moves = []
+	
 	for i in mappings.size():
 		var k = mappings.size()-i
 		var mapping = mappings[k - 1]
@@ -72,8 +74,10 @@ func _on_state_entered():
 							k_proj_safe = true
 							
 				if k_proj_safe and nbor.strict_corner_ranking >= k and move == null:
-					move = nbor
+					moves.apmend(nbor)
 					break
+	
+	move = moves[randi() % moves.size()]
 	
 	if move == null:
 		move = neighbors[randi() % neighbors.size()]

@@ -2,6 +2,8 @@ class_name VertexContainer
 extends GraphComponentContainer
 
 
+var vertex_style_resource : Resource
+
 
 var vertices :
 	get:
@@ -9,12 +11,15 @@ var vertices :
 
 
 func add_vertex(vtx:Vertex):
+	if is_instance_valid(vertex_style_resource):
+		vtx.style_resource = vertex_style_resource
 	add_child(vtx)
 
 func add_new_vertex(vtx_resource: Resource, pos:Vector2=Vector2(0,0)):
 	var new_vtx = vtx_resource.instantiate()
 	new_vtx.index = vertices.size()
 	new_vtx.position = pos
+	new_vtx.style_resource = vertex_style_resource
 	add_vertex(new_vtx)
 	return new_vtx
 

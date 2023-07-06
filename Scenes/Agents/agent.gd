@@ -12,29 +12,15 @@ signal caught
 
 @export var arsonist : bool = false
 
-@export var travel_time: float = 1.0
+var travel_time: float = 0.5
 @export var current_vertex : Vertex = null
-
-
-
-@export_enum("person", "cop", "cop-m", "cop-f", "robber", 
-				"zombie", "zombie-m", "zombie-f") var skin : String = "person"
-
-@export_group("Skins")
-@export var person_skin : Texture2D
-@export var cop_skin : Texture2D
-@export var cop_m_skin : Texture2D
-@export var cop_f_skin : Texture2D
-@export var robber_skin : Texture2D
-@export var zombie_skin : Texture2D
-@export var zombie_m_skin : Texture2D
-@export var zombie_f_skin : Texture2D
 
 
 @export_group("Nodes")
 @export var sprite : Sprite2D
 @export var anim : AnimationPlayer
 @export var label : Label
+
 
 var moving = false
 var captured = false
@@ -43,31 +29,13 @@ var movement_tween : Tween
 
 
 func _ready():
+	
 	match mode:
 		"Cop":
 			add_to_group("Cops")
 		"Robber":
 			add_to_group("Robbers")
 	
-	match skin:
-		"person":
-			sprite.texture = person_skin
-		"cop":
-			sprite.texture = cop_skin
-		"cop-m":
-			sprite.texture = cop_m_skin	
-		"cop-f":
-			sprite.texture = cop_f_skin
-		"robber":
-			sprite.texture = robber_skin
-		"zombie":
-			sprite.texture = zombie_skin
-		"zombie-m":
-			sprite.texture = zombie_m_skin
-		"zombie-f":
-			sprite.texture = zombie_f_skin
-	
-#	print(self.name, ": ", get_groups())
 	
 	anim.animation_started.connect(_on_animation_started)
 	anim.play("idle")
@@ -114,19 +82,19 @@ func move_to(new_vertex:Vertex):
 	if moving: return
 	moving = true
 	if is_instance_valid(current_vertex) and new_vertex != current_vertex:
+#		print("Before: ", current_vertex.occupents)
 		current_vertex.occupents.erase(self)
+#		print("After: ", current_vertex.occupents)
 	
 	current_vertex = new_vertex
 	
 	movement_tween = get_tree().create_tween()
+	print(typeof(travel_time))
 	movement_tween.tween_property(self, "global_position", new_vertex.global_position, travel_time)
 	anim.play("move")
 	departed.emit()
 	
 	#check whether to burn previously occupied vertex
-	if arsonist and is_instance_valid(old_vtx) and old_vtx.get_occupents().size() == 0:
-		old_vtx.burn()
-	
 	
 	await movement_tween.finished
 	anim.play("idle")
@@ -136,6 +104,8 @@ func move_to(new_vertex:Vertex):
 	arrived.emit()
 	moving = false
 	
+	if arsonist and is_instance_valid(old_vtx) and old_vtx.get_occupents().size() == 0:
+		old_vtx.burn()
 
 	
 #	print("Just moved... ", self.name, ": ", get_groups())
@@ -173,3 +143,6 @@ func get_neighbors():
 
 func get_vertex():
 	return current_vertex
+
+func set_sprite(texture:Texture2D):
+	sprite.texture = texture

@@ -29,10 +29,13 @@ signal vertex_selected(vtx:Vertex)
 @export_group("Resources")
 @export var vertex_resource : Resource
 @export var edge_resource : Resource
+@export var vertex_style_resource : Resource
+@export var edge_style_resource : Resource
 
 
 @export_group("Debug")
 @export var graph_data_display_label : Label
+
 
 
 var vertices : Array :
@@ -44,6 +47,13 @@ var edges : Array :
 		return edge_container.edges
 
 var mappings
+
+
+var title : String = ""
+var author : String = ""
+var description : String = ""
+var citation : String = ""
+
 
 func _ready():
 	graph_data.changed.connect(_on_graph_data_changed)
@@ -356,7 +366,11 @@ func save_graph(path : String):
 
 	var dict : Dictionary = {
 		"adjacency_matrix" : array,
-		"positions" : positions_string
+		"positions" : positions_string,
+		"title" : title,
+		"author" : author,
+		"description" : description,
+		"citation" : citation
 	}
 	var json_string = JSON.stringify(dict)
 	save_file.store_string(json_string)
@@ -374,7 +388,7 @@ func load_graph(path : String):
 	match path.get_extension():
 		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
-			var json_as_dict = JSON.parse_string(json_as_text)
+			var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
 			adjacency_matrix = json_as_dict["adjacency_matrix"]
 			var positions_array = str_to_var(json_as_dict["positions"])
 			for p in positions_array:
@@ -384,7 +398,20 @@ func load_graph(path : String):
 				add_vertex(positions[i])
 			
 			graph_data.graph = adjacency_matrix
-		
+			
+			var keys = json_as_dict.keys()
+			if "title" in keys: title = json_as_dict["title"]
+			else: title = ""
+			
+			if "author" in keys: author = json_as_dict["author"]
+			else: author = ""
+			
+			if "description" in keys: description = json_as_dict["description"]
+			else: description = ""
+			
+			if "citation" in keys: citation = json_as_dict["citation"]
+			else: citation = ""
+			
 		"csv":
 			var array = []
 			var i = 0
@@ -424,6 +451,16 @@ func load_graph(path : String):
 	
 
 
+func set_title(str:String): title = str
+func set_author(str:String): author = str
+func set_description(str:String): description = str
+func set_citation(str:String): citation = str
+
+
+func set_positions_in_circle():
+	var positions = generate_default_positions(graph_data.size())
+	for i in vertices.size():
+		vertices[i].position = positions[i]
 
 func generate_default_positions(num:int) -> Array:
 	var array = []

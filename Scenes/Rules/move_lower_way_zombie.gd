@@ -46,45 +46,33 @@ func _on_state_entered():
 		for v in neighbors:
 			v = v as Vertex
 			if v.strict_corner_ranking > move.strict_corner_ranking:
-				print("Going to next highest SCR...")
 				move = v
 		agent.move_to(move)
 		return
 	
 	#not copwin graph
 	if not graph.is_copwin():
-		print("graph is not copwin")
 		agent.move_to(neighbors[0])
 		return
 	
-	print(1)
 	var mappings = graph.get_Fk_mappings()
-	print(2)
 	
 	#find new target
 	if target == null:
-		print("finding new target")
 		var robbers = get_tree().get_nodes_in_group("Robbers")
 		if robbers.size() == 0:
-			print("no robbers to target...")
 			agent.move_to(neighbors[0])
 			return
 		else:
-			print("target acquired...")
 			target = robbers[randi() % robbers.size()]
 	
 	
-	print("Mappings: ", mappings)
 	#in each mapping, check if robber shadow is found
 	for mapping in mappings:
-		print("current mapping: ", mapping)
 		if move != null:
-			print("move already fixed")
 			break
 		for nbor in neighbors:
-			print("current neighbor: ", nbor)
 			if nbor in mapping[target.current_vertex]:
-				print("Move found!")
 				move = nbor
 				break
 	
@@ -94,7 +82,6 @@ func _on_state_entered():
 		for nbor in neighbors:
 			nbor = nbor as Vertex
 			if nbor.strict_corner_ranking > move.strict_corner_ranking:
-				print("Going to next highest SCR...")
 				move = nbor
 	
 	#once capture target

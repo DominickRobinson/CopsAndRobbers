@@ -1,12 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://dqbdvl6orfadx"]
+[gd_scene load_steps=8 format=3 uid="uid://dqbdvl6orfadx"]
 
 [ext_resource type="Script" path="res://Scenes/Agents/agent.gd" id="1_kpjln"]
-[ext_resource type="Texture2D" uid="uid://j6vgutrsfypo" path="res://Assets/Art/Characters/person.svg" id="2_geaao"]
-[ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="3_shyxh"]
-[ext_resource type="Texture2D" uid="uid://t72tjaqr3rob" path="res://Assets/Art/Characters/cop-m.svg" id="4_23ybu"]
-[ext_resource type="Texture2D" uid="uid://cf3v8qp1b83lo" path="res://Assets/Art/Characters/cop-f.svg" id="5_ioq7w"]
-[ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="6_gedw3"]
-[ext_resource type="Texture2D" uid="uid://vw2ngclv7jt3" path="res://Assets/Art/Characters/zombie.svg" id="7_o7tlt"]
 
 [sub_resource type="Animation" id="Animation_vh7pb"]
 length = 0.001
@@ -61,7 +55,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_erfn7"]
 resource_name = "capture"
-length = 2.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -69,10 +63,10 @@ tracks/0/path = NodePath("Sprite2D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1.5, 2),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1.25, 1.25), Vector2(1.25, 1.25), Vector2(1, 1)]
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1.5, 1.5), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_mbduo"]
@@ -174,20 +168,11 @@ _data = {
 
 [node name="Agent" type="Node2D" node_paths=PackedStringArray("sprite", "anim", "label") groups=["Agents"]]
 script = ExtResource("1_kpjln")
-arsonist = null
-travel_time = 0.5
-person_skin = ExtResource("2_geaao")
-cop_skin = ExtResource("3_shyxh")
-cop_m_skin = ExtResource("4_23ybu")
-cop_f_skin = ExtResource("5_ioq7w")
-robber_skin = ExtResource("6_gedw3")
-zombie_skin = ExtResource("7_o7tlt")
 sprite = NodePath("Sprite2D")
 anim = NodePath("AnimationPlayer")
 label = NodePath("Sprite2D/Label")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_geaao")
 
 [node name="Label" type="Label" parent="Sprite2D"]
 anchors_preset = 8

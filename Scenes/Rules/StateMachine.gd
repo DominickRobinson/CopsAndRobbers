@@ -54,10 +54,17 @@ func _process(delta):
 	if is_instance_valid(label):
 		label.text = "State: "
 		if is_instance_valid(curr_state): 
-			label.text += str(curr_state.name)
+			label.text += str(curr_state.name) + "\n"
 		else:
-			label.text += "none"
-		label.text = "\nTurn: " + str(turn)
+			label.text += "none\n"
+		label.text = "Turn: " + str(turn) + "\n"
+	
+	var vertices = graph.vertices
+	var burnt = 0
+	for vtx in vertices:
+		if vtx.burnt: burnt += 1
+	
+	label.text += "Burnt: " + str(burnt)
 
 
 func end():

@@ -106,6 +106,10 @@ func retract_corners():
 	display_graph()
 	edit_graph()
 
+func eliminate_strict_corners():
+	graph_data.eliminate_strict_corners()
+	display_graph()
+	edit_graph()
 
 func save_graph_button():
 	save_file_dialog.visible = true

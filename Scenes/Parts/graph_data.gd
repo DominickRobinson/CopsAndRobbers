@@ -44,6 +44,10 @@ func display():
 	output += "Undirected: " + str(is_undirected()) + "\n"
 	output += "Clique: " + str(is_clique()) + "\n"
 	output += "Connected: " + str(is_connected_graph()) + "\n"
+	output += "Zero top: " + str(is_zero_top()) + "\n"
+	output += "One top: " + str(is_one_top()) + "\n"
+	output += "Capture time: " + str(get_capture_time()) + "\n"
+	
 	#for each row
 	for i in graph.size():
 		output += "[ "
@@ -218,6 +222,17 @@ func retract_strict_corners():
 			if old_graph.strictly_corners(j, i): 
 				retract_vertex(i)
 
+func eliminate_strict_corners():
+	retract_strict_corners()
+	
+	var scrs = get_strict_corner_ranking()
+	
+	var s = size()
+	for i in size():
+		var k = s-i-1
+		if scrs[k] == -1: remove_vertex(k)
+
+
 func retract_strict_corner():
 	var old_graph : GraphData = dup()
 	#check each vertex for corners
@@ -290,6 +305,51 @@ func is_connected_graph():
 		if not product.graph[i][j]: return false
 	#must be connected
 	return true
+
+func is_one_top() -> bool:
+	
+	if not is_cop_win(): return false
+	
+	var max_ranking = get_max_ranking()
+	if max_ranking == 1: return false
+	
+	var rankings = get_strict_corner_ranking()
+	
+	var top_vtxs : Array[int] = []
+	var second_top_vtxs : Array[int] = []
+	
+	for vtx in size():
+		if rankings[vtx] == max_ranking: top_vtxs.append(vtx)
+		if rankings[vtx] == max_ranking - 1: second_top_vtxs.append(vtx)
+	
+	#for top two ranks, each vertex in top rank is connected to all vertices in second rank 
+	
+	for i in top_vtxs:
+		for j in second_top_vtxs:
+			if not graph[i][j]: return false
+	
+	return true
+
+func is_zero_top():
+	return is_cop_win() and get_max_ranking() != -1 and not is_one_top()
+
+func get_capture_time()->int:
+	var scr = get_max_ranking()
+	
+	if scr == null: return 0
+	
+	if not is_cop_win():
+		return -1
+	
+	if scr == 1:
+		return 1
+	
+	if is_one_top():
+		return scr - 2
+	else:
+		assert(is_zero_top())
+		return scr - 1
+	
 
 func bool_to_int(bool_graph : Array = graph):
 	var int_graph : Array = []

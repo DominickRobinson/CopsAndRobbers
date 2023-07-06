@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://p1gmq0pbvgk5"]
+[gd_scene load_steps=9 format=3 uid="uid://p1gmq0pbvgk5"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/graph.gd" id="1_yxyr6"]
 [ext_resource type="PackedScene" uid="uid://ri24hib3q64a" path="res://Scenes/Parts/edge.tscn" id="2_un6rm"]
 [ext_resource type="PackedScene" uid="uid://daf044eyid212" path="res://Scenes/Parts/vertex.tscn" id="3_t7qd1"]
 [ext_resource type="Script" path="res://Scenes/Parts/EdgeContainer.gd" id="4_5lpg6"]
 [ext_resource type="PackedScene" uid="uid://bd6nyi2cnfc0w" path="res://Scenes/Parts/graph_data.tscn" id="4_e23mg"]
+[ext_resource type="Resource" uid="uid://bbdmf64s4opni" path="res://Resources/vertex_style.tres" id="4_pwj5u"]
+[ext_resource type="Resource" uid="uid://dydjnp5uvs487" path="res://Resources/edge_style.tres" id="5_kd8kp"]
 [ext_resource type="Script" path="res://Scenes/Parts/VertexContainer.gd" id="5_p56fu"]
 
 [node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container") groups=["Graphs"]]
@@ -14,6 +16,8 @@ vertex_container = NodePath("Vertices")
 edge_container = NodePath("Edges")
 vertex_resource = ExtResource("3_t7qd1")
 edge_resource = ExtResource("2_un6rm")
+vertex_style_resource = ExtResource("4_pwj5u")
+edge_style_resource = ExtResource("5_kd8kp")
 
 [node name="Edges" type="Node2D" parent="."]
 script = ExtResource("4_5lpg6")

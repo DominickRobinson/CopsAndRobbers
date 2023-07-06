@@ -34,6 +34,7 @@ extends Node
 var audio_dict : Dictionary = {}
 var export_variables : Array[String]
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for p in get_property_list():
@@ -42,8 +43,6 @@ func _ready():
 		
 	for v in export_variables:
 		audio_dict[v] = get(v)
-	
-	print(audio_dict)
 
 
 func get_audio(key:String = ""):

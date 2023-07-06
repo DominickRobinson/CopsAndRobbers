@@ -14,6 +14,12 @@ extends Node2D
 @export var new_edge_line : Line2D
 @export var corner_spinbox : SpinBox
 
+@export_group("Metadata text edits")
+@export var title_text_edit : TextEdit
+@export var author_text_edit : TextEdit
+@export var description_text_edit : TextEdit
+@export var citation_text_edit : TextEdit
+
 @export_group("Save and load nodes")
 @export var save_file_dialog : FileDialog
 @export var load_file_dialog : FileDialog
@@ -47,13 +53,32 @@ func _ready():
 	graph.refreshed.connect(refresh)
 	
 	save_file_dialog.file_selected.connect(graph.save_graph)
-	load_file_dialog.file_selected.connect(graph.load_graph)
+	load_file_dialog.file_selected.connect(load_graph)
+	
+	title_text_edit.text_changed.connect(set_title)
+	author_text_edit.text_changed.connect(set_author)
+	description_text_edit.text_changed.connect(set_description)
+	citation_text_edit.text_changed.connect(set_citation)
+	
 
+func load_graph(path):
+	graph.load_graph(path)
+	
+	title_text_edit.text = graph.title
+	author_text_edit.text = graph.author
+	description_text_edit.text = graph.description
+	citation_text_edit.text = graph.citation
 
 func _on_graph_changed():
 	pass
 
+func set_title(): graph.title = title_text_edit.text
+func set_author(): graph.author = author_text_edit.text
+func set_description(): graph.description = description_text_edit.text
+func set_citation(): graph.citation = citation_text_edit.text
+
 func _unhandled_input(event):
+	
 	if Input.is_action_just_pressed("select") and hovering_vertex != null:
 		hovering_vertex.selected.emit()
 	

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cr1kk04l6bvoe"
+path="res://.godot/imported/Cops and Robbers_Robotic Intro.mp3-da40f5ea0d3ef907af89766542b82db8.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/Cops and Robbers_Robotic Intro.mp3"
+dest_files=["res://.godot/imported/Cops and Robbers_Robotic Intro.mp3-da40f5ea0d3ef907af89766542b82db8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,37 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://dydjnp5uvs487"]
+
+[ext_resource type="Texture2D" uid="uid://wryqe0jivfct" path="res://Assets/Art/directed_edge.png" id="1_lef0t"]
+[ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Assets/Art/reflexive_edge.png" id="2_jntfk"]
+[ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Assets/Art/undirected_edge.png" id="3_y157s"]
+
+[sub_resource type="GDScript" id="GDScript_d4t1k"]
+script/source = "extends Resource
+
+@export_enum(\"skin\", \"color\") var mode = \"skin\"
+
+@export_category(\"Skins\")
+@export var undirected_skin : Texture2D
+@export var directed_skin : Texture2D
+@export var reflexive_skin : Texture2D
+
+@export_category(\"Colors\")
+@export var default_color : Color = Color(0,0,0)
+@export var border_color : Color = Color(0,0,0)
+
+@export_category(\"Other\")
+@export var width_px : float = 10.0
+@export var border_width_px : float = 1.0
+@export var show_reflexive_loop : bool = false
+"
+
+[resource]
+script = SubResource("GDScript_d4t1k")
+mode = "color"
+undirected_skin = ExtResource("3_y157s")
+directed_skin = ExtResource("1_lef0t")
+reflexive_skin = ExtResource("2_jntfk")
+default_color = Color(1, 1, 1, 1)
+border_color = Color(0, 0, 0, 1)
+width_px = 10.0
+border_width_px = 1.0
+show_reflexive_loop = false

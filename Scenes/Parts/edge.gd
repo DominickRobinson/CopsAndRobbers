@@ -8,6 +8,8 @@ var start_vertex : Vertex
 #end vertex of directed edge
 var end_vertex : Vertex 
 
+@export var style_resource : Resource
+
 @export_group("Properties")
 var reflexive : bool = false
 @export var directed : bool = true
@@ -16,47 +18,38 @@ var reflexive : bool = false
 @export_group("Nodes")
 @export var line : Line2D
 @export var loop_sprite : Sprite2D
-@export var loop_line : Line2D
-#@export var path :Path2D
+#@export var path : Path2D
+
 var area_shape 
-
-@export_group("Textures")
-@export var directed_edge_texture : Texture
-@export var undirected_edge_texture : Texture
-@export var reflexive_edge_texture : Texture
-
 
 
 func _ready():
+	loop_sprite.hide()
 	area_shape = area.get_children()[0]
-	
 	reflexive = start_vertex == end_vertex
 	
-	if reflexive:
-		loop_sprite.texture = reflexive_edge_texture
-#		loop_line.hide()
-		line.hide()
-#		path.hide()
-		loop_sprite.show()
-	else:
-		loop_sprite.hide()
-#		loop_line.hide()
-		line.show()
-#		path.show()
-		if directed:
-			line.texture = directed_edge_texture
-		else: 
-			line.texture = undirected_edge_texture
+	
+	match style_resource.mode:
+		"skin":
+			if reflexive:
+				loop_sprite.texture = style_resource.reflexive_skin
+				if style_resource.show_reflexive_loop: 
+					loop_sprite.texture = style_resource.reflexive_skin
+					loop_sprite.show()
+			else:
+				loop_sprite.hide()
+				if directed: line.texture = style_resource.directed_skin
+				else: line.texture = style_resource.undirected_skin
+		"color":
+			line.default_color = style_resource.default_color
+			line.texture = null
+			line.width = style_resource.width_px
 	
 	super._ready()
 	
 	#anchor edge at origin for consistency
 	position = Vector2(0,0)
-	
-#	if is_instance_valid(start_vertex):
-#		start_vertex.moved.connect(draw)
-#	if is_instance_valid(end_vertex):
-#		end_vertex.moved.connect(draw)
+
 
 func _process(delta):
 	if can_draw():
@@ -67,8 +60,6 @@ func _process(delta):
 
 
 func draw():
-	
-	
 	if start_vertex != end_vertex:
 		position = Vector2.ZERO
 
