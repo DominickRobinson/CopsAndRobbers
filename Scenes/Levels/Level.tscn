@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bebemkvgmx50c"]
+[gd_scene load_steps=15 format=3 uid="uid://bebemkvgmx50c"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_55e2u"]
 [ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="2_7d7am"]
@@ -12,21 +12,22 @@
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="6_6iha4"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="7_g64p5"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="12_mnp18"]
+[ext_resource type="Script" path="res://Scenes/UI/BeginScreen.gd" id="12_xlatv"]
+[ext_resource type="Texture2D" uid="uid://rnw0n3230ttj" path="res://Assets/Art/Backgrounds/dark_gray.png" id="13_7lm2m"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_55e2u")
 game_theme = ExtResource("2_mq2u3")
 game_rules = ExtResource("3_viwtt")
-graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/1254321.json"
+graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/12533221.json"
 agent_resource = ExtResource("2_7d7am")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "cop_win_screen", "robber_win_screen", "game_over_screen")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label")]
 script = ExtResource("3_cjnp4")
 state_machine = NodePath("StateMachine")
 graph = NodePath("../Graph")
-cop_win_screen = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/CopsWin")
-robber_win_screen = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/RobbersWin")
 game_over_screen = NodePath("../CanvasLayer/GameOverScreen")
+game_over_label = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/Gameover")
 
 [node name="StateMachine" parent="GameManager" node_paths=PackedStringArray("label") instance=ExtResource("3_d6yj3")]
 label = NodePath("../../CanvasLayer/MarginContainer/VBoxContainer/Label")
@@ -56,6 +57,15 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 alignment = 2
+
+[node name="Retry" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Restart"
+script = ExtResource("7_g64p5")
+
+[node name="ForfeitButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Forfeit"
 
 [node name="PauseButton" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("6_6iha4")]
 layout_mode = 2
@@ -88,21 +98,6 @@ layout_mode = 2
 
 [node name="Gameover" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "Game over..."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CopsWin" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Cops win!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RobbersWin" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Robbers win!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -116,6 +111,62 @@ layout_mode = 2
 text = "Go to main menu"
 script = ExtResource("7_g64p5")
 scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
+
+[node name="BeginScreen" type="PanelContainer" parent="CanvasLayer" node_paths=PackedStringArray("graph")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_xlatv")
+graph = NodePath("../../Graph")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/BeginScreen"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/BeginScreen/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Graph Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AuthorLabel" type="Label" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "by *name*"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="Control" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "*description here"
+autowrap_mode = 2
+
+[node name="VSeparator2" type="Control" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="BeginButton" type="Button" parent="CanvasLayer/BeginScreen"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
 
 [node name="Agents" type="Node2D" parent="."]
 
@@ -131,6 +182,8 @@ music_track_name = "music_cops_and_robbers"
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("13_7lm2m")
 centered = false
 
 [connection signal="cop_win" from="GameManager/CheckForCopWin" to="GameManager" method="cop_win"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/ForfeitButton" to="GameManager" method="forfeit"]

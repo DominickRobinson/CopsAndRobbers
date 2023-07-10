@@ -13,7 +13,7 @@ extends Node
 @export var sound_edge_remove : AudioStream
 @export_subgroup("Gameplay")
 @export var sound_vertex_select : AudioStream
-@export var sound_running : AudioStream
+@export var sound_footsteps : AudioStream
 
 @export_group("UI")
 @export var ui_button_select : AudioStream

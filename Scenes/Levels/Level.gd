@@ -24,9 +24,13 @@ var robber_script : Script
 @onready var state_machine : StateMachine = $GameManager/StateMachine
 @onready var background : Sprite2D = $ParallaxBackground/ParallaxLayer/Background
 
+
+
 func _ready():
 	
 	background.texture = game_theme.background_skin
+	
+	graph.load_graph(graph_path) 
 	
 	
 	#get strategies
@@ -34,7 +38,6 @@ func _ready():
 	robber_script = game_rules.robber_script
 	
 	#load graph
-	graph.load_graph(graph_path)
 	graph.edge_style_resource = edge_style_resource
 	graph.vertex_style_resource = vertex_style_resource
 	

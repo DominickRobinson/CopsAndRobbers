@@ -131,9 +131,13 @@ func move_to(new_vertex:Vertex):
 		old_vtx.burn()
 	
 	#check whether to burn previously occupied vertex
-	
+	var audio_player = SoundManager.play_sound("sound_footsteps")
 	await movement_tween.finished
+	audio_player.stop()
 	reset_animation()
+	
+	
+	
 	if not (self in current_vertex.occupents): 
 		current_vertex.occupents.append(self)
 	
