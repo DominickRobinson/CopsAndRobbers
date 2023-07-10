@@ -1,8 +1,6 @@
 extends State
 
-@export var agent : Agent
 
-@export var target : Agent
 
 func _ready():
 	super._ready()
@@ -13,7 +11,6 @@ func _ready():
 func _on_state_entered():
 	super._on_state_entered()
 	
-	assert(is_instance_valid(agent))
 	
 	if agent.captured:
 		go_to_next_state()
@@ -26,12 +23,10 @@ func _on_state_entered():
 	else:
 		neighbors = agent.current_vertex.get_neighbors()
 	
-	print("Neighbors: ", neighbors)
 	
 	agent.arrived.connect(go_to_next_state)
 	
 	
-	await get_tree().create_timer(0.5).timeout
 	
 	
 	graph.get_Fk_mappings()

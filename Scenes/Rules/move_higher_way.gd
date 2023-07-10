@@ -1,6 +1,5 @@
 extends State
 
-@export var agent : Agent
 var cops : Array :
 	get:
 		return get_tree().get_nodes_in_group("Cops")
@@ -30,7 +29,6 @@ func _on_state_entered():
 	agent.arrived.connect(go_to_next_state)
 	
 	
-#	await get_tree().create_timer(0.5).timeout
 	
 	#chooses random neighbor to move to
 	var move : Vertex = null
@@ -73,21 +71,35 @@ func _on_state_entered():
 						if not (nbor in c_prime.get_neighbors()):
 							k_proj_safe = true
 							
-				if k_proj_safe and nbor.strict_corner_ranking >= k and move == null:
-					moves.apmend(nbor)
-					break
+				if k_proj_safe and nbor.strict_corner_ranking >= k and not (nbor in moves):
+					moves.append(nbor)
+#					break
 	
-	move = moves[randi() % moves.size()]
+	if moves.size() == 0: 
+		move = neighbors.pick_random()
+		while move.has_cop():
+			move = neighbors.pick_random()
 	
 	if move == null:
-		move = neighbors[randi() % neighbors.size()]
-		var cop_vertices = []
-		for c in cops:
-			cop_vertices.append(c.get_vertex())
-		while move in cop_vertices:
-			move = neighbors[randi() % neighbors.size()]
+		var best_scr : int = moves[0].strict_corner_ranking
+		for m in moves: 
+			m = m as Vertex
+			if m.strict_corner_ranking > best_scr:
+				best_scr = m.strict_corner_ranking
+		
+		move = moves.pick_random()
+		while move.strict_corner_ranking < best_scr:
+			move = moves.pick_random()
 	
-#	await get_tree().create_timer(0.5).timeout
+	
+#	if move == null:
+#		move = neighbors[randi() % neighbors.size()]
+#		var cop_vertices = []
+#		for c in cops:
+#			cop_vertices.append(c.get_vertex())
+#		while move in cop_vertices:
+#			move = neighbors[randi() % neighbors.size()]
+	
 	
 	agent.move_to(move)
 

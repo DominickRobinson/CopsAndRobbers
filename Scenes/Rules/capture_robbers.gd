@@ -8,11 +8,11 @@ func _ready():
 	await get_parent().game_start
 	
 	for c in get_parent().cops:
-		c.arrived.connect(check_for_robbers)
+		c.arrived.connect(capture_robbers)
 	for r in get_parent().robbers:
-		r.arrived.connect(check_for_robbers)
+		r.arrived.connect(capture_robbers)
 
-func check_for_robbers():
+func capture_robbers():
 	for c in get_parent().cops:
-		await c.check_for_robbers()
+		await c.capture_robbers()
 

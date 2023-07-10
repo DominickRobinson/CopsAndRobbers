@@ -14,10 +14,14 @@ signal state_exited
 
 @export var next_state : State
 
+@export var agent : Agent
+@export var target : Agent
+
+
 func _ready():
 	state_entered.connect(_on_state_entered)
 	state_exited.connect(_on_state_exited)
-	
+
 
 
 func activate():

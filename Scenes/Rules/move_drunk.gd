@@ -1,6 +1,5 @@
 extends State
 
-@export var agent : Agent
 
 
 func _on_state_entered():
@@ -23,7 +22,6 @@ func _on_state_entered():
 	agent.arrived.connect(go_to_next_state)
 	
 	
-	await get_tree().create_timer(0.5).timeout
 	
 	#chooses random neighbor to move to
 	var drunk_move : Vertex = vertices[randi() % vertices.size()]

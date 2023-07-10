@@ -1,12 +1,16 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bbdmf64s4opni"]
+[gd_resource type="Resource" load_steps=9 format=3 uid="uid://bbdmf64s4opni"]
 
-[ext_resource type="Texture2D" uid="uid://c535rv16dtaur" path="res://Assets/Art/Objects/structural-fire.svg" id="1_iin66"]
-[ext_resource type="Texture2D" uid="uid://ry23xo5rw33e" path="res://Assets/Art/Objects/house.svg" id="2_s5tb0"]
+[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="1_3gi1y"]
+[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="2_csuqk"]
+[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="3_rnraj"]
+[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="4_swdpr"]
+[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="5_u6pvq"]
+[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="6_35ayf"]
+[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="7_mxaxu"]
 
 [sub_resource type="GDScript" id="GDScript_c5y8f"]
 script/source = "extends Resource
 
-@export_enum(\"skin\", \"color\") var mode = \"skin\"
 
 @export_category(\"Skins\")
 @export var default_skin : Texture2D
@@ -17,26 +21,16 @@ script/source = "extends Resource
 @export var selected_skin : Texture2D
 @export var hovering_skin : Texture2D
 
-@export_category(\"Colors\")
-@export var default_color : Color
-@export var cop_color : Color
-@export var robber_color : Color
-@export var both_color : Color
-@export var burnt_color: Color
-@export var selected_color : Color
-@export var hover_color : Color
+
 
 "
 
 [resource]
 script = SubResource("GDScript_c5y8f")
-mode = "skin"
-default_skin = ExtResource("2_s5tb0")
-burnt_skin = ExtResource("1_iin66")
-default_color = Color(1, 1, 1, 1)
-cop_color = Color(0, 0, 1, 1)
-robber_color = Color(1, 0, 0, 1)
-both_color = Color(1, 0, 1, 1)
-burnt_color = Color(0, 0, 0, 1)
-selected_color = Color(0, 1, 0, 1)
-hover_color = Color(0, 1, 1, 1)
+default_skin = ExtResource("4_swdpr")
+cop_skin = ExtResource("3_rnraj")
+robber_skin = ExtResource("6_35ayf")
+both_skin = ExtResource("1_3gi1y")
+burnt_skin = ExtResource("2_csuqk")
+selected_skin = ExtResource("5_u6pvq")
+hovering_skin = ExtResource("7_mxaxu")

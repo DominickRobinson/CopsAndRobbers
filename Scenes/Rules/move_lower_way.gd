@@ -1,8 +1,5 @@
 extends State
 
-@export var agent : Agent
-
-@export var target : Agent
 
 func _ready():
 	super._ready()
@@ -31,7 +28,6 @@ func _on_state_entered():
 	agent.arrived.connect(go_to_next_state)
 	
 	
-#	await get_tree().create_timer(0.5).timeout
 	
 	
 	graph.get_Fk_mappings()
@@ -69,14 +65,12 @@ func _on_state_entered():
 	var moves = []
 	#in each mapping, check if robber shadow is found
 	for mapping in mappings:
-		if move != null:
-			break
 		for nbor in neighbors:
 			if nbor in mapping[target.get_vertex()]:
 				moves.append(nbor)
-				break
+#				break
 	
-	move = moves[randi() % moves.size()]
+	move = moves.pick_random()
 	
 	#if not found in any, then go to highest ranking neighbor
 	if move == null:

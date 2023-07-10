@@ -1,12 +1,11 @@
 extends State
 
-@export var agent : Agent
 
 
 func _on_state_entered():
 	super._on_state_entered()
 	
-	agent.play_idle()
+	if not agent.captured: agent.play_idle()
 	
 	if agent.captured:
 		go_to_next_state()
@@ -39,7 +38,7 @@ func _on_vertex_selected(vtx:Vertex):
 func _on_state_exited():
 	super._on_state_exited()
 	
-	agent.stop_animation()
+	if not agent.captured: agent.stop_animation()
 	
 	for v in graph.vertices:
 		v = v as Vertex

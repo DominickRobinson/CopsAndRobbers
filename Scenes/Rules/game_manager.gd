@@ -39,5 +39,4 @@ func end():
 	if is_instance_valid(state_machine):
 		state_machine.end()
 	
-	await get_tree().create_timer(3.0).timeout
 	game_over_screen.show()

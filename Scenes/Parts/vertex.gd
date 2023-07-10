@@ -143,3 +143,9 @@ func _on_selected():
 #	await get_tree().create_timer(0.5).timeout
 #	can_change_skin = true
 	pass
+
+func has_cop():
+	for o in occupents:
+		o = o as Agent
+		if o.is_cop(): return true
+	return false

@@ -13,7 +13,7 @@ signal caught
 @export var arsonist : bool = false
 
 var travel_time: float = 0.5
-@export var current_vertex : Vertex = null
+var current_vertex : Vertex = null
 
 
 @export_group("Nodes")
@@ -30,6 +30,8 @@ var movement_tween : Tween
 
 func _ready():
 	
+	hide()
+	
 	match mode:
 		"Cop":
 			add_to_group("Cops")
@@ -37,9 +39,8 @@ func _ready():
 			add_to_group("Robbers")
 	
 	
-	anim.animation_started.connect(_on_animation_started)
-	anim.play("idle")
-
+#	anim.animation_started.connect(_on_animation_started)
+	play_anim("idle")
 	
 
 
@@ -51,30 +52,60 @@ func _unhandled_input(event):
 
 
 func get_captured():
+	play_anim("captured")
+	
+	#checking for final kill
+	var robbers = get_tree().get_nodes_in_group("Robbers")
+
+	var all_on_final_vtx = false
+	var final_vtx : Vertex = null
+	var count = 0
+	for r in robbers: 
+#		r = r as Robber
+		if final_vtx == null: 
+			final_vtx = r.current_vertex
+			all_on_final_vtx = true
+		elif final_vtx != r.current_vertex: 
+			all_on_final_vtx = false
+		if not r.captured: count += 1
+	
+	if all_on_final_vtx or count == 1: anim.speed_scale = 0.4
+	
+	await anim.animation_finished
+#	await anim.animation_finished
 	captured = true
 	caught.emit()
-	play_final_animation("captured")
 
 
 func capture(robber:Agent):
-	play_final_animation("capture")
-	
-#	await anim.animation_finished
+	play_anim("capture")
 	
 	robber.get_captured()
 	
-#	await robber.caught
+	await robber.caught
 	
+	return true
 
-func check_for_robbers():
+
+func capture_robbers():
 	if not is_instance_valid(current_vertex): return
 	
 	for o in current_vertex.get_occupents():
-#		print(o.name, ": ", o.is_robber())
 		if o.is_robber():
 			if not o.captured:
-				capture(o)
+				await capture(o)
+	
+	return true
 
+func check_for_robbers(include_captured:bool=false):
+	if not is_instance_valid(current_vertex): return
+	
+	for o in current_vertex.get_occupents():
+		if o.is_robber():
+			if include_captured or not o.captured:
+				return true
+	
+	return false
 
 func move_to(new_vertex:Vertex):
 	var old_vtx = current_vertex
@@ -89,47 +120,56 @@ func move_to(new_vertex:Vertex):
 	current_vertex = new_vertex
 	
 	movement_tween = get_tree().create_tween()
-	print(typeof(travel_time))
-	movement_tween.tween_property(self, "global_position", new_vertex.global_position, travel_time)
-	anim.play("move")
+	if visible:
+		movement_tween.tween_property(self, "global_position", new_vertex.global_position, travel_time)
+	else:
+		movement_tween.tween_property(self, "global_position", new_vertex.global_position, 0)
+	play_anim("move")
 	departed.emit()
+	
+	if arsonist and is_instance_valid(old_vtx) and old_vtx.get_occupents().size() == 0:
+		old_vtx.burn()
 	
 	#check whether to burn previously occupied vertex
 	
 	await movement_tween.finished
-	anim.play("RESET")
+	reset_animation()
 	if not (self in current_vertex.occupents): 
 		current_vertex.occupents.append(self)
 	
+	if new_vertex.has_cop():
+		await capture_robbers()
+	
 	arrived.emit()
+	if not visible: show()
 	moving = false
 	
-	if arsonist and is_instance_valid(old_vtx) and old_vtx.get_occupents().size() == 0:
-		old_vtx.burn()
+	
+
 
 	
 #	print("Just moved... ", self.name, ": ", get_groups())
 
 
-func _on_animation_started(anim_name):
-	if anim_name == "RESET":
-		return
-	anim.play("RESET")
-	anim.animation_started.disconnect(_on_animation_started)
-	await anim.animation_finished
-	anim.play(anim_name)
-	anim.animation_started.connect(_on_animation_started)
+#func _on_animation_started(anim_name):
+#	if anim_name == "RESET":
+#		return
+#	anim.play("RESET")
+#	anim.animation_started.disconnect(_on_animation_started)
+#	await anim.animation_finished
+#	anim.play(anim_name)
+#	anim.animation_started.connect(_on_animation_started)
 
-
-func play_final_animation(anim_name):
+func reset_animation():
 	anim.play("RESET")
-	anim.animation_started.disconnect(_on_animation_started)
-	await anim.animation_finished
+
+func play_anim(anim_name):
+	reset_animation()
 	anim.play(anim_name)
-	return true
+
 
 func play_idle():
-	anim.play("idle")
+	play_anim("idle")
 
 func stop_animation():
 	anim.stop()

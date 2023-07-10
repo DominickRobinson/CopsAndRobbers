@@ -61,8 +61,11 @@ func _process(delta):
 	for vtx in vertices:
 		if vtx.burnt: burnt += 1
 	
-	label.text += "Burnt: " + str(burnt)
-
+	label.text += "Burnt: " + str(burnt) + "\n"
+	if curr_state:
+		label.text += "State: " + curr_state.name
+	else:
+		label.text += "State: none"
 
 func end():
 	curr_state.deactivate()
