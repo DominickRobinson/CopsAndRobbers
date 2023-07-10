@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6v8j2v2aj8dg"]
+[gd_scene load_steps=6 format=3 uid="uid://casul5jth1sxe"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/edge.gd" id="1_ifrx8"]
 [ext_resource type="Resource" uid="uid://dydjnp5uvs487" path="res://Resources/edge_style.tres" id="2_jqc4g"]

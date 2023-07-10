@@ -13,7 +13,9 @@ func _ready():
 	
 	begin_button.pressed.connect(_on_button_pressed)
 	
-	await graph.created
+#	await graph.created
+	while not is_instance_valid(graph):
+		pass
 	
 	if graph.title != "":
 		title_label.text = graph.title

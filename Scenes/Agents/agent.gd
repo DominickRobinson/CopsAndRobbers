@@ -38,6 +38,7 @@ func _ready():
 		"Robber":
 			add_to_group("Robbers")
 	
+	label.text = name
 	
 #	anim.animation_started.connect(_on_animation_started)
 	play_anim("idle")

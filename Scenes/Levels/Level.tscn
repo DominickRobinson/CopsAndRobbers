@@ -1,25 +1,25 @@
-[gd_scene load_steps=15 format=3 uid="uid://bebemkvgmx50c"]
+[gd_scene load_steps=16 format=3 uid="uid://bebemkvgmx50c"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_55e2u"]
 [ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="2_7d7am"]
-[ext_resource type="PackedScene" uid="uid://crqqy1tr77aea" path="res://Scenes/Parts/graph.tscn" id="2_kuov2"]
-[ext_resource type="Resource" uid="uid://bpwvgw3kdoq4e" path="res://Resources/game_theme.tres" id="2_mq2u3"]
+[ext_resource type="PackedScene" uid="uid://cye6br4b3bx28" path="res://Scenes/Parts/graph.tscn" id="2_kuov2"]
+[ext_resource type="Resource" uid="uid://bhfb5vvjnl4bv" path="res://Resources/game.tres" id="2_q2w7h"]
 [ext_resource type="Script" path="res://Scenes/Rules/game_manager.gd" id="3_cjnp4"]
 [ext_resource type="PackedScene" uid="uid://bc6k3dwiyonyw" path="res://Scenes/Rules/state_machine.tscn" id="3_d6yj3"]
-[ext_resource type="Resource" uid="uid://bs544mu5et3ho" path="res://Resources/game_rules.tres" id="3_viwtt"]
 [ext_resource type="PackedScene" uid="uid://btuqhupbnwq6" path="res://Scenes/Rules/check_for_cop_win.tscn" id="4_r5mjt"]
 [ext_resource type="Script" path="res://Scenes/Rules/capture_robbers.gd" id="5_4hjs4"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="6_6iha4"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="7_g64p5"]
+[ext_resource type="Script" path="res://Scenes/UI/NextLevelButton.gd" id="11_4dtft"]
+[ext_resource type="Script" path="res://Scenes/UI/ReloadLevelButton.gd" id="11_c0djf"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="12_mnp18"]
 [ext_resource type="Script" path="res://Scenes/UI/BeginScreen.gd" id="12_xlatv"]
 [ext_resource type="Texture2D" uid="uid://rnw0n3230ttj" path="res://Assets/Art/Backgrounds/dark_gray.png" id="13_7lm2m"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_55e2u")
-game_theme = ExtResource("2_mq2u3")
-game_rules = ExtResource("3_viwtt")
-graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/12533221.json"
+game_resource = ExtResource("2_q2w7h")
+graph_path = "res://Graphs/chordal7.json"
 agent_resource = ExtResource("2_7d7am")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label")]
@@ -59,6 +59,12 @@ size_flags_vertical = 0
 alignment = 2
 
 [node name="Retry" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Retry"
+script = ExtResource("11_c0djf")
+
+[node name="Restart" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Restart"
 script = ExtResource("7_g64p5")
@@ -101,10 +107,21 @@ layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="RetryButton" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Retry"
+script = ExtResource("7_g64p5")
+
 [node name="Retry" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "Play again"
-script = ExtResource("7_g64p5")
+text = "Retry"
+script = ExtResource("11_c0djf")
+
+[node name="NextLevelButton" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Next level"
+script = ExtResource("11_4dtft")
 
 [node name="MainMenu" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
 layout_mode = 2

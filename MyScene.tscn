@@ -1,0 +1,246 @@
+[gd_scene load_steps=28 format=3]
+
+[ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_a61o6"]
+[ext_resource type="Resource" path="res://Resources/level_packs/CopsAndRobbersSimple/simple_cops_and_robbers_game.tres" id="2_0o8gc"]
+[ext_resource type="PackedScene" path="res://Scenes/Agents/agent.tscn" id="3_kr0sn"]
+[ext_resource type="Script" path="res://Scenes/Rules/game_manager.gd" id="4_aolx5"]
+[ext_resource type="PackedScene" path="res://Scenes/Rules/state_machine.tscn" id="5_3ig1f"]
+[ext_resource type="Script" path="res://Scenes/Rules/StateMachine.gd" id="6_fh5qy"]
+[ext_resource type="PackedScene" path="res://Scenes/Rules/check_for_cop_win.tscn" id="7_lgslp"]
+[ext_resource type="Script" path="res://Scenes/Rules/check_for_cop_win.gd" id="8_8iqrb"]
+[ext_resource type="Script" path="res://Scenes/Rules/capture_robbers.gd" id="9_x0gwd"]
+[ext_resource type="PackedScene" path="res://Scenes/Parts/graph.tscn" id="10_h0ng7"]
+[ext_resource type="Script" path="res://Scenes/Parts/graph.gd" id="11_8adaw"]
+[ext_resource type="PackedScene" path="res://Scenes/Parts/vertex.tscn" id="12_sb1vr"]
+[ext_resource type="PackedScene" path="res://Scenes/Parts/edge.tscn" id="13_bjlq5"]
+[ext_resource type="Resource" path="res://Resources/vertex_style.tres" id="14_63sg5"]
+[ext_resource type="Texture2D" path="res://Assets/Art/directed_edge.png" id="15_uaewx"]
+[ext_resource type="Texture2D" path="res://Assets/Art/reflexive_edge.png" id="16_yfbsv"]
+[ext_resource type="Texture2D" path="res://Assets/Art/undirected_edge.png" id="17_beclc"]
+[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="18_y7343"]
+[ext_resource type="PackedScene" path="res://Autoloads/Pause/PauseButton.tscn" id="19_4i7du"]
+[ext_resource type="Script" path="res://Autoloads/Pause/PauseButton.gd" id="20_nwdle"]
+[ext_resource type="Script" path="res://Scenes/UI/NextLevelButton.gd" id="21_ub500"]
+[ext_resource type="Script" path="res://Scenes/UI/BeginScreen.gd" id="22_5f80f"]
+[ext_resource type="PackedScene" path="res://Scenes/music_player.tscn" id="23_rfepc"]
+[ext_resource type="Script" path="res://Scenes/music_player.gd" id="24_2wrr2"]
+[ext_resource type="Texture2D" path="res://Assets/Art/Backgrounds/dark_gray.png" id="25_lf6v6"]
+
+[sub_resource type="GDScript" id="GDScript_d4t1k"]
+script/source = "extends Resource
+
+@export_enum(\"skin\", \"color\") var mode = \"skin\"
+
+@export_category(\"Skins\")
+@export var undirected_skin : Texture2D
+@export var directed_skin : Texture2D
+@export var reflexive_skin : Texture2D
+
+@export_category(\"Colors\")
+@export var default_color : Color = Color(0,0,0)
+@export var border_color : Color = Color(0,0,0)
+
+@export_category(\"Other\")
+@export var width_px : float = 5.0
+@export var border_width_px : float = 1.0
+@export var show_reflexive_loop : bool = false
+"
+
+[sub_resource type="Resource" id="Resource_u0fc6"]
+script = SubResource("GDScript_d4t1k")
+mode = "color"
+undirected_skin = ExtResource("17_beclc")
+directed_skin = ExtResource("15_uaewx")
+reflexive_skin = ExtResource("16_yfbsv")
+default_color = Color(0, 0, 0, 1)
+border_color = Color(0, 0, 0, 1)
+width_px = 5.0
+border_width_px = 1.0
+show_reflexive_loop = false
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_a61o6")
+game_resource = ExtResource("2_0o8gc")
+graph_path = "res://Graphs/Offner/Maybe-1-Top-Minimal/12841.json"
+agent_resource = ExtResource("3_kr0sn")
+next_level_path = null
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("4_aolx5")
+
+[node name="StateMachine" type="Node" parent="GameManager" instance=ExtResource("5_3ig1f")]
+script = ExtResource("6_fh5qy")
+
+[node name="CheckForCopWin" type="Node" parent="GameManager" instance=ExtResource("7_lgslp")]
+script = ExtResource("8_8iqrb")
+
+[node name="CaptureRobbers" type="Node" parent="GameManager"]
+script = ExtResource("9_x0gwd")
+
+[node name="Graph" type="Node2D" parent="." groups=["Graphs"] instance=ExtResource("10_h0ng7")]
+script = ExtResource("11_8adaw")
+graph_filepath = null
+vertex_resource = ExtResource("12_sb1vr")
+edge_resource = ExtResource("13_bjlq5")
+vertex_style_resource = ExtResource("14_63sg5")
+edge_style_resource = SubResource("Resource_u0fc6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+alignment = 2
+
+[node name="Restart" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Restart"
+script = ExtResource("18_y7343")
+scene_path = null
+
+[node name="ForfeitButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Forfeit"
+
+[node name="PauseButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("19_4i7du")]
+layout_mode = 2
+text = "Pause"
+script = ExtResource("20_nwdle")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GameOverScreen" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameOverScreen/CenterContainer"]
+layout_mode = 2
+
+[node name="Gameover" type="Label" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RetryButton" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Retry"
+script = ExtResource("18_y7343")
+scene_path = null
+
+[node name="NextLevelButton" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Next level"
+script = ExtResource("21_ub500")
+
+[node name="MainMenu" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Go to main menu"
+script = ExtResource("18_y7343")
+scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
+
+[node name="BeginScreen" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("22_5f80f")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/BeginScreen"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/BeginScreen/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Graph Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AuthorLabel" type="Label" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "by *name*"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="Control" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "*description here"
+autowrap_mode = 2
+
+[node name="VSeparator2" type="Control" parent="CanvasLayer/BeginScreen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="BeginButton" type="Button" parent="CanvasLayer/BeginScreen"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Agents" type="Node2D" parent="."]
+
+[node name="Cops" type="Node2D" parent="Agents"]
+
+[node name="Robbers" type="Node2D" parent="Agents"]
+
+[node name="MusicPlayer" type="Node" parent="." instance=ExtResource("23_rfepc")]
+script = ExtResource("24_2wrr2")
+music_track_name = "music_cops_and_robbers"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("25_lf6v6")
+centered = false
+
+[connection signal="cop_win" from="GameManager/CheckForCopWin" to="GameManager" method="cop_win" flags=18]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/ForfeitButton" to="GameManager" method="forfeit" flags=18]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/HBoxContainer/PauseButton" to="CanvasLayer/MarginContainer/HBoxContainer/PauseButton" method="pause" flags=18]
+[connection signal="toggled" from="CanvasLayer/MarginContainer/HBoxContainer/PauseButton" to="CanvasLayer/MarginContainer/HBoxContainer/PauseButton" method="toggle" flags=18]

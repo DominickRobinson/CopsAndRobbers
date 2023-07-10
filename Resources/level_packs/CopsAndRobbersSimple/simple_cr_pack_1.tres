@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c7l4wtb8ya74f"]
+
+[ext_resource type="Resource" uid="uid://7bvo52k6ffes" path="res://Resources/level_packs/CopsAndRobbersSimple/simple_cops_and_robbers_game.tres" id="1_ykjme"]
+
+[sub_resource type="GDScript" id="GDScript_mpdwq"]
+script/source = "extends Resource
+
+@export var game_resource : Resource
+@export_dir var levels_path
+"
+
+[resource]
+script = SubResource("GDScript_mpdwq")
+game_resource = ExtResource("1_ykjme")
+levels_path = "res://Graphs/Offner/Maybe-1-Top-Minimal"

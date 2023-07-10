@@ -59,10 +59,12 @@ func _ready():
 	graph_data.changed.connect(_on_graph_data_changed)
 	
 	if graph_filepath != null:
-		load_graph(graph_filepath)
+		await load_graph(graph_filepath)
 	
+	refresh()
 	await refreshed
 	created.emit()
+	
 	
 
 
@@ -391,7 +393,9 @@ func load_graph(path : String):
 	match path.get_extension():
 		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
+#			print("json_as_text: ", json_as_text)
 			var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
+#			print("json_as_dict: ", json_as_dict)
 			adjacency_matrix = json_as_dict["adjacency_matrix"]
 			var positions_array = str_to_var(json_as_dict["positions"])
 			for p in positions_array:
@@ -449,9 +453,10 @@ func load_graph(path : String):
 				add_vertex(positions[j])
 			graph_data.graph = array
 	
+	return true
 #	if positions == []:
 #		positions = generate_default_positions(graph_data.size())
-	
+
 
 
 func set_title(str:String): title = str

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://daf044eyid212"]
+[gd_scene load_steps=10 format=3 uid="uid://djom8ayqa817m"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/vertex.gd" id="1_cri6f"]
 [ext_resource type="Resource" uid="uid://bbdmf64s4opni" path="res://Resources/vertex_style.tres" id="2_mniy3"]
@@ -113,6 +113,7 @@ area = NodePath("Area2D")
 texture = ExtResource("2_qu2d6")
 
 [node name="Label" type="Label" parent="Sprite2D"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

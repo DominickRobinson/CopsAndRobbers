@@ -25,14 +25,10 @@ func _init(s:int=initial_size):
 			graph[i].append(false)
 
 
-func _process(_delta):
-	#checks if graph data has changed
-	
-	
+func emit_change():
 	if old != graph:
 #		strict_corner_ranking = get_strict_corner_ranking(self)
 		new = graph.duplicate(true)
-		changed.emit(old, new)
 		old = new.duplicate(true)
 
 
@@ -72,6 +68,8 @@ func add_vertex():
 	#add last row
 	for i in graph.size():
 		graph[graph.size()-1].append(false)
+	
+	emit_change()
 
 func add_strict_corner(probability:float=0.5, dom_vtx:int = -1):
 	#when empty
@@ -103,6 +101,8 @@ func add_strict_corner(probability:float=0.5, dom_vtx:int = -1):
 		if my_random_number <= probability:
 			add_edge(new_vtx, vtx)
 			add_edge(vtx, new_vtx)
+	
+	emit_change()
 
 
 func remove_vertex(v : int):
@@ -113,16 +113,21 @@ func remove_vertex(v : int):
 		graph[i].remove_at(v)
 	#remove row
 	graph.remove_at(v)
+	
+	emit_change()
 
 
 
 func add_edge(v1:int, v2:int):
 	if not is_valid_edge(v1, v2): return
 	graph[v1][v2] = true
+	emit_change()
+
 
 func remove_edge(v1:int, v2:int):
 	if not is_valid_edge(v1, v2): return
 	graph[v1][v2] = false
+	emit_change()
 
 
 func edge_exists(v1:int, v2:int):
@@ -146,25 +151,30 @@ func fill():
 	for i in graph.size():
 		for j in graph.size():
 			graph[i][j] = true
+	emit_change()
 
 func clear():
 	for i in graph.size():
 		for j in graph.size():
 			graph[i][j] = false
+	emit_change()
 
 func invert():
 	for i in graph.size():
 		for j in graph.size():
 			graph[i][j] = not graph[i][j]
+	emit_change()
 
 func make_reflexive():
 	for i in graph.size():
 		graph[i][i] = true
+	emit_change()
 
 func make_undirected():
 	for i in graph.size():
 		for j in graph.size():
 			graph[i][j] = graph[i][j] or graph[j][i]
+	emit_change()
 
 
 func strictly_corners(v1 : int, v2 : int):
@@ -211,6 +221,7 @@ func retract_vertex(v : int):
 	for i in graph.size():
 		graph[i][v] = false
 		graph[v][i] = false
+	emit_change()
 #	return g
 
 func retract_strict_corners():
@@ -221,6 +232,7 @@ func retract_strict_corners():
 			#if i is strictly cornered by j
 			if old_graph.strictly_corners(j, i): 
 				retract_vertex(i)
+	emit_change()
 
 func eliminate_strict_corners():
 	retract_strict_corners()
@@ -231,6 +243,7 @@ func eliminate_strict_corners():
 	for i in size():
 		var k = s-i-1
 		if scrs[k] == -1: remove_vertex(k)
+	emit_change()
 
 
 func retract_strict_corner():
@@ -241,7 +254,9 @@ func retract_strict_corner():
 			#if i is strictly cornered by j
 			if old_graph.strictly_corners(j, i): 
 				retract_vertex(i)
+				emit_change()
 				return
+	emit_change()
 
 func retract_corners():
 	var old_graph : GraphData = dup()
@@ -251,6 +266,7 @@ func retract_corners():
 			#if i is cornered by j
 			if old_graph.corners(j, i): 
 				retract_vertex(i)
+	emit_change()
 
 func retract_twins():
 	var old_graph : GraphData = dup()
@@ -260,6 +276,7 @@ func retract_twins():
 			#if i and j are twins
 			if old_graph.are_twins(j, i): 
 				retract_vertex(i)
+	emit_change()
 
 func neighborhood(v : int):
 	return graph[v]
@@ -379,6 +396,7 @@ func add(g2 : GraphData = self, g1 : GraphData = self):
 	#sum each entry
 	for i in g1.size(): for j in g1.size():
 		sum.graph[i][j] = bool(int(g1.graph[i][j]) + int(g2.graph[i][j]))
+	emit_change()
 	return sum
 
 func multiply(g2 : GraphData = self, g1 : GraphData = self):
@@ -390,9 +408,11 @@ func multiply(g2 : GraphData = self, g1 : GraphData = self):
 		for m in g1.size():
 			p += int(g1.graph[i][m]) * int(g2.graph[m][j])
 		product.graph[i][j] = bool(p)
+	emit_change()
 	return product
 
 func square():
+	emit_change()
 	return multiply(self, self)
 
 func create_identity(s : int):
@@ -609,6 +629,8 @@ func load_graph(path : String):
 	array.pop_back()
 	
 	graph = array
+	
+	emit_change()
 
 
 

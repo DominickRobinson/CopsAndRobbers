@@ -1,7 +1,7 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bs544mu5et3ho"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cegyon10xb8ph"]
 
-[ext_resource type="Script" path="res://Scenes/Rules/move_player.gd" id="1_qo0l5"]
-[ext_resource type="Script" path="res://Scenes/Rules/move_higher_way.gd" id="2_1kvd8"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="1_qo0l5"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_higher_way.gd" id="2_1kvd8"]
 
 [sub_resource type="GDScript" id="GDScript_0b81t"]
 script/source = "extends Resource

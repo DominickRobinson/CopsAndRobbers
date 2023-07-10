@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://7bvo52k6ffes"]
+
+[ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="1_5w6ya"]
+[ext_resource type="Resource" uid="uid://cegyon10xb8ph" path="res://Resources/game_rules.tres" id="2_15h8x"]
+[ext_resource type="Resource" uid="uid://qxpihp3xcmvo" path="res://Resources/game_theme.tres" id="3_x75a4"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_higher_way.gd" id="4_m8sbv"]
+
+[sub_resource type="GDScript" id="GDScript_ag8j8"]
+script/source = "extends Resource
+
+@export var game_theme : Resource
+@export var game_rules : Resource
+
+@export var cop_script : Script
+@export var robber_script : Script
+"
+
+[resource]
+script = SubResource("GDScript_ag8j8")
+game_theme = ExtResource("3_x75a4")
+game_rules = ExtResource("2_15h8x")
+cop_script = ExtResource("1_5w6ya")
+robber_script = ExtResource("4_m8sbv")

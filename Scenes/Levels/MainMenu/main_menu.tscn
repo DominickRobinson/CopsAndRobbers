@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7jqxo4jy5gav"]
+[gd_scene load_steps=9 format=3 uid="uid://b7jqxo4jy5gav"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://Assets/Art/logo.png" id="1_pq47r"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
 [ext_resource type="FontFile" uid="uid://bsti1sjiaolqo" path="res://Assets/Fonts/Policía Secreta.ttf" id="2_k5cdb"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="3_f3unt"]
 [ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]
+[ext_resource type="Script" path="res://Scenes/UI/LevelPackButton.gd" id="4_52l23"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
+[ext_resource type="Resource" uid="uid://c7l4wtb8ya74f" path="res://Resources/level_packs/CopsAndRobbersSimple/simple_cr_pack_1.tres" id="5_o4gsd"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -93,27 +95,47 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 drag_to_rearrange_enabled = true
 
-[node name="Play" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+[node name="Play" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3"]
+[node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer"]
+[node name="LevelPackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+layout_mode = 2
+text = "Simple cops and robbers #1"
+script = ExtResource("4_52l23")
+level_pack = ExtResource("5_o4gsd")
+
+[node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Players:"
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer/HBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 3
@@ -124,14 +146,14 @@ popup/item_1/id = 2
 popup/item_2/text = "Multiplayer"
 popup/item_2/id = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Mode:"
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer/HBoxContainer2"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 8
@@ -152,32 +174,32 @@ popup/item_6/id = 6
 popup/item_7/text = "Ranchers and cattle"
 popup/item_7/id = 7
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 text = "Level:"
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer/HBoxContainer3"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 1
 popup/item_0/text = "Level 1"
 popup/item_0/id = 0
 
-[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer"]
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Begin!"
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
 layout_mode = 2
 
-[node name="SceneButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/VBoxContainer3/VBoxContainer2"]
+[node name="SceneButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Play Cops and Robbers demo"
 script = ExtResource("3_f3unt")
@@ -228,21 +250,21 @@ theme_override_constants/margin_bottom = 25
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+[node name="Dom" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
 layout_mode = 2
 text = "Dominick Robinson - programmer"
 
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+[node name="Offner" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
 layout_mode = 2
 text = "David Offner - research advisor"
 
-[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
-layout_mode = 2
-text = "Alexa Carl - art"
-
-[node name="Label4" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+[node name="Gabe" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
 layout_mode = 2
 text = "Gabriel Prado - music"
+
+[node name="Aleca" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+layout_mode = 2
+text = "Alexa Carl - art"
 
 [node name="References" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 visible = false

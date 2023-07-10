@@ -32,9 +32,9 @@ var turn = 0
 
 
 func _ready():
-	
+	print("Waiting for game start in State Machine...")
 	await get_parent().game_start
-	
+	print("Game started in State Machine!")
 	for c in get_children():
 		if not (c is State):
 			continue
@@ -51,21 +51,22 @@ func increment_turn():
 
 func _process(delta):
 	
-	label.text = "Capture time: " + str(graph.capture_time) + "\n"
+	label.text = "Optimal capture time: " + str(graph.capture_time) + "\n"
 	
 	
-	label.text += "Turn: " + str(turn) + "\n"
+	label.text += "Total turns: " + str(turn) + "\n"
 	
 	var vertices = graph.vertices
 	var burnt = 0
 	for vtx in vertices:
 		if vtx.burnt: burnt += 1
 	
-	label.text += "Burnt: " + str(burnt) + "\n"
+	label.text += "Vertices burnt: " + str(burnt) + "\n"
+	
 	if curr_state:
-		label.text += "State: " + curr_state.name
+		label.text += curr_state.agent.name + "'s turn!"
 	else:
-		label.text += "State: none"
+		label.text += "Uh oh..."
 
 func end():
 	curr_state.deactivate()

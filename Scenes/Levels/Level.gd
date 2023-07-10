@@ -3,8 +3,9 @@ extends Node2D
 
 signal level_ready
 
-@export var game_theme : Resource
-@export var game_rules : Resource
+@export var game_resource : Resource
+var game_theme : Resource
+var game_rules : Resource
 var vertex_style_resource : Resource
 var edge_style_resource : Resource
 
@@ -24,18 +25,28 @@ var robber_script : Script
 @onready var state_machine : StateMachine = $GameManager/StateMachine
 @onready var background : Sprite2D = $ParallaxBackground/ParallaxLayer/Background
 
-
+@export_file("*") var next_level_path
+@onready var next_level_button : NextLevelButton = $CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/NextLevelButton
 
 func _ready():
 	
+	game_theme = game_resource.game_theme
+	game_rules = game_resource.game_rules
+	
 	background.texture = game_theme.background_skin
 	
-	graph.load_graph(graph_path) 
+	print("Waiting for graph to be loaded in Level...")
+	await graph.load_graph(graph_path)
+	print("Graph loaded in Level!")
+	await graph.refresh()
+	print("Graph refreshed!")
 	
+	if next_level_path == null: 
+		next_level_button.hide()
 	
 	#get strategies
-	cop_script = game_rules.cop_script
-	robber_script = game_rules.robber_script
+	cop_script = game_resource.cop_script
+	robber_script = game_resource.robber_script
 	
 	#load graph
 	graph.edge_style_resource = edge_style_resource
@@ -44,7 +55,7 @@ func _ready():
 	#create all agents
 	for i in game_rules.number_of_cops:
 		var new_cop = agent_resource.instantiate() as Agent
-		new_cop.name = "Cop" + str(i)
+		new_cop.name = "Cop " + str(i+1)
 		new_cop.mode = "Cop"
 		new_cop.set_sprite(game_theme.cop_skin)
 		
@@ -53,7 +64,7 @@ func _ready():
 		cops.add_child(new_cop)
 	for i in game_rules.number_of_robbers:
 		var new_robber = agent_resource.instantiate() as Agent
-		new_robber.name = "Robber" + str(i)
+		new_robber.name = "Robber " + str(i+1)
 		new_robber.mode = "Robber"
 		new_robber.set_sprite(game_theme.robber_skin)
 		
@@ -100,6 +111,7 @@ func _ready():
 	prev_state.next_state = first_state
 	state_machine.first_state = first_state
 	
+	print("Should emit level ready in Level!")
 	level_ready.emit()
 
 func create_state(script : Variant) -> State:

@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://crqqy1tr77aea"]
+[gd_scene load_steps=13 format=3 uid="uid://cye6br4b3bx28"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/graph.gd" id="1_yxyr6"]
-[ext_resource type="PackedScene" uid="uid://b6v8j2v2aj8dg" path="res://Scenes/Parts/edge.tscn" id="2_un6rm"]
-[ext_resource type="PackedScene" uid="uid://daf044eyid212" path="res://Scenes/Parts/vertex.tscn" id="3_t7qd1"]
+[ext_resource type="PackedScene" uid="uid://casul5jth1sxe" path="res://Scenes/Parts/edge.tscn" id="2_un6rm"]
+[ext_resource type="PackedScene" uid="uid://djom8ayqa817m" path="res://Scenes/Parts/vertex.tscn" id="3_t7qd1"]
 [ext_resource type="Script" path="res://Scenes/Parts/EdgeContainer.gd" id="4_5lpg6"]
 [ext_resource type="PackedScene" uid="uid://bd6nyi2cnfc0w" path="res://Scenes/Parts/graph_data.tscn" id="4_e23mg"]
 [ext_resource type="Resource" uid="uid://bbdmf64s4opni" path="res://Resources/vertex_style.tres" id="4_pwj5u"]

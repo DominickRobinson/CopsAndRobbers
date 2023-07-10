@@ -21,9 +21,12 @@ var robbers:
 
 
 func _ready():
+	print("Waiting for level ready in Game Manager...")
 	await get_parent().level_ready
+	print("Level ready in Game Manager!")
 	
-	graph.created.connect(emit_signal.bind("game_start"))
+#	graph.created.connect(emit_signal.bind("game_start"))
+	game_start.emit()
 	
 	
 
