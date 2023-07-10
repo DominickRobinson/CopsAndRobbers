@@ -31,7 +31,8 @@ func _on_vertex_selected(vtx:Vertex):
 	
 	for v in graph.vertices:
 		v = v as Vertex
-		v.selected.disconnect(_on_vertex_selected)
+		if v.selected.is_connected(_on_vertex_selected):
+			v.selected.disconnect(_on_vertex_selected)
 		v.selectable = false
 	
 
@@ -42,7 +43,8 @@ func _on_state_exited():
 	
 	for v in graph.vertices:
 		v = v as Vertex
-		v.selected.disconnect(_on_vertex_selected)
+		if v.selected.is_connected(_on_vertex_selected):
+			v.selected.disconnect(_on_vertex_selected)
 		v.selectable = false
 	
 	if is_instance_valid(agent): agent.arrived.disconnect(go_to_next_state)

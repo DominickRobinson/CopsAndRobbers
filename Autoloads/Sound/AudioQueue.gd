@@ -35,9 +35,11 @@ func play_audio(audio:AudioStream, vol:float=0.0, loop:bool=false, pitch:float=1
 	a.pitch_scale = pitch
 	#loop if necessary
 	if loop:
-		a.finished.connect(a.play)
+		if not a.finished.is_connected(a.play):
+			a.finished.connect(a.play)
 	else:
-		a.finished.disconnect(a.play)
+		if a.finished.is_connected(a.play):
+			a.finished.disconnect(a.play)
 	#voila
 	a.play()
 	
