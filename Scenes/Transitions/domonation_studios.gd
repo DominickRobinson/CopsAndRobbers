@@ -10,3 +10,7 @@ func _ready():
 	await anim.animation_finished
 	
 	SceneManager.change_scene(next_scene)
+
+func _process(delta):
+	if Input.is_action_just_pressed("select") or Input.is_action_just_pressed("delete"):
+		anim.advance(3.0)

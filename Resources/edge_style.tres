@@ -27,7 +27,7 @@ script/source = "extends Resource
 [resource]
 resource_local_to_scene = true
 script = SubResource("GDScript_d4t1k")
-mode = "skin"
+mode = "color"
 undirected_skin = ExtResource("3_y157s")
 directed_skin = ExtResource("1_lef0t")
 reflexive_skin = ExtResource("2_jntfk")
