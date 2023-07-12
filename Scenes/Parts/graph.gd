@@ -116,11 +116,14 @@ func add_vertex(pos):
 #	new_vtx.position = positions[i]
 #	new_vtx.moved.connect(update_positions.bind(new_vtx))
 	new_vtx.selected.connect(emit_signal.bind("vertex_selected", new_vtx))
+	new_vtx.name = "Vertex " + str(new_vtx.index)
 	
 	vertex_container.add_vertex(new_vtx)
 	
 #	positions.append(pos)
 	graph_data.add_vertex()
+	
+	changed.emit()
 #	return new_vtx
 
 func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
@@ -156,7 +159,7 @@ func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	await changed
 	set_positions_by_ranking()
 	
-
+	changed.emit()
 
 func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	if vertices.size() == 0:
@@ -197,56 +200,82 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	
 	set_positions_by_ranking()
 	make_reflexive()
+	
+	changed.emit()
 
 func remove_vertex(vtx : Vertex):
 #	positions.remove_at(vtx.index)
 	vertex_container.remove_vertex(vtx)
 	graph_data.remove_vertex(vtx.index)
+	changed.emit()
 
 
 func add_edge(start_vtx : Vertex, end_vtx : Vertex, undirected : bool = false):
 	graph_data.add_edge(start_vtx.index, end_vtx.index)
 	if undirected:
 		graph_data.add_edge(end_vtx.index, start_vtx.index)
+	
+	changed.emit()
+	
 
 
 func remove_edge(edge : Edge, reflexive : bool = false):
 	graph_data.remove_edge(edge.start_vertex.index, edge.end_vertex.index)
 	if reflexive:
-		graph_data.remove_edge(edge.end_vertex.index, edge.start_vertex.indez)
+		graph_data.remove_edge(edge.end_vertex.index, edge.start_vertex.index)
+	
+	changed.emit()
+	
 
 func remove_edge_given_vertices(v1:Vertex, v2:Vertex, undirected:bool=false):
 	graph_data.remove_edge(v1.index, v2.index)
 	if undirected:
 		graph_data.remove_edge(v2.index, v1.index)
+	
+	changed.emit()
+	
 
 func make_reflexive():
 	graph_data.make_reflexive()
+	changed.emit()
+	
 
 func make_undirected():
 	graph_data.make_undirected()
+	changed.emit()
+	
 
 func fill():
 	graph_data.fill()
+	changed.emit()
+	
 
 func clear():
 	graph_data.clear()
+	changed.emit()
+	
 
 func invert():
 	graph_data.invert()
+	changed.emit()
 
 func square():
 	graph_data.square()
+	changed.emit()
 
 func retract_strict_corners():
 	graph_data.retract_strict_corners()
+	changed.emit()
+
 
 func retract_corners():
 	graph_data.retract_corners()
+	changed.emit()
 
 func clear_graph():
 	edge_container.remove_all()
 	vertex_container.remove_all()
+	changed.emit()
 
 func get_capture_time():
 	return graph_data.get_capture_time()

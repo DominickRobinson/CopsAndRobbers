@@ -20,6 +20,7 @@ func add_new_vertex(vtx_resource: Resource, pos:Vector2=Vector2(0,0)):
 	new_vtx.index = vertices.size()
 	new_vtx.position = pos
 	new_vtx.style_resource = vertex_style_resource
+	new_vtx.name = "Vertex " + str(new_vtx.index)
 	add_vertex(new_vtx)
 	return new_vtx
 

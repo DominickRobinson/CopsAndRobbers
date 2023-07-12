@@ -26,6 +26,7 @@ script/source = "extends Resource
 "
 
 [resource]
+resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("4_swdpr")
 cop_skin = ExtResource("3_rnraj")

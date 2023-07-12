@@ -110,6 +110,7 @@ func burn():
 	for nbor in neighbors:
 		graph.remove_edge_given_vertices(self, nbor, true)
 	
+	graph.refresh()
 #	fire_sprite.show()
 	sprite.texture = style_resource.burnt_skin
 	burnt = true

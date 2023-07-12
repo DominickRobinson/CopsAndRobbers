@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b7jqxo4jy5gav"]
+[gd_scene load_steps=10 format=3 uid="uid://b7jqxo4jy5gav"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://Assets/Art/logo.png" id="1_pq47r"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scenes/UI/LevelPackButton.gd" id="4_52l23"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
 [ext_resource type="Resource" uid="uid://c7l4wtb8ya74f" path="res://Resources/level_packs/CopsAndRobbersSimple/simple_cr_pack_1.tres" id="5_o4gsd"]
+[ext_resource type="Resource" uid="uid://dfhelgorhmddd" path="res://Resources/level_packs/FirefightersAndArsonists/fa_pack_1.tres" id="6_rwcll"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -113,6 +114,12 @@ layout_mode = 2
 text = "Simple cops and robbers #1"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("5_o4gsd")
+
+[node name="LevelPackButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+layout_mode = 2
+text = "Firefighter and arsonist #1"
+script = ExtResource("4_52l23")
+level_pack = ExtResource("6_rwcll")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
 visible = false

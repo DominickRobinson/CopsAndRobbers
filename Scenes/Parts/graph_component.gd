@@ -26,11 +26,11 @@ func remove():
 	queue_free()
 
 func _on_area_2d_mouse_entered():
-#	print("Mouse entered: ", self)
+	print("Mouse entered: ", self.name)
 	mouse_inside_area = true
 	mouse_entered.emit()
 
 func _on_area_2d_mouse_exited():
-#	print("Mouse exited: ", self)
+	print("Mouse exited: ", self.name)
 	mouse_inside_area = false
 	mouse_exited.emit()

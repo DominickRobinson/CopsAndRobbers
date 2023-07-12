@@ -70,7 +70,7 @@ func load_graph(path):
 	citation_text_edit.text = graph.citation
 
 func _on_graph_changed():
-	pass
+	graph.refresh()
 
 func set_title(): graph.title = title_text_edit.text
 func set_author(): graph.author = author_text_edit.text
@@ -188,6 +188,7 @@ func retract_corners():
 
 
 func refresh():
+	print("Refreshing!")
 	for e in graph.edges:
 		e.mouse_entered.connect(set_hovering_edge.bind(e))
 		e.mouse_exited.connect(set_hovering_edge.bind(null))

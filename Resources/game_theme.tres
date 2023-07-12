@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=7 format=3 uid="uid://qxpihp3xcmvo"]
 
-[ext_resource type="Texture2D" uid="uid://b0twtefd41dmh" path="res://Assets/Art/Backgrounds/grass1_1152x648.jpg" id="1_5otkv"]
+[ext_resource type="Texture2D" uid="uid://rnw0n3230ttj" path="res://Assets/Art/Backgrounds/dark_gray.png" id="1_53v6w"]
 [ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="2_bi2rd"]
 [ext_resource type="Resource" uid="uid://dydjnp5uvs487" path="res://Resources/edge_style.tres" id="2_usdv6"]
 [ext_resource type="Resource" uid="uid://bbdmf64s4opni" path="res://Resources/vertex_style.tres" id="3_viv7a"]
@@ -20,7 +20,7 @@ var agent_travel_time : float = 0.5
 
 [resource]
 script = SubResource("GDScript_oai1h")
-background_skin = ExtResource("1_5otkv")
+background_skin = ExtResource("1_53v6w")
 cop_skin = ExtResource("2_bi2rd")
 robber_skin = ExtResource("4_of5ob")
 vertex_style_resource = ExtResource("3_viv7a")

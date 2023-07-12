@@ -25,8 +25,9 @@ script/source = "extends Resource
 "
 
 [resource]
+resource_local_to_scene = true
 script = SubResource("GDScript_d4t1k")
-mode = "color"
+mode = "skin"
 undirected_skin = ExtResource("3_y157s")
 directed_skin = ExtResource("1_lef0t")
 reflexive_skin = ExtResource("2_jntfk")
@@ -34,4 +35,4 @@ default_color = Color(0, 0, 0, 1)
 border_color = Color(0, 0, 0, 1)
 width_px = 5.0
 border_width_px = 1.0
-show_reflexive_loop = false
+show_reflexive_loop = true
