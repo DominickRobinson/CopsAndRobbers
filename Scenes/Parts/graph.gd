@@ -326,6 +326,8 @@ func refresh():
 	for v in vertex_container.vertices:
 		v = v as Vertex
 		v.strict_corner_ranking = scr[v.index]
+		v.is_top = (v.strict_corner_ranking == get_max_ranking())
+	
 	
 	mappings = get_Fk_mappings()
 	capture_time = get_capture_time()
@@ -337,6 +339,7 @@ func refresh_vertices():
 		var v = vertices[i] as Vertex
 		v.index = i
 		v.neighbors = get_neighbors_from_vertex(v)
+		
 
 func refresh_edges():
 	edge_container.remove_all()
@@ -352,6 +355,8 @@ func refresh_edges():
 				
 				edge_container.add_edge(new_edge)
 
+func get_max_ranking():
+	return graph_data.get_max_ranking()
 
 func update_positions(vtx:Vertex):
 #	positions[vtx.index] = vtx.position

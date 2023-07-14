@@ -14,6 +14,7 @@ extends Node
 @export_subgroup("Gameplay")
 @export var sound_vertex_select : AudioStream
 @export var sound_footsteps : AudioStream
+@export var sound_laugh : AudioStream
 
 @export_group("UI")
 @export var ui_button_select : AudioStream

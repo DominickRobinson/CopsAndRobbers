@@ -102,6 +102,10 @@ func _on_state_entered():
 	
 	
 	agent.move_to(move)
+	
+	await agent.arrived
+	if move.is_top:
+		agent.laugh()
 
 
 func _on_state_exited():

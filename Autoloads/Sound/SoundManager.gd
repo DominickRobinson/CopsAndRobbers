@@ -18,6 +18,12 @@ extends Node
 
 func play_sound(audio_name:String, vol:float=0.0, loop:bool=false, pitch:float=1.0) -> AudioStreamPlayer:
 	var audio = audio_pool.get_audio(audio_name)
+	
+	print("audio: ", typeof(audio))
+	
+	if not is_instance_valid(audio):
+		return null
+	
 	#type is audiostream
 	if is_instance_of(audio, AudioStream):
 		return sound_queue.play_audio(audio, vol, loop, pitch)

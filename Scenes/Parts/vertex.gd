@@ -19,7 +19,7 @@ signal moved
 var index : int = -1
 
 var strict_corner_ranking : int = 0
-
+var is_top : bool = false
 
 var mouse_offset = Vector2.ZERO
 

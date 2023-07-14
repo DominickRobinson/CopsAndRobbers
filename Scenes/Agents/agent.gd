@@ -145,6 +145,9 @@ func move_to(new_vertex:Vertex):
 	if new_vertex.has_cop():
 		await capture_robbers()
 	
+	if new_vertex.is_top and is_robber():
+		await anim.animation_finished
+	
 	arrived.emit()
 	if not visible: show()
 	moving = false
@@ -179,6 +182,11 @@ func play_idle():
 func stop_animation():
 	anim.stop()
 
+func laugh():
+	anim.play("laugh")
+	SoundManager.play_sound("sound_laugh")
+	await anim.animation_finished
+	return true
 
 func is_cop():
 	return (mode == "Cop")
