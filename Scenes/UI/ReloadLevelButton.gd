@@ -7,4 +7,4 @@ func _ready():
 
 
 func _on_pressed():
-	SceneManager.load_level()
+	SceneManager.reload_level()

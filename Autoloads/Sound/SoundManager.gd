@@ -31,13 +31,31 @@ func play_sound(audio_name:String, vol:float=0.0, loop:bool=false, pitch:float=1
 	else:
 		assert( typeof(audio) == 28 )
 		return sound_queue.play_random_audio(audio, vol, loop, pitch)
-	
+
+
 func play_ui_sound(audio_name:String, vol:float=0.0, loop:bool=false, pitch:float=1.0) -> AudioStreamPlayer:
 	var audio = audio_pool.get_audio(audio_name)
 	return ui_sound_queue.play_audio(audio, vol, loop, pitch)
 
 func play_music(audio_name:String, fade:float=1.0, vol:float=0.0, loop:bool=true, pitch:float=1.0) -> AudioStreamPlayer:
 	var audio = audio_pool.get_audio(audio_name)
+	music_player.stream = audio
+	if loop:
+		music_player.finished.connect(music_player.play)
+	else:
+		music_player.finished.disconnect(music_player.play)
+	music_player.pitch_scale = pitch
+	
+	var tween = create_tween()
+	music_player.volume_db = -99
+	tween.tween_property(music_player, "volume_db", vol, fade).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.play()
+	
+	music_player.play()
+	
+	return music_player
+
+func play_music_file(audio:AudioStream, fade:float=1.0, vol:float=0.0, loop:bool=true, pitch:float=1.0) -> AudioStreamPlayer:
 	music_player.stream = audio
 	if loop:
 		music_player.finished.connect(music_player.play)

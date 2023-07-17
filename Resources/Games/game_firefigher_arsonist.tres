@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="Game" load_steps=6 format=3 uid="uid://bt2j167efe3id"]
+[gd_resource type="Resource" script_class="Game" load_steps=6 format=3 uid="uid://cw2sstuw148mi"]
 
-[ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="1_7u8p7"]
-[ext_resource type="Resource" uid="uid://b67q1qm8rft1f" path="res://Resources/GameRules/game_rules_firefigher_arsonist.tres" id="2_0sgdh"]
-[ext_resource type="Resource" uid="uid://xq1hrdkinp3p" path="res://Resources/GameThemes/game_theme_firefigher_arsonist.tres" id="3_c5mlc"]
-[ext_resource type="Script" path="res://Resources/Scripts/move_higher_way.gd" id="4_xkl58"]
-[ext_resource type="Script" path="res://Resources/Games/game.gd" id="5_afk8i"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="1_vxye0"]
+[ext_resource type="Resource" path="res://Resources/GameComponents/GameRules/game_rules_firefigher_arsonist.tres" id="2_xm0hi"]
+[ext_resource type="Script" path="res://Resources/Games/game.gd" id="3_3qgpt"]
+[ext_resource type="Resource" path="res://Resources/GameComponents/GameThemes/game_theme_firefigher_arsonist.tres" id="3_xolvg"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_higher_way.gd" id="4_d0qme"]
 
 [resource]
-script = ExtResource("5_afk8i")
-game_theme = ExtResource("3_c5mlc")
-game_rules = ExtResource("2_0sgdh")
-cop_script = ExtResource("1_7u8p7")
-robber_script = ExtResource("4_xkl58")
+script = ExtResource("3_3qgpt")
+game_theme = ExtResource("3_xolvg")
+game_rules = ExtResource("2_xm0hi")
+cop_script = ExtResource("1_vxye0")
+robber_script = ExtResource("4_d0qme")

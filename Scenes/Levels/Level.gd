@@ -3,11 +3,11 @@ extends Node2D
 
 signal level_ready
 
-@export var game_resource : Resource
-var game_theme : Resource
-var game_rules : Resource
-var vertex_style_resource : Resource
-var edge_style_resource : Resource
+@export var game_resource : Game
+var game_theme : GameTheme
+var game_rules : GameRules
+var vertex_style_resource : VertexStyle
+var edge_style_resource : EdgeStyle
 
 @export_file("*") var graph_path
 @export var agent_resource : Resource
@@ -29,6 +29,7 @@ var robber_script : Script
 @onready var next_level_button : NextLevelButton = $CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/NextLevelButton
 
 func _ready():
+	
 	
 	game_theme = game_resource.game_theme
 	game_rules = game_resource.game_rules

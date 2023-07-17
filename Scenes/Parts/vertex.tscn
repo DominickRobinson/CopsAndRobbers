@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://qfrun7bjqppy"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/vertex.gd" id="1_cri6f"]
-[ext_resource type="Resource" uid="uid://bbdmf64s4opni" path="res://Resources/bad/vertex_style_bad.tres" id="2_as6xv"]
+[ext_resource type="Resource" uid="uid://cju1g68il7m27" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style_basic.tres" id="2_imd5n"]
 [ext_resource type="Texture2D" uid="uid://bk56yi56pgoem" path="res://Assets/Art/vertex.png" id="2_qu2d6"]
 [ext_resource type="Texture2D" uid="uid://c0ysay55dwxi2" path="res://Assets/Art/Objects/fire.svg" id="3_3y557"]
 
@@ -102,7 +102,7 @@ _data = {
 
 [node name="Vertex" type="Node2D" node_paths=PackedStringArray("label", "anim", "sprite", "fire_sprite", "area")]
 script = ExtResource("1_cri6f")
-style_resource = ExtResource("2_as6xv")
+style_resource = ExtResource("2_imd5n")
 label = NodePath("Sprite2D/Label")
 anim = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")

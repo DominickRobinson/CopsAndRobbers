@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://vyf6ngr5gikf"]
+[gd_scene load_steps=7 format=3 uid="uid://vyf6ngr5gikf"]
 
 [ext_resource type="Script" path="res://Autoloads/Pause/PauseManager.gd" id="1_fdy4f"]
 [ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="2_bfudg"]
+[ext_resource type="Script" path="res://Scenes/UI/ReloadLevelButton.gd" id="5_nmxni"]
 [ext_resource type="Texture2D" uid="uid://cd07o6bwhhmwt" path="res://Assets/Art/UI/home-button.svg" id="7_e5myp"]
 [ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="8_pxl0a"]
 
@@ -50,10 +51,10 @@ layout_mode = 2
 layout_mode = 2
 text = "Resume"
 
-[node name="SceneButton" type="Button" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ReloadLevelButton" type="Button" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Restart"
-script = ExtResource("8_pxl0a")
+script = ExtResource("5_nmxni")
 
 [node name="VSeparator3" type="VSeparator" parent="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)

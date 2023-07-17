@@ -7,4 +7,6 @@ class_name GameTheme
 @export var vertex_style_resource : VertexStyle
 @export var edge_style_resource : EdgeStyle
 
+@export var music : AudioStream
+
 @export var agent_travel_time : float = 0.5

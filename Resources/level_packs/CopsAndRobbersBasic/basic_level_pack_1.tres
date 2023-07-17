@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="LevelPack" load_steps=3 format=3 uid="uid://hjqetla2gcmv"]
 
 [ext_resource type="Script" path="res://Resources/level_packs/level_pack.gd" id="1_2mlwm"]
-[ext_resource type="Resource" uid="uid://br6y6axjc3bks" path="res://Resources/Games/game_basic.tres" id="1_45ixb"]
+[ext_resource type="Resource" uid="uid://dxk6tfgbm11k2" path="res://Resources/Games/game_basic.tres" id="1_45ixb"]
 
 [resource]
 script = ExtResource("1_2mlwm")

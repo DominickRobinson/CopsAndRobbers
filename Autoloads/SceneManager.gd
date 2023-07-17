@@ -1,7 +1,7 @@
 extends Node
 
 
-#var level_resource = preload("res://Scenes/Levels/level.tscn")
+var level_resource = preload("res://level.tscn")
 
 var levels : Array = []
 var level_index = 0
@@ -19,6 +19,13 @@ func change_scene(scene_path : String = "res://Scenes/Levels/level.tscn"):
 	else:
 		get_tree().change_scene_to_file(scene_path)
 	
+	return true
+
+func reload_scene():
+	get_tree().reload_current_scene()
+
+func reload_level():
+	load_level()
 
 func unpack_level_pack(level_pack : Resource):
 	game_resource = level_pack.game_resource
@@ -38,19 +45,18 @@ func load_next_level():
 		load_level()
 
 
-
-
 func load_level():
-	change_scene("res://level.tscn")
-	await get_tree().tree_changed
-	
-	var new_level = get_tree().current_scene
-	
+	var new_level = level_resource.instantiate()
 	new_level.game_resource = game_resource
-#	print(levels)
 	new_level.graph_path = levels[level_index]
 	if level_index < levels.size() - 1:
 		new_level.next_level_path = levels[level_index + 1]
+	
+	change_scene("res://main.tscn")
+	await get_tree().process_frame
+	get_tree().current_scene.add_child(new_level)
+	
+	SoundManager.play_music_file(game_resource.game_theme.music)
 
 
 

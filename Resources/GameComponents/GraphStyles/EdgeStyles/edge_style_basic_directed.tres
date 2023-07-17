@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="EdgeStyle" load_steps=5 format=3 uid="uid://dea8q7wx0wljc"]
+[gd_resource type="Resource" script_class="EdgeStyle" load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://Resources/GraphStyles/EdgeStyles/edge_style.gd" id="1_4on0l"]
+[ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style.gd" id="1_4on0l"]
 [ext_resource type="Texture2D" uid="uid://wryqe0jivfct" path="res://Assets/Art/directed_edge.png" id="1_5n74d"]
 [ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Assets/Art/reflexive_edge.png" id="2_bcpcs"]
 [ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Assets/Art/undirected_edge.png" id="4_g6wfo"]

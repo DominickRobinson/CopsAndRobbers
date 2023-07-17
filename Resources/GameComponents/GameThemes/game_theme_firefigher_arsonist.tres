@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GameTheme" load_steps=8 format=3]
+
+[ext_resource type="Texture2D" uid="uid://tya4k5ue3owt" path="res://Assets/Art/Backgrounds/grass3_1152x648.jpg" id="1_xk6i3"]
+[ext_resource type="Texture2D" uid="uid://ck2tximmbnkrs" path="res://Assets/Art/Characters/firefighter.svg" id="2_tutvx"]
+[ext_resource type="Resource" uid="uid://blxkar7wagjc6" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_undirected.tres" id="3_l36d8"]
+[ext_resource type="AudioStream" uid="uid://qu81m00cypdr" path="res://Assets/Music/arsonist.wav" id="4_08p6y"]
+[ext_resource type="Texture2D" uid="uid://xp74jlbc7rsd" path="res://Assets/Art/Characters/arsonist.svg" id="4_qnawl"]
+[ext_resource type="Script" path="res://Resources/GameComponents/GameThemes/game_theme.gd" id="5_v84v6"]
+[ext_resource type="Resource" uid="uid://cacylpg4qvc3e" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style_firefighter_arsonist.tres" id="6_qgxx8"]
+
+[resource]
+script = ExtResource("5_v84v6")
+background_skin = ExtResource("1_xk6i3")
+cop_skin = ExtResource("2_tutvx")
+robber_skin = ExtResource("4_qnawl")
+vertex_style_resource = ExtResource("6_qgxx8")
+edge_style_resource = ExtResource("3_l36d8")
+music = ExtResource("4_08p6y")
+agent_travel_time = 0.5

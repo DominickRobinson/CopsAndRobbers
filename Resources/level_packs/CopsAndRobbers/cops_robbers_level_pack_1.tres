@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LevelPack" load_steps=3 format=3 uid="uid://bmclpx4sgq0wi"]
+
+[ext_resource type="Resource" path="res://Resources/Games/game_cops_robbers.tres" id="1_0m8pa"]
+[ext_resource type="Script" path="res://Resources/level_packs/level_pack.gd" id="2_6j7v1"]
+
+[resource]
+script = ExtResource("2_6j7v1")
+game_resource = ExtResource("1_0m8pa")
+levels_path = "res://Graphs/Offner/Minimal-1-Top"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LevelPack" load_steps=3 format=3 uid="uid://bnf4k60udmi2h"]
+
+[ext_resource type="Resource" uid="uid://cw2sstuw148mi" path="res://Resources/Games/game_firefigher_arsonist.tres" id="1_ranmn"]
+[ext_resource type="Script" path="res://Resources/level_packs/level_pack.gd" id="1_vyd64"]
+
+[resource]
+script = ExtResource("1_vyd64")
+game_resource = ExtResource("1_ranmn")
+levels_path = "res://Graphs/Offner/Maybe-1-Top-Minimal"

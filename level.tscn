@@ -1,13 +1,12 @@
-[gd_scene load_steps=25 format=3 uid="uid://ccp73t4r2n7kf"]
+[gd_scene load_steps=23 format=3 uid="uid://ccp73t4r2n7kf"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_4vtp5"]
-[ext_resource type="Resource" uid="uid://bt2j167efe3id" path="res://Resources/Games/game_firefigher_arsonist.tres" id="2_w2vsq"]
 [ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="3_5e23p"]
 [ext_resource type="Script" path="res://Scenes/Rules/game_manager.gd" id="4_u8lwv"]
 [ext_resource type="PackedScene" uid="uid://bc6k3dwiyonyw" path="res://Scenes/Rules/state_machine.tscn" id="5_xvqft"]
 [ext_resource type="PackedScene" uid="uid://btuqhupbnwq6" path="res://Scenes/Rules/check_for_cop_win.tscn" id="6_uq0nc"]
 [ext_resource type="Script" path="res://Scenes/Rules/capture_robbers.gd" id="7_ggxgr"]
-[ext_resource type="PackedScene" path="res://Scenes/Parts/graph.tscn" id="8_386oa"]
+[ext_resource type="PackedScene" uid="uid://drpi6jihu1vex" path="res://Scenes/Parts/graph.tscn" id="8_386oa"]
 [ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="9_c80yj"]
 [ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="10_osy3l"]
 [ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="11_uketj"]
@@ -20,7 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="18_bt1jo"]
 [ext_resource type="Script" path="res://Scenes/UI/NextLevelButton.gd" id="19_jyn66"]
 [ext_resource type="Script" path="res://Scenes/UI/BeginScreen.gd" id="20_0r1o1"]
-[ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="21_sda5w"]
 [ext_resource type="Texture2D" uid="uid://rnw0n3230ttj" path="res://Assets/Art/Backgrounds/dark_gray.png" id="22_tgikc"]
 
 [sub_resource type="GDScript" id="GDScript_c5y8f"]
@@ -40,7 +38,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_hkguu"]
+[sub_resource type="Resource" id="Resource_j0631"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("12_s8e4o")
@@ -53,8 +51,6 @@ hovering_skin = ExtResource("13_4e5s1")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4vtp5")
-game_resource = ExtResource("2_w2vsq")
-graph_path = "res://Graphs/chordal7.json"
 agent_resource = ExtResource("3_5e23p")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label")]
@@ -73,7 +69,7 @@ label = NodePath("../../CanvasLayer/MarginContainer/VBoxContainer/Label")
 script = ExtResource("7_ggxgr")
 
 [node name="Graph" parent="." instance=ExtResource("8_386oa")]
-vertex_style_resource = SubResource("Resource_hkguu")
+vertex_style_resource = SubResource("Resource_j0631")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -226,9 +222,6 @@ layout_mode = 2
 [node name="Cops" type="Node2D" parent="Agents"]
 
 [node name="Robbers" type="Node2D" parent="Agents"]
-
-[node name="MusicPlayer" parent="." instance=ExtResource("21_sda5w")]
-music_track_name = "music_cops_and_robbers"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

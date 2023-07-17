@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="Game" load_steps=6 format=3 uid="uid://erox38t32igr"]
+[gd_resource type="Resource" script_class="Game" load_steps=6 format=3 uid="uid://37xlqxcedgx"]
 
 [ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="1_1j5i1"]
-[ext_resource type="Resource" uid="uid://bfvhdo510mufe" path="res://Resources/GameRules/game_rules_cops_robbers.tres" id="2_5fqin"]
-[ext_resource type="Resource" uid="uid://dntwgw8ykw86a" path="res://Resources/GameThemes/game_theme_jesus_devil.tres" id="3_kx6qu"]
+[ext_resource type="Resource" path="res://Resources/GameComponents/GameRules/game_rules_cops_robbers.tres" id="2_5fqin"]
+[ext_resource type="Resource" path="res://Resources/GameComponents/GameThemes/game_theme_jesus_devil.tres" id="3_kx6qu"]
 [ext_resource type="Script" path="res://Resources/Scripts/move_higher_way.gd" id="4_dpvwd"]
 [ext_resource type="Script" path="res://Resources/Games/game.gd" id="5_3jd6c"]
 
