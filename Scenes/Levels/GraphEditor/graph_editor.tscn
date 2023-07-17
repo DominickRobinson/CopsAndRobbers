@@ -1,11 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://c086hshnh55j5"]
+[gd_scene load_steps=17 format=3 uid="uid://c086hshnh55j5"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_8o4cl"]
 [ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_mtsu3"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_fkwqj"]
 [ext_resource type="PackedScene" uid="uid://drpi6jihu1vex" path="res://Scenes/Parts/graph.tscn" id="4_lemyg"]
+[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="5_0gxno"]
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/VertexSpawnPosition.gd" id="5_3ulu6"]
+[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="6_dgjcg"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="6_vbmlc"]
+[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="7_hpwno"]
+[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="8_bqhji"]
+[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="9_1sbwa"]
+[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="10_n2uqf"]
+[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="11_dsyp6"]
+
+[sub_resource type="GDScript" id="GDScript_c5y8f"]
+script/source = "extends Resource
+
+
+@export_category(\"Skins\")
+@export var default_skin : Texture2D
+@export var cop_skin : Texture2D
+@export var robber_skin : Texture2D
+@export var both_skin : Texture2D
+@export var burnt_skin : Texture2D
+@export var selected_skin : Texture2D
+@export var hovering_skin : Texture2D
+
+
+
+"
+
+[sub_resource type="Resource" id="Resource_b1y6r"]
+resource_local_to_scene = true
+script = SubResource("GDScript_c5y8f")
+default_skin = ExtResource("8_bqhji")
+cop_skin = ExtResource("7_hpwno")
+robber_skin = ExtResource("10_n2uqf")
+both_skin = ExtResource("5_0gxno")
+burnt_skin = ExtResource("6_dgjcg")
+selected_skin = ExtResource("11_dsyp6")
+hovering_skin = ExtResource("9_1sbwa")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxaq5"]
 
@@ -105,6 +140,12 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+
+[node name="ShowHideButton" type="Button" parent="GUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Show/hide"
 
 [node name="TabContainer" type="TabContainer" parent="GUI/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -350,6 +391,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_lemyg")]
+vertex_style_resource = SubResource("Resource_b1y6r")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -396,6 +438,7 @@ anchor_mode = 0
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Mode/EdgeMode" to="." method="set_edge_mode"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/SaveGraph" to="SaveFileDialog" method="show"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/LoadGraph" to="LoadFileDialog" method="show"]
+[connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/ShowHideButton" to="GUI/MarginContainer/VBoxContainer/TabContainer" method="set_visible"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties/MakeReflexive" to="." method="make_reflexive"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties/MakeUndirected" to="." method="make_undirected"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/Fill" to="." method="fill"]
