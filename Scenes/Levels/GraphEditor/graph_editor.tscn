@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_8o4cl"]
 [ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_mtsu3"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_fkwqj"]
-[ext_resource type="PackedScene" uid="uid://cye6br4b3bx28" path="res://Scenes/Parts/graph.tscn" id="4_lemyg"]
+[ext_resource type="PackedScene" path="res://Scenes/Parts/graph.tscn" id="4_lemyg"]
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/VertexSpawnPosition.gd" id="5_3ulu6"]
 [ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="5_gdkfp"]
 [ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="6_1xdtx"]
@@ -31,7 +31,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_ru6dj"]
+[sub_resource type="Resource" id="Resource_vvh0r"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("8_qe6qk")
@@ -143,6 +143,8 @@ size_flags_vertical = 0
 
 [node name="TabContainer" type="TabContainer" parent="GUI/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Actions" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
 layout_mode = 2
@@ -333,6 +335,22 @@ placeholder_text = "Citation"
 wrap_mode = 1
 scroll_fit_content_height = true
 
+[node name="Properties" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Properties"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+
+[node name="SpinBox" type="SpinBox" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Properties/VBoxContainer"]
+layout_mode = 2
+prefix = "Camera zoom:   "
+
 [node name="PanelContainer" type="PanelContainer" parent="GUI/MarginContainer"]
 visible = false
 layout_mode = 2
@@ -367,7 +385,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_lemyg")]
-vertex_style_resource = SubResource("Resource_ru6dj")
+vertex_style_resource = SubResource("Resource_vvh0r")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -391,7 +409,7 @@ root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv", "*.json")
 
 [node name="VertexSpawnPosition" type="Node2D" parent="."]
-position = Vector2(642, 358)
+position = Vector2(580, 324)
 script = ExtResource("5_3ulu6")
 
 [node name="Area2D" type="Area2D" parent="VertexSpawnPosition"]
@@ -406,7 +424,7 @@ default_color = Color(0.192157, 0.639216, 1, 1)
 music_track_name = "music_editor"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(638, 334)
+anchor_mode = 0
 
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Buttons/AddVertex" to="." method="add_vertex"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Buttons/Refresh" to="." method="refresh"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dt28dm1habglm"]
+[gd_scene load_steps=22 format=3 uid="uid://dt28dm1habglm"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -7,8 +7,55 @@
 [ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]
 [ext_resource type="Script" path="res://Scenes/UI/LevelPackButton.gd" id="4_52l23"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
-[ext_resource type="Resource" uid="uid://c7l4wtb8ya74f" path="res://Resources/level_packs/CopsAndRobbersSimple/simple_cr_pack_1.tres" id="5_o4gsd"]
-[ext_resource type="Resource" uid="uid://dfhelgorhmddd" path="res://Resources/level_packs/FirefightersAndArsonists/fa_pack_1.tres" id="6_rwcll"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="5_36xhy"]
+[ext_resource type="Resource" uid="uid://hjqetla2gcmv" path="res://Resources/level_packs/CopsAndRobbersBasic/basic_level_pack_1.tres" id="5_fsk6h"]
+[ext_resource type="Resource" uid="uid://cegyon10xb8ph" path="res://Resources/bad/game_rules_bad.tres" id="6_yry7g"]
+[ext_resource type="Resource" uid="uid://c7lew64p4gk4c" path="res://Resources/bad/game_theme_bad.tres" id="7_0dis4"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_higher_way.gd" id="8_2pa2h"]
+[ext_resource type="Texture2D" uid="uid://dnjq8kwqdhki8" path="res://Assets/Art/UI/youtube.svg" id="11_81ldx"]
+[ext_resource type="Script" path="res://Scenes/UI/LinkIconButton.gd" id="12_c1in3"]
+[ext_resource type="Texture2D" uid="uid://bbnt4qcwrcnak" path="res://Assets/Art/UI/link.svg" id="13_3d1wh"]
+
+[sub_resource type="GDScript" id="GDScript_ag8j8"]
+script/source = "extends Resource
+
+@export var game_theme : Resource
+@export var game_rules : Resource
+
+@export var cop_script : Script
+@export var robber_script : Script
+"
+
+[sub_resource type="Resource" id="Resource_d6c3p"]
+script = SubResource("GDScript_ag8j8")
+game_theme = ExtResource("7_0dis4")
+game_rules = ExtResource("6_yry7g")
+cop_script = ExtResource("5_36xhy")
+robber_script = ExtResource("8_2pa2h")
+
+[sub_resource type="GDScript" id="GDScript_mpdwq"]
+script/source = "extends Resource
+
+@export var game_resource : Resource
+@export_dir var levels_path
+"
+
+[sub_resource type="Resource" id="Resource_ac2lb"]
+script = SubResource("GDScript_mpdwq")
+game_resource = SubResource("Resource_d6c3p")
+levels_path = "res://Graphs/Offner/Maybe-1-Top-Minimal"
+
+[sub_resource type="GDScript" id="GDScript_5hubq"]
+script/source = "extends Resource
+
+@export var game_resource : Resource
+@export_dir var levels_path
+"
+
+[sub_resource type="Resource" id="Resource_h1q4x"]
+script = SubResource("GDScript_5hubq")
+game_resource = SubResource("Resource_d6c3p")
+levels_path = "res://Graphs/Offner/Maybe-1-Top-Minimal"
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -111,15 +158,21 @@ layout_mode = 2
 
 [node name="LevelPackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
+text = "Basic level pack #1"
+script = ExtResource("4_52l23")
+level_pack = ExtResource("5_fsk6h")
+
+[node name="LevelPackButton3" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+layout_mode = 2
 text = "Simple cops and robbers #1"
 script = ExtResource("4_52l23")
-level_pack = ExtResource("5_o4gsd")
+level_pack = SubResource("Resource_ac2lb")
 
 [node name="LevelPackButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
 text = "Firefighter and arsonist #1"
 script = ExtResource("4_52l23")
-level_pack = ExtResource("6_rwcll")
+level_pack = SubResource("Resource_h1q4x")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
 visible = false
@@ -254,24 +307,98 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits"]
 layout_mode = 2
 
-[node name="Dom" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+[node name="People" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer"]
+layout_mode = 2
+
+[node name="People" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+layout_mode = 2
+text = "PEOPLE:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+layout_mode = 2
+
+[node name="Dom" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer"]
 layout_mode = 2
 text = "Dominick Robinson - programmer"
 
-[node name="Offner" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+[node name="YouTube" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+icon = ExtResource("11_81ldx")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("12_c1in3")
+url = "https://www.youtube.com/@DomonationYT"
+
+[node name="Website" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+icon = ExtResource("13_3d1wh")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("12_c1in3")
+url = "https://domonation.dev/"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+layout_mode = 2
+
+[node name="Offner" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer2"]
 layout_mode = 2
 text = "David Offner - research advisor"
 
-[node name="Gabe" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+[node name="Website2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+icon = ExtResource("13_3d1wh")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("12_c1in3")
+url = "https://davidoffner.wordpress.com/"
+
+[node name="Gabe" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
 layout_mode = 2
 text = "Gabriel Prado - music"
 
-[node name="Aleca" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+[node name="Aleca" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
 layout_mode = 2
 text = "Alexa Carl - art"
+
+[node name="HSeparator" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Things" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer"]
+layout_mode = 2
+
+[node name="Things" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+layout_mode = 2
+text = "THINGS:"
+
+[node name="Godot" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+layout_mode = 2
+text = "Godot Engine - amazing free game engine used"
+
+[node name="OpenMoji" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+layout_mode = 2
+text = "OpenMoji - free emoji art assets"
+
+[node name="FreeSound" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+layout_mode = 2
+text = "FreeSound - free songs and sound effects"
+
+[node name="itch" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+layout_mode = 2
+text = "itch.io - hosting the game"
+
+[node name="Wikimedia Commons" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+layout_mode = 2
+text = "Wikimedia Commons - free stock art"
 
 [node name="References" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 visible = false

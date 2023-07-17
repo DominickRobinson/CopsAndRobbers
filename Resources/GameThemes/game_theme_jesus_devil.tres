@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GameTheme" load_steps=7 format=3 uid="uid://dntwgw8ykw86a"]
+
+[ext_resource type="Texture2D" uid="uid://dpoo5vhb0n5l3" path="res://Assets/Art/Backgrounds/desert.jpg" id="1_q1s4v"]
+[ext_resource type="Texture2D" uid="uid://ihdb7bhjal4d" path="res://Assets/Art/Characters/jesus.svg" id="2_3h6y0"]
+[ext_resource type="Resource" uid="uid://blxkar7wagjc6" path="res://Resources/GraphStyles/EdgeStyles/edge_style_basic_undirected.tres" id="3_y1wee"]
+[ext_resource type="Texture2D" uid="uid://1a6i24xpddcp" path="res://Assets/Art/Characters/snake.svg" id="4_u7u0e"]
+[ext_resource type="Script" path="res://Resources/GameThemes/game_theme.gd" id="5_xfobi"]
+[ext_resource type="Resource" uid="uid://ci5rybhdf1pog" path="res://Resources/GraphStyles/VertexStyles/vertex_style_basic.tres" id="6_g2e1r"]
+
+[resource]
+script = ExtResource("5_xfobi")
+background_skin = ExtResource("1_q1s4v")
+cop_skin = ExtResource("2_3h6y0")
+robber_skin = ExtResource("4_u7u0e")
+vertex_style_resource = ExtResource("6_g2e1r")
+edge_style_resource = ExtResource("3_y1wee")
+agent_travel_time = 0.5

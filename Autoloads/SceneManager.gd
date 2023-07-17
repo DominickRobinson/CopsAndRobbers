@@ -1,7 +1,7 @@
 extends Node
 
 
-var level_resource = preload("res://Scenes/Levels/level.tscn")
+#var level_resource = preload("res://Scenes/Levels/level.tscn")
 
 var levels : Array = []
 var level_index = 0
@@ -41,23 +41,16 @@ func load_next_level():
 
 
 func load_level():
-	change_scene("res://empty.tscn")
-	await get_tree().process_frame
+	change_scene("res://level.tscn")
+	await get_tree().tree_changed
 	
-	var new_level = level_resource.instantiate() as Level
+	var new_level = get_tree().current_scene
 	
 	new_level.game_resource = game_resource
-	print(levels)
+#	print(levels)
 	new_level.graph_path = levels[level_index]
 	if level_index < levels.size() - 1:
 		new_level.next_level_path = levels[level_index + 1]
-
-#	print("GR: ", new_level.game_resource)
-#	print("GP: ", new_level.graph_path)
-	
-	
-	
-	get_tree().root.get_node("empty").add_child(new_level)
 
 
 

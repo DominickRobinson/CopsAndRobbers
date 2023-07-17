@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="VertexStyle" load_steps=9 format=3 uid="uid://ci5rybhdf1pog"]
+
+[ext_resource type="Script" path="res://Resources/GraphStyles/VertexStyles/vertex_style.gd" id="1_dstxy"]
+[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="1_y4row"]
+[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="1_ynbxt"]
+[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="3_8mepw"]
+[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="4_nac0d"]
+[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="5_5dhbq"]
+[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="6_uesu8"]
+[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="8_suh0w"]
+
+[resource]
+script = ExtResource("1_dstxy")
+default_skin = ExtResource("4_nac0d")
+cop_skin = ExtResource("3_8mepw")
+robber_skin = ExtResource("6_uesu8")
+both_skin = ExtResource("1_ynbxt")
+burnt_skin = ExtResource("1_y4row")
+selected_skin = ExtResource("8_suh0w")
+hovering_skin = ExtResource("5_5dhbq")
