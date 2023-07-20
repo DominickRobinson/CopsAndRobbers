@@ -17,7 +17,7 @@
 
 [node name="AudioPool" type="Node"]
 script = ExtResource("1_7y3od")
-cops_and_robbers = Array[AudioStream]([ExtResource("2_e6edi"), ExtResource("3_wckey"), ExtResource("4_mnr6s")])
+sound_cops_and_robbers = Array[AudioStream]([ExtResource("3_wckey"), ExtResource("2_e6edi"), ExtResource("4_mnr6s")])
 sound_vertex_add = Array[AudioStream]([ExtResource("6_a1s4l"), ExtResource("5_pcbhb")])
 sound_vertex_remove = ExtResource("5_251pd")
 sound_edge_add_start = ExtResource("5_pcbhb")

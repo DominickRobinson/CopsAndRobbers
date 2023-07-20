@@ -1,18 +1,18 @@
 [gd_scene load_steps=17 format=3 uid="uid://c086hshnh55j5"]
 
-[ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_8o4cl"]
-[ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_mtsu3"]
-[ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_fkwqj"]
-[ext_resource type="PackedScene" uid="uid://drpi6jihu1vex" path="res://Scenes/Parts/graph.tscn" id="4_lemyg"]
-[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="5_0gxno"]
-[ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/VertexSpawnPosition.gd" id="5_3ulu6"]
-[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="6_dgjcg"]
-[ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="6_vbmlc"]
-[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="7_hpwno"]
-[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="8_bqhji"]
-[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="9_1sbwa"]
-[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="10_n2uqf"]
-[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="11_dsyp6"]
+[ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_afr4a"]
+[ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_lg68n"]
+[ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_o7u82"]
+[ext_resource type="PackedScene" uid="uid://drpi6jihu1vex" path="res://Scenes/Parts/graph.tscn" id="4_7hxle"]
+[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="5_ncynv"]
+[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="6_shywg"]
+[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="7_2m1pa"]
+[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="8_wus48"]
+[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="9_ui86k"]
+[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="10_qrq67"]
+[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="11_jfp1i"]
+[ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/VertexSpawnPosition.gd" id="12_7ecey"]
+[ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="13_fqo07"]
 
 [sub_resource type="GDScript" id="GDScript_c5y8f"]
 script/source = "extends Resource
@@ -31,21 +31,21 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_b1y6r"]
+[sub_resource type="Resource" id="Resource_3fmn0"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
-default_skin = ExtResource("8_bqhji")
-cop_skin = ExtResource("7_hpwno")
-robber_skin = ExtResource("10_n2uqf")
-both_skin = ExtResource("5_0gxno")
-burnt_skin = ExtResource("6_dgjcg")
-selected_skin = ExtResource("11_dsyp6")
-hovering_skin = ExtResource("9_1sbwa")
+default_skin = ExtResource("8_wus48")
+cop_skin = ExtResource("7_2m1pa")
+robber_skin = ExtResource("10_qrq67")
+both_skin = ExtResource("5_ncynv")
+burnt_skin = ExtResource("6_shywg")
+selected_skin = ExtResource("11_jfp1i")
+hovering_skin = ExtResource("9_ui86k")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxaq5"]
 
 [node name="GraphEditor" type="Node2D" node_paths=PackedStringArray("graph", "vertex_spawn_position", "add_vertex_button", "selected_label", "vertex_mode_button", "edge_mode_button", "new_edge_line", "corner_spinbox", "title_text_edit", "author_text_edit", "description_text_edit", "citation_text_edit", "save_file_dialog", "load_file_dialog")]
-script = ExtResource("1_8o4cl")
+script = ExtResource("1_afr4a")
 graph = NodePath("Graph")
 vertex_spawn_position = NodePath("VertexSpawnPosition")
 add_vertex_button = NodePath("GUI/MarginContainer/HBoxContainer/Buttons/AddVertex")
@@ -104,14 +104,14 @@ layout_mode = 2
 layout_mode = 2
 toggle_mode = true
 button_pressed = true
-button_group = ExtResource("2_mtsu3")
+button_group = ExtResource("2_lg68n")
 text = "Vertex mode"
 
 [node name="EdgeMode" type="Button" parent="GUI/MarginContainer/HBoxContainer/Mode"]
 layout_mode = 2
 size_flags_vertical = 3
 toggle_mode = true
-button_group = ExtResource("2_mtsu3")
+button_group = ExtResource("2_lg68n")
 text = "Edge mode"
 
 [node name="HSeparator2" type="HSeparator" parent="GUI/MarginContainer/HBoxContainer"]
@@ -133,7 +133,7 @@ text = "Load Graph"
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="PauseButton" parent="GUI/MarginContainer/HBoxContainer" instance=ExtResource("3_fkwqj")]
+[node name="PauseButton" parent="GUI/MarginContainer/HBoxContainer" instance=ExtResource("3_o7u82")]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer"]
@@ -390,8 +390,8 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 horizontal_alignment = 2
 
-[node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_lemyg")]
-vertex_style_resource = SubResource("Resource_b1y6r")
+[node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
+vertex_style_resource = SubResource("Resource_3fmn0")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -416,7 +416,7 @@ filters = PackedStringArray("*.csv", "*.tsv", "*.json")
 
 [node name="VertexSpawnPosition" type="Node2D" parent="."]
 position = Vector2(580, 324)
-script = ExtResource("5_3ulu6")
+script = ExtResource("12_7ecey")
 
 [node name="Area2D" type="Area2D" parent="VertexSpawnPosition"]
 
@@ -426,7 +426,7 @@ shape = SubResource("RectangleShape2D_nxaq5")
 [node name="NewEdgeLine" type="Line2D" parent="."]
 default_color = Color(0.192157, 0.639216, 1, 1)
 
-[node name="MusicPlayer" parent="." instance=ExtResource("6_vbmlc")]
+[node name="MusicPlayer" parent="." instance=ExtResource("13_fqo07")]
 music_track_name = "music_editor"
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -19,7 +19,8 @@ func _on_press():
 		can_play = false
 		var player = SoundManager.play_sound(audio_name)
 		disabled = true
-		await player.finished
+		if is_instance_valid(player):
+			await player.finished
 		can_play = true
 		disabled = false
 	

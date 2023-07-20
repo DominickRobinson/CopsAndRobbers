@@ -76,6 +76,6 @@ layout_mode = 2
 text = "Go to main menu"
 icon = ExtResource("7_e5myp")
 script = ExtResource("8_pxl0a")
-scene_path = "res://Scenes/Levels/MainMenu/main_menu.tscn"
+scene_path = "res://Scenes/Levels/main_menu.tscn"
 
 [connection signal="pressed" from="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="unpause"]

@@ -1,6 +1,6 @@
 #@tool
 class_name GraphData
-extends Node
+extends Node2D
 
 signal changed(old_graph:Array, new_graph:Array)
 

@@ -4,7 +4,7 @@ extends Node
 
 @export_group("Sound")
 @export_subgroup("Title")
-@export var cops_and_robbers : Array[AudioStream]
+@export var sound_cops_and_robbers : Array[AudioStream]
 @export_subgroup("Editor")
 @export var sound_vertex_add : Array[AudioStream]
 @export var sound_vertex_remove : AudioStream

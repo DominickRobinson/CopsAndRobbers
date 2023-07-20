@@ -60,15 +60,19 @@ func _ready():
 
 func _unhandled_input(_event):
 	if editable:
-		if Input.is_action_just_pressed("select") and mouse_inside_area:
-			mouse_offset = global_position - get_global_mouse_position()
+		if Input.is_action_just_pressed("select"):
+			await get_tree().process_frame
+			if mouse_inside_area:
+				mouse_offset = global_position - get_global_mouse_position()
 		if Input.is_action_just_released("select"):
 			draggable = false
 			deselected.emit()
 			moved.emit()
 	
-	if mouse_inside_area and Input.is_action_just_pressed("select") and selectable:
-		selected.emit()
+	if Input.is_action_just_pressed("select") and selectable:
+		await get_tree().process_frame
+		if mouse_inside_area:
+			selected.emit()
 	
 #		if Input.is_action_just_pressed("delete") and mouse_inside_area:
 #			remove()

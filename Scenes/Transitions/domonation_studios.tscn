@@ -48,7 +48,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p88ou")
-next_scene = "res://Scenes/Levels/MainMenu/main_menu.tscn"
+next_scene = "res://Scenes/Levels/main_menu.tscn"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
