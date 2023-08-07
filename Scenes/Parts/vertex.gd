@@ -69,7 +69,7 @@ func _unhandled_input(_event):
 			deselected.emit()
 			moved.emit()
 	
-	if Input.is_action_just_pressed("select") and selectable:
+	if Input.is_action_just_released("select") and selectable:
 		await get_tree().process_frame
 		if mouse_inside_area:
 			selected.emit()

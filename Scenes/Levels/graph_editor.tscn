@@ -31,7 +31,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_3fmn0"]
+[sub_resource type="Resource" id="Resource_b4fq0"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("8_wus48")
@@ -89,7 +89,6 @@ layout_mode = 2
 text = "Add vertex"
 
 [node name="Refresh" type="Button" parent="GUI/MarginContainer/HBoxContainer/Buttons"]
-visible = false
 layout_mode = 2
 text = "Refresh"
 
@@ -341,7 +340,7 @@ placeholder_text = "Citation"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="Properties" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
+[node name="Tips" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -349,13 +348,21 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Properties"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="SpinBox" type="SpinBox" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Properties/VBoxContainer"]
+[node name="RightClick" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips/VBoxContainer"]
 layout_mode = 2
-prefix = "Camera zoom:   "
+text = "Right click to deleted an edge or vertex."
+
+[node name="VertexMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips/VBoxContainer"]
+layout_mode = 2
+text = "You can move and delete vertices in vertex mode."
+
+[node name="EdgeMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips/VBoxContainer"]
+layout_mode = 2
+text = "You can only create and delete edges in edge mode."
 
 [node name="PanelContainer" type="PanelContainer" parent="GUI/MarginContainer"]
 visible = false
@@ -385,13 +392,14 @@ theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 
 [node name="SelectedLabel" type="Label" parent="GUI/MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_3fmn0")
+vertex_style_resource = SubResource("Resource_b4fq0")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]

@@ -59,7 +59,7 @@ func _ready():
 	author_text_edit.text_changed.connect(set_author)
 	description_text_edit.text_changed.connect(set_description)
 	citation_text_edit.text_changed.connect(set_citation)
-	
+
 
 func load_graph(path):
 	graph.load_graph(path)
@@ -69,13 +69,16 @@ func load_graph(path):
 	description_text_edit.text = graph.description
 	citation_text_edit.text = graph.citation
 
+
 func _on_graph_changed():
 	graph.refresh()
+
 
 func set_title(): graph.title = title_text_edit.text
 func set_author(): graph.author = author_text_edit.text
 func set_description(): graph.description = description_text_edit.text
 func set_citation(): graph.citation = citation_text_edit.text
+
 
 func _unhandled_input(event):
 	
@@ -188,7 +191,6 @@ func retract_corners():
 
 
 func refresh():
-	print("Refreshing!")
 	for e in graph.edges:
 		e.mouse_entered.connect(set_hovering_edge.bind(e))
 		e.mouse_exited.connect(set_hovering_edge.bind(null))
@@ -203,6 +205,7 @@ func refresh():
 		set_vertex_mode()
 	elif mode == Modes.EdgeMode:
 		set_edge_mode()
+
 
 
 func set_vertex_mode():

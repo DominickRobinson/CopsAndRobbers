@@ -91,7 +91,8 @@ func get_neighbors_from_vertex(vtx:Vertex) -> Array:
 	var nbors = []
 	var i = vtx.index
 	for j in graph_data.size():
-		if graph_data.graph[i][j]:
+		
+		if i < graph_data.size() and graph_data.graph[i][j]:
 			var nbor = vertex_container.get_vertex_from_index(j)
 			nbors.append(nbor)
 	return nbors
@@ -216,7 +217,6 @@ func add_edge(start_vtx : Vertex, end_vtx : Vertex, undirected : bool = false):
 		graph_data.add_edge(end_vtx.index, start_vtx.index)
 	
 	changed.emit()
-	
 
 
 func remove_edge(edge : Edge, reflexive : bool = false):
@@ -317,15 +317,15 @@ func get_Fk_mappings() -> Array:
 	return mappings
 
 func refresh():
-	refresh_vertices()
-	await get_tree().process_frame
-	refresh_edges()
+	await refresh_vertices()
+	await refresh_edges()
 	
 	var scr = graph_data.get_strict_corner_ranking()
 	
-	for v in vertex_container.vertices:
+	for v in vertices:
 		v = v as Vertex
-		v.strict_corner_ranking = scr[v.index]
+		if v.index < scr.size():
+			v.strict_corner_ranking = scr[v.index]
 		v.is_top = (v.strict_corner_ranking == get_max_ranking())
 	
 	
@@ -334,12 +334,15 @@ func refresh():
 	
 	refreshed.emit()
 
+
 func refresh_vertices():
+	print("Refreshing vertices")
 	for i in vertices.size():
 		var v = vertices[i] as Vertex
+		print(v.name)
 		v.index = i
 		v.neighbors = get_neighbors_from_vertex(v)
-		
+	return true
 
 func refresh_edges():
 	edge_container.remove_all()
@@ -354,6 +357,8 @@ func refresh_edges():
 				new_edge.directed = not graph_data.graph[j][i]
 				
 				edge_container.add_edge(new_edge)
+	
+	return true
 
 func get_max_ranking():
 	return graph_data.get_max_ranking()
@@ -486,6 +491,9 @@ func load_graph(path : String):
 			for j in array.size():
 				add_vertex(positions[j])
 			graph_data.graph = array
+	
+	await get_tree().create_timer(0.5).timeout
+	changed.emit()
 	
 	return true
 #	if positions == []:

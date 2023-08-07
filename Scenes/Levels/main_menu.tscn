@@ -103,6 +103,7 @@ theme_override_font_sizes/font_size = 25
 drag_to_rearrange_enabled = true
 
 [node name="Play" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
@@ -116,31 +117,41 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="LevelPackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Basic level pack #1"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("5_fsk6h")
 
 [node name="LevelPackButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Cops and robbers #1"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("6_rswi2")
 
 [node name="LevelPackButton3" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Cops and robbers #2"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("6_jh50r")
 
 [node name="LevelPackButton4" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Firefighters and arsonists #1"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("8_1xuos")
 
 [node name="LevelPackButton5" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Jesus and devil #1"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("9_33rho")
@@ -237,7 +248,6 @@ script = ExtResource("3_f3unt")
 scene_path = "res://Scenes/Levels/level.tscn"
 
 [node name="Create" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
@@ -249,15 +259,17 @@ layout_mode = 2
 
 [node name="SceneButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Create/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Graph editor"
 script = ExtResource("3_f3unt")
-scene_path = "res://Scenes/Levels/GraphEditor/graph_editor.tscn"
+scene_path = "res://Scenes/Levels/graph_editor.tscn"
 
 [node name="SceneButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Create/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Graph data editor"
 script = ExtResource("3_f3unt")
-scene_path = "res://Scenes/Levels/GraphDataEditor/graph_data_editor.tscn"
+scene_path = "res://Scenes/Levels/graph_data_editor.tscn"
 
 [node name="Settings" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 visible = false
