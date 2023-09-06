@@ -175,11 +175,13 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 		fill()
 		return
 	
+	
 	add_vertex(pos)
 	await changed
 	make_reflexive()
 	await changed
 	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
+	print("Vertex to connect to: ", old_vtx.index)
 	var new_vtx = vertices[-1]
 	
 	#add edges
@@ -195,8 +197,8 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	await changed
 	if new_vtx.neighbors.size() == old_vtx.neighbors.size():
 		var vtxs = new_vtx.neighbors
-		vtxs.erase(old_vtx)
-		vtxs.erase(new_vtx)
+#		vtxs.erase(old_vtx)
+#		vtxs.erase(new_vtx)
 		remove_edge_given_vertices(new_vtx, vtxs[randi() % vtxs.size()], true)
 	
 	set_positions_by_ranking()
@@ -411,6 +413,7 @@ func save_graph(path : String):
 	var dict : Dictionary = {
 		"adjacency_matrix" : array,
 		"positions" : positions_string,
+#		"corner_ranking" : str(graph_data.strict_corner_ranking)
 		"title" : title,
 		"author" : author,
 		"description" : description,

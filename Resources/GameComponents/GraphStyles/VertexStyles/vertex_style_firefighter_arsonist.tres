@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="VertexStyle" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="VertexStyle" load_steps=4 format=3 uid="uid://chqujuxex5yjx"]
 
 [ext_resource type="Texture2D" uid="uid://b5n7fbt31ctb6" path="res://Assets/Art/Objects/wildfire.svg" id="1_7rea3"]
 [ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style.gd" id="1_u6yvq"]

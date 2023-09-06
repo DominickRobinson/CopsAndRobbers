@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dt28dm1habglm"]
+[gd_scene load_steps=26 format=3 uid="uid://dt28dm1habglm"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -12,9 +12,25 @@
 [ext_resource type="Resource" uid="uid://bmclpx4sgq0wi" path="res://Resources/level_packs/CopsAndRobbers/cops_robbers_level_pack_1.tres" id="6_rswi2"]
 [ext_resource type="Resource" uid="uid://bnf4k60udmi2h" path="res://Resources/level_packs/FirefightersAndArsonists/firefighter_arsonist_level_pack_1.tres" id="8_1xuos"]
 [ext_resource type="Resource" uid="uid://cxb3mggpiidmy" path="res://Resources/level_packs/JesusDevil/jesus_devil_level_pack_1.tres" id="9_33rho"]
+[ext_resource type="Script" path="res://Scenes/Levels/LoadCustomGameButton.gd" id="10_pcfh5"]
 [ext_resource type="Texture2D" uid="uid://dnjq8kwqdhki8" path="res://Assets/Art/UI/youtube.svg" id="11_81ldx"]
+[ext_resource type="Resource" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_undirected.tres" id="11_dyvdp"]
+[ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="11_fvfss"]
+[ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="11_q8lxc"]
 [ext_resource type="Script" path="res://Scenes/UI/LinkIconButton.gd" id="12_c1in3"]
+[ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="12_vt7vy"]
 [ext_resource type="Texture2D" uid="uid://bbnt4qcwrcnak" path="res://Assets/Art/UI/link.svg" id="13_3d1wh"]
+[ext_resource type="Resource" uid="uid://cju1g68il7m27" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style_basic.tres" id="14_eh0lr"]
+[ext_resource type="Texture2D" uid="uid://dddrfir8htm7" path="res://Assets/Art/Backgrounds/white.png" id="15_efkoq"]
+[ext_resource type="Script" path="res://Scenes/Levels/EmailButton.gd" id="15_ht1of"]
+[ext_resource type="AudioStream" uid="uid://osh0sglynqcr" path="res://Assets/Music/cops_and_robbers_music.wav" id="16_q7tx4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ku1lq"]
+bg_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -103,10 +119,10 @@ theme_override_font_sizes/font_size = 25
 drag_to_rearrange_enabled = true
 
 [node name="Play" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -157,7 +173,6 @@ script = ExtResource("4_52l23")
 level_pack = ExtResource("9_33rho")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -167,87 +182,313 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="CopStrategy" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
-text = "Players:"
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopStrategy"]
+layout_mode = 2
+text = "Cop strategy: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopStrategy"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 3
-popup/item_0/text = "Single player - cop"
+item_count = 5
+popup/item_0/text = "Player"
 popup/item_0/id = 0
-popup/item_1/text = "Single player - robber"
+popup/item_1/text = "Drunk"
 popup/item_1/id = 2
-popup/item_2/text = "Multiplayer"
-popup/item_2/id = 1
+popup/item_2/text = "Drunk (non-suicidal)"
+popup/item_2/id = 4
+popup/item_3/text = "Higher way"
+popup/item_3/id = 1
+popup/item_4/text = "Lower way"
+popup/item_4/id = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
+[node name="RobberStrategy" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberStrategy"]
 layout_mode = 2
-text = "Mode:"
+text = "Robber strategy: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberStrategy"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 8
-popup/item_0/text = "Cops and robbers"
+item_count = 5
+popup/item_0/text = "Player"
 popup/item_0/id = 0
-popup/item_1/text = "Zombies and survivors"
-popup/item_1/id = 1
-popup/item_2/text = "Drunk cops and robbers"
-popup/item_2/id = 2
-popup/item_3/text = "Rops and cobbers"
-popup/item_3/id = 3
-popup/item_4/text = "Crewmates and imposters"
-popup/item_4/id = 4
-popup/item_5/text = "Ghosts and ghostbusters"
-popup/item_5/id = 5
-popup/item_6/text = "Battle royale"
-popup/item_6/id = 6
-popup/item_7/text = "Ranchers and cattle"
-popup/item_7/id = 7
+popup/item_1/text = "Drunk"
+popup/item_1/id = 2
+popup/item_2/text = "Drunk (non-suicidal)"
+popup/item_2/id = 4
+popup/item_3/text = "Higher way"
+popup/item_3/id = 1
+popup/item_4/text = "Lower way"
+popup/item_4/id = 3
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
+[node name="CopSkin" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopSkin"]
 layout_mode = 2
-text = "Level:"
+text = "Cop skin: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer/HBoxContainer3"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopSkin"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 7
+popup/item_0/text = "*invisible*"
+popup/item_0/id = 4
+popup/item_1/text = "Cop"
+popup/item_1/id = 0
+popup/item_2/text = "Robber"
+popup/item_2/id = 1
+popup/item_3/text = "Firefighter"
+popup/item_3/id = 2
+popup/item_4/text = "Arsonist"
+popup/item_4/id = 3
+popup/item_5/text = "Survivor"
+popup/item_5/id = 6
+popup/item_6/text = "Zombie"
+popup/item_6/id = 5
+
+[node name="RobberSkin" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberSkin"]
+layout_mode = 2
+text = "Robber skin: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberSkin"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 7
+popup/item_0/text = "*invisible*"
+popup/item_0/id = 4
+popup/item_1/text = "Cop"
+popup/item_1/id = 0
+popup/item_2/text = "Robber"
+popup/item_2/id = 1
+popup/item_3/text = "Firefighter"
+popup/item_3/id = 2
+popup/item_4/text = "Arsonist"
+popup/item_4/id = 3
+popup/item_5/text = "Survivor"
+popup/item_5/id = 6
+popup/item_6/text = "Zombie"
+popup/item_6/id = 5
+
+[node name="Vertex style" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Vertex style"]
+layout_mode = 2
+text = "Vertex aesthetic style: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Vertex style"]
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 1
-popup/item_0/text = "Level 1"
+fit_to_longest_item = false
+popup/item_0/text = "Basic"
 popup/item_0/id = 0
 
-[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
+[node name="Edge style" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
-text = "Begin!"
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 25)
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Edge style"]
+layout_mode = 2
+text = "Edge aesthetic style: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Edge style"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 1
+fit_to_longest_item = false
+popup/item_0/text = "Basic"
+popup/item_0/id = 0
+
+[node name="Background image" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Background image"]
+layout_mode = 2
+text = "Background image: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Background image"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+fit_to_longest_item = false
+popup/item_0/text = "Basic"
+popup/item_0/id = 0
+popup/item_1/text = ""
+popup/item_1/id = 1
+
+[node name="Music" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Music"]
+layout_mode = 2
+text = "Music: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Music"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+fit_to_longest_item = false
+popup/item_0/text = "Basic"
+popup/item_0/id = 0
+popup/item_1/text = ""
+popup/item_1/id = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="NumberOfCops" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops"]
+layout_mode = 2
+text = "Number of cops: "
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops"]
+layout_mode = 2
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+
+[node name="NumberOfRobbers" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers"]
+layout_mode = 2
+text = "Number of robbers: "
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers"]
+layout_mode = 2
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+
+[node name="CopSpeed" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopSpeed"]
+layout_mode = 2
+text = "Cop speed (# of moves per turn): "
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopSpeed"]
+layout_mode = 2
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+
+[node name="RobberSpeed" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberSpeed"]
+layout_mode = 2
+text = "Robber speed (# of moves per turn): "
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberSpeed"]
+layout_mode = 2
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+
+[node name="AgentTravelTime" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime"]
+layout_mode = 2
+text = "Agent travel time (seconds): "
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime"]
+layout_mode = 2
+max_value = 5.0
+step = 0.1
+value = 0.5
+
+[node name="CopArsonist" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopArsonist"]
+layout_mode = 2
+text = "Cop is arsonist?"
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopArsonist"]
+layout_mode = 2
+
+[node name="RobberArsonist" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberArsonist"]
+layout_mode = 2
+text = "Robber is arsonist?"
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberArsonist"]
+layout_mode = 2
+
+[node name="LoadGraph" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+layout_mode = 2
+text = "Choose graph folder"
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
 layout_mode = 2
 
-[node name="SceneButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2"]
+[node name="LoadCustomGameButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("cop_strategy_button", "robber_strategy_button", "cop_skin_button", "robber_skin_button", "vertex_style_button", "edge_style_button", "background_image_button", "music_button", "cop_number_button", "robber_number_button", "cop_speed_button", "robber_speed_button", "agent_travel_time_button", "cop_arsonist_button", "robber_arsonist_button")]
 layout_mode = 2
-text = "Play Cops and Robbers demo"
-script = ExtResource("3_f3unt")
-scene_path = "res://Scenes/Levels/level.tscn"
+text = "Play custom game!"
+script = ExtResource("10_pcfh5")
+cop_strategy_button = NodePath("../../HSplitContainer/VBoxContainer/CopStrategy/OptionButton")
+robber_strategy_button = NodePath("../../HSplitContainer/VBoxContainer/RobberStrategy/OptionButton")
+cop_skin_button = NodePath("../../HSplitContainer/VBoxContainer/CopSkin/OptionButton")
+robber_skin_button = NodePath("../../HSplitContainer/VBoxContainer/RobberSkin/OptionButton")
+vertex_style_button = NodePath("../../HSplitContainer/VBoxContainer/Vertex style/OptionButton")
+edge_style_button = NodePath("../../HSplitContainer/VBoxContainer/Edge style/OptionButton")
+background_image_button = NodePath("../../HSplitContainer/VBoxContainer/Background image/OptionButton")
+music_button = NodePath("../../HSplitContainer/VBoxContainer/Music/OptionButton")
+cop_number_button = NodePath("../../HSplitContainer/VBoxContainer2/NumberOfCops/SpinBox")
+robber_number_button = NodePath("../../HSplitContainer/VBoxContainer2/NumberOfRobbers/SpinBox")
+cop_speed_button = NodePath("../../HSplitContainer/VBoxContainer2/CopSpeed/SpinBox")
+robber_speed_button = NodePath("../../HSplitContainer/VBoxContainer2/RobberSpeed/SpinBox")
+agent_travel_time_button = NodePath("../../HSplitContainer/VBoxContainer2/AgentTravelTime/SpinBox")
+cop_arsonist_button = NodePath("../../HSplitContainer/VBoxContainer2/CopArsonist/CheckButton")
+robber_arsonist_button = NodePath("../../HSplitContainer/VBoxContainer2/RobberArsonist/CheckButton")
+cop_strategy = ExtResource("11_q8lxc")
+robber_strategy = ExtResource("11_q8lxc")
+cop_skin = ExtResource("11_fvfss")
+robber_skin = ExtResource("12_vt7vy")
+vertex_style = ExtResource("14_eh0lr")
+edge_style = ExtResource("11_dyvdp")
+background_image = ExtResource("15_efkoq")
+music = ExtResource("16_q7tx4")
+
+[node name="LoadFileDialog" type="FileDialog" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+title = "Open a File or Directory"
+position = Vector2i(300, 100)
+size = Vector2i(500, 400)
+content_scale_mode = 2
+content_scale_aspect = 1
+ok_button_text = "Open"
+file_mode = 3
+root_subfolder = "Graphs"
+filters = PackedStringArray("*.csv", "*.tsv", "*.json")
 
 [node name="Create" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
@@ -290,24 +531,27 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits"]
 layout_mode = 2
 
-[node name="People" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
 layout_mode = 2
 
-[node name="People" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+[node name="People" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="People" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
 layout_mode = 2
 text = "PEOPLE:"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
 layout_mode = 2
 
-[node name="Dom" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer"]
+[node name="Dom" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer"]
 layout_mode = 2
 text = "Dominick Robinson - programmer"
 
-[node name="YouTube" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer"]
+[node name="YouTube" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 icon = ExtResource("11_81ldx")
@@ -317,7 +561,7 @@ expand_icon = true
 script = ExtResource("12_c1in3")
 url = "https://www.youtube.com/@DomonationYT"
 
-[node name="Website" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer"]
+[node name="Website" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 icon = ExtResource("13_3d1wh")
@@ -327,14 +571,14 @@ expand_icon = true
 script = ExtResource("12_c1in3")
 url = "https://domonation.dev/"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
 layout_mode = 2
 
-[node name="Offner" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer2"]
+[node name="Offner" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer2"]
 layout_mode = 2
 text = "David Offner - research advisor"
 
-[node name="Website2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People/HBoxContainer2"]
+[node name="Website2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer2"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 icon = ExtResource("13_3d1wh")
@@ -344,44 +588,59 @@ expand_icon = true
 script = ExtResource("12_c1in3")
 url = "https://davidoffner.wordpress.com/"
 
-[node name="Gabe" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+[node name="Gabe" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
 layout_mode = 2
 text = "Gabriel Prado - music"
 
-[node name="Aleca" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/People"]
+[node name="Aleca" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
 layout_mode = 2
 text = "Alexa Carl - art"
 
-[node name="HSeparator" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer"]
+[node name="HSeparator" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="Things" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer"]
+[node name="Things" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Things" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+[node name="Things" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
 layout_mode = 2
 text = "THINGS:"
 
-[node name="Godot" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+[node name="Godot" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
 layout_mode = 2
 text = "Godot Engine - amazing free game engine used"
 
-[node name="OpenMoji" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+[node name="OpenMoji" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
 layout_mode = 2
 text = "OpenMoji - free emoji art assets"
 
-[node name="FreeSound" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+[node name="FreeSound" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
 layout_mode = 2
 text = "FreeSound - free songs and sound effects"
 
-[node name="itch" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+[node name="itch" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
 layout_mode = 2
 text = "itch.io - hosting the game"
 
-[node name="Wikimedia Commons" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/HBoxContainer/Things"]
+[node name="Wikimedia Commons" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
 layout_mode = 2
 text = "Wikimedia Commons - free stock art"
+
+[node name="VSeparator" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Email us!" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ku1lq")
+text = "Email us here!"
+script = ExtResource("15_ht1of")
 
 [node name="References" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 visible = false
@@ -406,3 +665,6 @@ uri = "https://davidoffner.files.wordpress.com/2019/03/graphicalexamples.pdf"
 
 [node name="MusicPlayer" parent="." instance=ExtResource("4_ag7rd")]
 music_track_name = "music_title"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2/LoadCustomGameButton" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2/LoadCustomGameButton" method="_on_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer2/Email us!" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer2/Email us!" method="_on_pressed"]

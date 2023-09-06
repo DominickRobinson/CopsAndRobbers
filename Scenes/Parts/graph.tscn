@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scenes/Parts/EdgeContainer.gd" id="4_5lpg6"]
 [ext_resource type="PackedScene" uid="uid://bd6nyi2cnfc0w" path="res://Scenes/Parts/graph_data.tscn" id="4_e23mg"]
 [ext_resource type="Resource" uid="uid://cju1g68il7m27" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style_basic.tres" id="4_fnoi2"]
-[ext_resource type="Resource" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_directed.tres" id="5_10eff"]
+[ext_resource type="Resource" uid="uid://ddqhh1ur33j6o" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_directed.tres" id="5_10eff"]
 [ext_resource type="Script" path="res://Scenes/Parts/VertexContainer.gd" id="5_p56fu"]
 
 [node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container") groups=["Graphs"]]
