@@ -21,11 +21,9 @@ func play_sound(audio_name:String, vol:float=0.0, loop:bool=false, pitch:float=1
 	
 	#type is audiostream
 	if is_instance_of(audio, AudioStream):
-		print(1)
 		return sound_queue.play_audio(audio, vol, loop, pitch)
 	#type is array
 	elif typeof(audio) == 28:
-		print(2)
 		return sound_queue.play_random_audio(audio, vol, loop, pitch)
 	
 	return null

@@ -6,3 +6,6 @@ class_name Game
 
 @export var cop_script : Script
 @export var robber_script : Script
+
+@export var cop_script_path : String
+@export var robber_script_path : String

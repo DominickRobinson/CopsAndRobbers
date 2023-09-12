@@ -36,11 +36,8 @@ func _ready():
 	
 	background.texture = game_theme.background_skin
 	
-	print("Waiting for graph to be loaded in Level...")
 	await graph.load_graph(graph_path)
-	print("Graph loaded in Level!")
 	await graph.refresh()
-	print("Graph refreshed!")
 	
 	if next_level_path == null: 
 		next_level_button.hide()
@@ -48,6 +45,9 @@ func _ready():
 	#get strategies
 	cop_script = game_resource.cop_script
 	robber_script = game_resource.robber_script
+
+#	cop_script = load(game_resource.cop_script_path)
+#	robber_script = load(game_resource.robber_script_path)
 	
 	#load graph
 	graph.edge_style_resource = edge_style_resource
@@ -112,12 +112,15 @@ func _ready():
 	prev_state.next_state = first_state
 	state_machine.first_state = first_state
 	
-	print("Should emit level ready in Level!")
 	level_ready.emit()
 
 func create_state(script : Variant) -> State:
 	var state = State.new()
+	print(state is State)
+	print("script: ", script)
 	state.set_script(script)
+	print(state is State)
+	state = state as State
 	return state
 
 

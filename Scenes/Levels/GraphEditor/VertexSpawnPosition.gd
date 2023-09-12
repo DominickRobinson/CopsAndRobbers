@@ -16,7 +16,6 @@ func find_open_position():
 		for i in steps:
 			for j in steps:
 				position = initial_position + Vector2(i * step_size, j * step_size)  - (step_size * steps/2)*Vector2(1,1)
-				print(position)
 				await get_tree().physics_frame
 #				await get_tree().create_timer(0.5).timeout
 				if not colliding_with_vertices():
@@ -27,9 +26,6 @@ func find_open_position():
 	var new_position = position
 	
 	position = initial_position
-	
-	print(1)
-	print(new_position)
 	
 	return new_position
 

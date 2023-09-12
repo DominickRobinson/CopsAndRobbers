@@ -18,11 +18,6 @@ func _on_state_entered():
 	else:
 		vertices = agent.current_vertex.get_neighbors()
 	
-	print("Agent: ", agent.name)
-	if is_instance_valid(agent.current_vertex):
-		print("Current vtx: ", agent.current_vertex.name)
-		print("Current vtx neighbors: ", agent.current_vertex.get_neighbors())
-	print("Available moves: ", vertices)
 	
 	for v in vertices:
 		v = v as Vertex

@@ -591,7 +591,6 @@ func is_isolated_vertex(array:Array = graph, vtx:int=0)->bool:
 	return true
 
 func save_graph(path : String):
-#	print("saving ", path.get_extension())
 	var save_file = FileAccess.open(path, FileAccess.WRITE)
 	var array = self.bool_to_int()
 #	var array = graph_data.graph
@@ -620,9 +619,7 @@ func load_graph(path : String):
 				row = load_file.get_csv_line(",")
 			"tsv":
 				row = load_file.get_csv_line("\t")
-#		print(row)
 		for j in row.size():
-#			print(str(int(row[j])))
 			array[i].append(int(row[j]))
 		i += 1
 	
@@ -641,12 +638,10 @@ func graphs_equal(g1 : Array, g2 : Array):
 	
 	for i in g1.size():
 		#each row must have same size
-#		print("Row i: ", g1[i], " vs. ", g2[i])
 		if g1[i] != g2[i]: return false
 #		if g1[i].size() != g2[i].size(): return false
 #		for j in g1.size():
 #			#must have same value within each cell
 #			if g1[i][j] != g2[i][j]: return false
 	
-#	print("graphs equal")
 	return true

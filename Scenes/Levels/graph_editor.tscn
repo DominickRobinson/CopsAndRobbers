@@ -31,7 +31,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_jescs"]
+[sub_resource type="Resource" id="Resource_o4tao"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("8_wus48")
@@ -54,10 +54,10 @@ vertex_mode_button = NodePath("GUI/MarginContainer/HBoxContainer/Mode/VertexMode
 edge_mode_button = NodePath("GUI/MarginContainer/HBoxContainer/Mode/EdgeMode")
 new_edge_line = NodePath("NewEdgeLine")
 corner_spinbox = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/HBoxContainer/SpinBox")
-title_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar/TitleTextEdit")
-author_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar/AuthorTextEdit")
-description_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar/DescriptionTextEdit")
-citation_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar/CitationTextEdit")
+title_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/TitleTextEdit")
+author_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/AuthorTextEdit")
+description_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/DescriptionTextEdit")
+citation_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/CitationTextEdit")
 save_file_dialog = NodePath("SaveFileDialog")
 load_file_dialog = NodePath("LoadFileDialog")
 
@@ -127,6 +127,10 @@ text = "Save Graph"
 [node name="LoadGraph" type="Button" parent="GUI/MarginContainer/HBoxContainer/SaveLoad"]
 layout_mode = 2
 text = "Load Graph"
+
+[node name="UploadGraph" type="Button" parent="GUI/MarginContainer/HBoxContainer/SaveLoad"]
+layout_mode = 2
+text = "Upload Graph"
 
 [node name="HSeparator3" type="HSeparator" parent="GUI/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(25, 0)
@@ -300,7 +304,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Print mappings"
 
-[node name="Text" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
+[node name="TextActions" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -308,32 +312,49 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TextSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Text"]
+[node name="TextSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="TitleTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar"]
+[node name="ToggleSCRs" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions/TextSidebar"]
+layout_mode = 2
+toggle_mode = true
+text = "Toggle strict corner rankings"
+
+[node name="Metadata" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+
+[node name="TitleTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 placeholder_text = "Title"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="AuthorTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar"]
+[node name="AuthorTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 placeholder_text = "Author"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="DescriptionTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar"]
+[node name="DescriptionTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 placeholder_text = "Description"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="CitationTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Text/TextSidebar"]
+[node name="CitationTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 placeholder_text = "Citation"
@@ -398,7 +419,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_jescs")
+vertex_style_resource = SubResource("Resource_o4tao")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -407,6 +428,7 @@ size = Vector2i(500, 400)
 content_scale_mode = 2
 content_scale_aspect = 1
 ok_button_text = "Save"
+access = 2
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.json")
 
@@ -418,6 +440,18 @@ content_scale_mode = 2
 content_scale_aspect = 1
 ok_button_text = "Open"
 file_mode = 3
+root_subfolder = "Graphs"
+filters = PackedStringArray("*.csv", "*.tsv", "*.json")
+
+[node name="UploadFileDialog" type="FileDialog" parent="."]
+title = "Open a File or Directory"
+position = Vector2i(300, 100)
+size = Vector2i(500, 400)
+content_scale_mode = 2
+content_scale_aspect = 1
+ok_button_text = "Open"
+file_mode = 3
+access = 2
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv", "*.json")
 
@@ -445,6 +479,7 @@ anchor_mode = 0
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Mode/EdgeMode" to="." method="set_edge_mode"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/SaveGraph" to="SaveFileDialog" method="show"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/LoadGraph" to="LoadFileDialog" method="show"]
+[connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/UploadGraph" to="UploadFileDialog" method="show"]
 [connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/ShowHideButton" to="GUI/MarginContainer/VBoxContainer/TabContainer" method="set_visible"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties/MakeReflexive" to="." method="make_reflexive"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties/MakeUndirected" to="." method="make_undirected"]
@@ -458,3 +493,4 @@ anchor_mode = 0
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/Button2" to="." method="add_strict_corner"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/OrganizeByRankingButton" to="." method="organize_by_ranking"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc/HBoxContainer/GraphActions/PrintMappings" to="." method="print_mappings"]
+[connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions/TextSidebar/ToggleSCRs" to="Graph" method="show_strict_corner_rankings"]

@@ -1,25 +1,25 @@
 [gd_scene load_steps=23 format=3 uid="uid://ccp73t4r2n7kf"]
 
-[ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_4vtp5"]
-[ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="3_5e23p"]
-[ext_resource type="Script" path="res://Scenes/Rules/game_manager.gd" id="4_u8lwv"]
-[ext_resource type="PackedScene" uid="uid://bc6k3dwiyonyw" path="res://Scenes/Rules/state_machine.tscn" id="5_xvqft"]
-[ext_resource type="PackedScene" uid="uid://btuqhupbnwq6" path="res://Scenes/Rules/check_for_cop_win.tscn" id="6_uq0nc"]
-[ext_resource type="Script" path="res://Scenes/Rules/capture_robbers.gd" id="7_ggxgr"]
-[ext_resource type="PackedScene" uid="uid://drpi6jihu1vex" path="res://Scenes/Parts/graph.tscn" id="8_386oa"]
-[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="9_c80yj"]
-[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="10_osy3l"]
-[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="11_uketj"]
-[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="12_s8e4o"]
-[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="13_4e5s1"]
-[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="14_873ov"]
-[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="15_wik8k"]
-[ext_resource type="Script" path="res://Scenes/UI/ReloadLevelButton.gd" id="16_wcnye"]
-[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="17_ar3dp"]
-[ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="18_bt1jo"]
-[ext_resource type="Script" path="res://Scenes/UI/NextLevelButton.gd" id="19_jyn66"]
-[ext_resource type="Script" path="res://Scenes/UI/BeginScreen.gd" id="20_0r1o1"]
-[ext_resource type="Texture2D" uid="uid://rnw0n3230ttj" path="res://Assets/Art/Backgrounds/dark_gray.png" id="22_tgikc"]
+[ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_12eah"]
+[ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="2_885p4"]
+[ext_resource type="Script" path="res://Scenes/Rules/game_manager.gd" id="3_kock0"]
+[ext_resource type="PackedScene" uid="uid://bc6k3dwiyonyw" path="res://Scenes/Rules/state_machine.tscn" id="4_oysjt"]
+[ext_resource type="PackedScene" uid="uid://btuqhupbnwq6" path="res://Scenes/Rules/check_for_cop_win.tscn" id="5_b0u6u"]
+[ext_resource type="Script" path="res://Scenes/Rules/capture_robbers.gd" id="6_3nbrt"]
+[ext_resource type="PackedScene" uid="uid://drpi6jihu1vex" path="res://Scenes/Parts/graph.tscn" id="7_vxu8e"]
+[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="8_ireie"]
+[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="9_dt0wh"]
+[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="10_u71h1"]
+[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="11_cf01o"]
+[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="12_pbbx2"]
+[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="13_1ijqw"]
+[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="14_02gd7"]
+[ext_resource type="Texture2D" uid="uid://rnw0n3230ttj" path="res://Assets/Art/Backgrounds/dark_gray.png" id="15_jip8x"]
+[ext_resource type="Script" path="res://Scenes/UI/ReloadLevelButton.gd" id="16_hgfn3"]
+[ext_resource type="Script" path="res://Scenes/UI/SceneButton.gd" id="17_0h2cj"]
+[ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="18_b3gwf"]
+[ext_resource type="Script" path="res://Scenes/UI/NextLevelButton.gd" id="19_dco50"]
+[ext_resource type="Script" path="res://Scenes/UI/BeginScreen.gd" id="20_fir45"]
 
 [sub_resource type="GDScript" id="GDScript_c5y8f"]
 script/source = "extends Resource
@@ -38,38 +38,38 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_7mhjy"]
+[sub_resource type="Resource" id="Resource_nnl78"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
-default_skin = ExtResource("12_s8e4o")
-cop_skin = ExtResource("11_uketj")
-robber_skin = ExtResource("14_873ov")
-both_skin = ExtResource("9_c80yj")
-burnt_skin = ExtResource("10_osy3l")
-selected_skin = ExtResource("15_wik8k")
-hovering_skin = ExtResource("13_4e5s1")
+default_skin = ExtResource("11_cf01o")
+cop_skin = ExtResource("10_u71h1")
+robber_skin = ExtResource("13_1ijqw")
+both_skin = ExtResource("8_ireie")
+burnt_skin = ExtResource("9_dt0wh")
+selected_skin = ExtResource("14_02gd7")
+hovering_skin = ExtResource("12_pbbx2")
 
 [node name="Level" type="Node2D"]
-script = ExtResource("1_4vtp5")
-agent_resource = ExtResource("3_5e23p")
+script = ExtResource("1_12eah")
+agent_resource = ExtResource("2_885p4")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label")]
-script = ExtResource("4_u8lwv")
+script = ExtResource("3_kock0")
 state_machine = NodePath("StateMachine")
 graph = NodePath("../Graph")
 game_over_screen = NodePath("../CanvasLayer/GameOverScreen")
 game_over_label = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/Gameover")
 
-[node name="StateMachine" parent="GameManager" node_paths=PackedStringArray("label") instance=ExtResource("5_xvqft")]
+[node name="StateMachine" parent="GameManager" node_paths=PackedStringArray("label") instance=ExtResource("4_oysjt")]
 label = NodePath("../../CanvasLayer/MarginContainer/VBoxContainer/Label")
 
-[node name="CheckForCopWin" parent="GameManager" instance=ExtResource("6_uq0nc")]
+[node name="CheckForCopWin" parent="GameManager" instance=ExtResource("5_b0u6u")]
 
 [node name="CaptureRobbers" type="Node" parent="GameManager"]
-script = ExtResource("7_ggxgr")
+script = ExtResource("6_3nbrt")
 
-[node name="Graph" parent="." instance=ExtResource("8_386oa")]
-vertex_style_resource = SubResource("Resource_7mhjy")
+[node name="Graph" parent="." instance=ExtResource("7_vxu8e")]
+vertex_style_resource = SubResource("Resource_nnl78")
 
 [node name="Agents" type="Node2D" parent="."]
 
@@ -82,7 +82,7 @@ vertex_style_resource = SubResource("Resource_7mhjy")
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-texture = ExtResource("22_tgikc")
+texture = ExtResource("15_jip8x")
 centered = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -109,7 +109,7 @@ custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Retry"
-script = ExtResource("16_wcnye")
+script = ExtResource("16_hgfn3")
 
 [node name="Restart" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 visible = false
@@ -117,7 +117,7 @@ custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Restart"
-script = ExtResource("17_ar3dp")
+script = ExtResource("17_0h2cj")
 
 [node name="ForfeitButton" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 50)
@@ -125,7 +125,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Forfeit"
 
-[node name="PauseButton" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("18_bt1jo")]
+[node name="PauseButton" parent="CanvasLayer/MarginContainer/HBoxContainer" instance=ExtResource("18_b3gwf")]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
@@ -168,28 +168,28 @@ autowrap_mode = 2
 visible = false
 layout_mode = 2
 text = "Retry"
-script = ExtResource("17_ar3dp")
+script = ExtResource("17_0h2cj")
 
 [node name="Retry" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Retry"
-script = ExtResource("16_wcnye")
+script = ExtResource("16_hgfn3")
 
 [node name="NextLevelButton" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Next level"
-script = ExtResource("19_jyn66")
+script = ExtResource("19_dco50")
 
 [node name="MainMenu" type="Button" parent="CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Go to main menu"
-script = ExtResource("17_ar3dp")
+script = ExtResource("17_0h2cj")
 scene_path = "res://Scenes/Levels/main_menu.tscn"
 
 [node name="BeginScreen" type="PanelContainer" parent="CanvasLayer" node_paths=PackedStringArray("graph")]
@@ -198,7 +198,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("20_0r1o1")
+script = ExtResource("20_fir45")
 graph = NodePath("../../Graph")
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/BeginScreen"]

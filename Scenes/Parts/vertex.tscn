@@ -100,10 +100,11 @@ _data = {
 "selected": SubResource("Animation_i3lfj")
 }
 
-[node name="Vertex" type="Node2D" node_paths=PackedStringArray("label", "anim", "sprite", "fire_sprite", "area")]
+[node name="Vertex" type="Node2D" node_paths=PackedStringArray("label", "scr_label", "anim", "sprite", "fire_sprite", "area")]
 script = ExtResource("1_cri6f")
 style_resource = ExtResource("2_imd5n")
-label = NodePath("Sprite2D/Label")
+label = NodePath("Sprite2D/VBoxContainer/Label")
+scr_label = NodePath("Sprite2D/VBoxContainer/SCRLabel")
 anim = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
 fire_sprite = NodePath("FireSprite")
@@ -112,20 +113,33 @@ area = NodePath("Area2D")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_qu2d6")
 
-[node name="Label" type="Label" parent="Sprite2D"]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="Sprite2D"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -52.0
-offset_top = -43.5
+offset_top = -60.0
 offset_right = -12.0
-offset_bottom = -20.5
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="Sprite2D/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SCRLabel" type="Label" parent="Sprite2D/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 horizontal_alignment = 1
 vertical_alignment = 1
 

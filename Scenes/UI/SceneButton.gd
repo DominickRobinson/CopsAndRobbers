@@ -13,4 +13,3 @@ func _ready():
 func _on_pressed():
 	if scene_path: SceneManager.change_scene(scene_path)
 
-

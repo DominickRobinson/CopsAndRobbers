@@ -148,7 +148,6 @@ func undo():
 		graph_data.graph = edits[-1].duplicate(true)
 	elif edits.size() == 1:
 		graph_data.graph = edits[0].duplicate(true)
-#		print(4)
 	
 	display_graph()
 
@@ -161,14 +160,12 @@ func graphs_equal(g1 : Array, g2 : Array):
 	
 	for i in g1.size():
 		#each row must have same size
-#		print("Row i: ", g1[i], " vs. ", g2[i])
 		if g1[i] != g2[i]: return false
 #		if g1[i].size() != g2[i].size(): return false
 #		for j in g1.size():
 #			#must have same value within each cell
 #			if g1[i][j] != g2[i][j]: return false
 	
-#	print("graphs equal")
 	return true
 
 
@@ -241,7 +238,5 @@ func load_graph(path : String):
 #				booleanRow.append(booleanValue)
 #
 #			arrayData.append(booleanRow)
-#	else:
-#		print("Failed to open file:", filePath)
 #
 #	return arrayData

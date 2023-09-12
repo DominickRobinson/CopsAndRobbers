@@ -35,11 +35,9 @@ func go_to_next_state(new_state:State = next_state):
 	new_state.activate()
 
 func _on_state_entered():
-#	print(name, " entered")
 	await get_tree().create_timer(.5)
 
 func _on_state_exited():
-#	print(name, " exited")
 	pass
 
 

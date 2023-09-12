@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="LevelPack" load_steps=9 format=3 uid="uid://ipwwjlg21q60"]
+
+[ext_resource type="Script" path="res://Resources/GameComponents/GameRules/game_rules.gd" id="1_h32pr"]
+[ext_resource type="Texture2D" uid="uid://bfdyf7o0afppm" path="res://Assets/Art/Characters/empty.svg" id="2_wfc5e"]
+[ext_resource type="Script" path="res://Resources/GameComponents/GameThemes/game_theme.gd" id="3_8yfqk"]
+[ext_resource type="Script" path="res://Resources/Games/game.gd" id="4_8gj47"]
+[ext_resource type="Script" path="res://Resources/level_packs/level_pack.gd" id="5_xqbgb"]
+
+[sub_resource type="Resource" id="Resource_5phw5"]
+script = ExtResource("1_h32pr")
+number_of_cops = 1
+number_of_robbers = 1
+cop_speed = 1
+robber_speed = 1
+cop_arsonist = false
+robber_arsonist = false
+
+[sub_resource type="Resource" id="Resource_vivom"]
+script = ExtResource("3_8yfqk")
+cop_skin = ExtResource("2_wfc5e")
+robber_skin = ExtResource("2_wfc5e")
+agent_travel_time = 0.5
+
+[sub_resource type="Resource" id="Resource_8vu21"]
+script = ExtResource("4_8gj47")
+game_theme = SubResource("Resource_vivom")
+game_rules = SubResource("Resource_5phw5")
+
+[resource]
+script = ExtResource("5_xqbgb")
+game_resource = SubResource("Resource_8vu21")
+levels_path = "res://Graphs/Offner"

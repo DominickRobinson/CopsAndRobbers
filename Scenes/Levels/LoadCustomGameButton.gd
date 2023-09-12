@@ -11,6 +11,15 @@ extends Button
 @export var background_image_button : OptionButton
 @export var music_button : OptionButton
 
+#@export var strategy_dict : Dictionary
+#@export var cop_skin_dict : Dictionary
+#@export var robber_skin_dict : Dictionary
+#@export var vertex_style_dict : Dictionary
+#@export var edge_style_dict : Dictionary
+#@export var background_dict : Dictionary
+#@export var music_dict : Dictionary
+
+
 @export var cop_number_button : SpinBox
 @export var robber_number_button : SpinBox
 @export var cop_speed_button : SpinBox
@@ -18,6 +27,8 @@ extends Button
 @export var agent_travel_time_button : SpinBox
 @export var cop_arsonist_button : CheckButton
 @export var robber_arsonist_button : CheckButton
+
+@export var load_graph_button : Button
 
 @export_category("Variables")
 @export var cop_strategy : Script
@@ -37,11 +48,7 @@ extends Button
 @export var cop_arsonist : bool = false
 @export var robber_arsonist : bool = false 
 
-
-
-
-
-
+@export var graph_path : String
 
 
 #	var node_to_save = $Node2D
@@ -54,12 +61,110 @@ extends Button
 
 
 func _on_pressed():
-	var level_pack = LevelPack.new()
+	if load_graph_button.get_graph_path() == "Choose graph folder":
+		return
+	
 	var game_resource = Game.new()
 	
 	var game_theme = GameTheme.new()
 	var game_rules = GameRules.new()
-	var cop_script : Script = null
-	var robber_script : Script = null
+	game_resource.cop_script = get_cop_script()
+	game_resource.robber_script = get_robber_script()
 	
+	var graph_path = load_graph_button.get_graph_path()
 	
+	game_theme.cop_skin = get_cop_skin()
+	game_theme.robber_skin = get_robber_skin()
+	game_theme.vertex_style_resource = get_vertex_style()
+	game_theme.edge_style_resource = get_edge_style()
+	game_theme.background_skin = get_bg_image()
+	game_theme.music = get_music()
+	game_theme.agent_travel_time = agent_travel_time_button.value
+	
+	game_rules.cop_speed = cop_speed_button.value
+	game_rules.robber_speed = robber_speed_button.value
+	game_rules.number_of_cops = cop_number_button.value
+	game_rules.number_of_robbers = robber_number_button.value
+	game_rules.cop_arsonist = cop_arsonist_button.button_pressed
+	game_rules.robber_arsonist = robber_arsonist_button.button_pressed
+	
+	game_resource.game_rules = game_rules
+	game_resource.game_theme = game_theme
+	
+#	await ResourceSaver.save(level_pack, "res://Custom/custom_game.tres")
+	
+	SceneManager.load_custom_level(game_resource, graph_path)
+
+
+func get_cop_script():
+	var str = "res://Resources/Scripts/move_"
+	match cop_strategy_button.selected:
+		0:
+			str +="player"
+		1:
+			str += "lower_way"
+		2:
+			str += "higher_way"
+		3:
+			str += "drunk"
+		4:
+			str += "drunk_nonsuicidal"
+	str += ".gd"
+	return load(str)
+
+func get_robber_script():
+	var str = "res://Resources/Scripts/move_"
+	match robber_strategy_button.selected:
+		0:
+			str +="player"
+		1:
+			str += "lower_way"
+		2:
+			str += "higher_way"
+		3:
+			str += "drunk"
+		4:
+			str += "drunk_nonsuicidal"
+	str += ".gd"
+	return load(str)
+
+func get_cop_skin():
+	var str = "res://Assets/Art/Characters/"
+	match cop_skin_button.selected:
+		0:
+			str += "empty"
+		1:
+			str += "cop"
+		2:
+			str += "firefighter"
+		3:
+			str += "zombie"
+	str += ".svg"
+	return load(str)
+
+func get_robber_skin():
+	var str = "res://Assets/Art/Characters/"
+	match robber_skin_button.selected:
+		0:
+			str += "empty"
+		1:
+			str += "ninja"
+		2:
+			str += "arsonist"
+		3:
+			str += "survivor"
+	str += ".svg"
+	return load(str)
+
+func get_vertex_style():
+	pass
+
+func get_edge_style():
+	pass
+
+func get_bg_image():
+	pass
+
+func get_music():
+	pass
+

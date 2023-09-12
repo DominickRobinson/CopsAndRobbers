@@ -36,9 +36,6 @@ func _on_state_entered():
 	#gets all retraction mappings
 	var mappings = graph.get_mappings()
 	
-	
-	
-	#debug print statements
 	var output = "r = "
 	if is_instance_valid(agent.get_vertex()):
 		output += str(agent.get_vertex().index)

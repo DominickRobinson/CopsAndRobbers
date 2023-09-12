@@ -11,6 +11,7 @@ signal moved
 @export var text : String = ""
 
 @export var label : Label
+@export var scr_label : Label
 @export var anim : AnimationPlayer
 
 @export var sprite : Sprite2D
@@ -79,7 +80,7 @@ func _unhandled_input(_event):
 
 
 func _process(delta):
-#	set_text()
+	set_text()
 	if draggable: follow_mouse()
 	
 #	if old_occupents != occupents:
@@ -101,6 +102,13 @@ func set_text():
 #	label.text = str(self)
 #	label.text = str(index)
 	label.text = ""
+
+
+func display_scr_text(show:bool=true):
+	if show:
+		scr_label.text = "SCR: " + str(strict_corner_ranking)
+	else:
+		scr_label.text = ""
 
 func get_neighbors():
 	return neighbors
@@ -153,3 +161,7 @@ func has_cop():
 		o = o as Agent
 		if o.is_cop(): return true
 	return false
+
+
+func show_strict_corner_ranking(show:bool=true):
+	scr_label.visible = show

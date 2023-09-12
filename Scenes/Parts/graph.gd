@@ -181,7 +181,6 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	make_reflexive()
 	await changed
 	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
-	print("Vertex to connect to: ", old_vtx.index)
 	var new_vtx = vertices[-1]
 	
 	#add edges
@@ -338,10 +337,8 @@ func refresh():
 
 
 func refresh_vertices():
-	print("Refreshing vertices")
 	for i in vertices.size():
 		var v = vertices[i] as Vertex
-		print(v.name)
 		v.index = i
 		v.neighbors = get_neighbors_from_vertex(v)
 	return true
@@ -435,9 +432,7 @@ func load_graph(path : String):
 	match path.get_extension():
 		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
-#			print("json_as_text: ", json_as_text)
 			var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
-#			print("json_as_dict: ", json_as_dict)
 			adjacency_matrix = json_as_dict["adjacency_matrix"]
 			var positions_array = str_to_var(json_as_dict["positions"])
 			for p in positions_array:
@@ -467,9 +462,7 @@ func load_graph(path : String):
 			while !load_file.eof_reached():
 				array.append([])
 				var row = load_file.get_csv_line(",")
-		#		print(row)
 				for j in row.size():
-		#			print(str(int(row[j])))
 					array[i].append(int(row[j]))
 				i += 1
 			array.pop_back()
@@ -484,9 +477,7 @@ func load_graph(path : String):
 			while !load_file.eof_reached():
 				array.append([])
 				var row = load_file.get_csv_line("\t")
-		#		print(row)
 				for j in row.size():
-		#			print(str(int(row[j])))
 					array[i].append(int(row[j]))
 				i += 1
 			array.pop_back()
@@ -550,3 +541,7 @@ func is_copwin():
 
 func get_mappings():
 	return mappings
+
+func show_strict_corner_rankings(show:bool=true):
+	for v in vertices:
+		v.show_strict_corner_ranking(show)

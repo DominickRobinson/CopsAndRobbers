@@ -70,7 +70,6 @@ func draw():
 		line.add_point(end_vertex.position)
 		
 		area_shape.shape.points = get_rectangle_points(line.points)
-#		print(self, " - ", area_shape.shape.points)
 		
 #		path.curve.clear_points()
 #		for p in line.points:
@@ -90,7 +89,6 @@ func erase():
 
 func vertices_exist():
 	var result =  (start_vertex != null) and (end_vertex != null)
-#	print("Vertices exist: ", result)
 	return result
 
 func contains_vertex(vertex : Vertex):
@@ -117,5 +115,4 @@ func get_rectangle_points(points:PackedVector2Array):
 	var p4 = b - offset
 	
 	var result = PackedVector2Array([p1,p2,p3,p4])
-#	print(self, " - ", result)
 	return result

@@ -298,7 +298,6 @@ func _on_remove_pressed():
 
 func toggle_vertex_in_selected(vtx:Vertex):
 	selected_vertex = vtx
-#	print("toggling the following vertex: ", str(vtx))
 	
 	var array = selected_vertices
 	if mode == Modes.VertexMode: array = selected_end_vertices
@@ -309,9 +308,6 @@ func toggle_vertex_in_selected(vtx:Vertex):
 		array.erase(vtx)
 
 func toggle_edge_in_selected(e:Edge):
-	
-#	print("toggling the following edge: ", str(e))
-	
 	if not (e in selected_edges):
 		selected_edges.append(e)
 	else:

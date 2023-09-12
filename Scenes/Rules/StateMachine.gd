@@ -32,9 +32,7 @@ var turn = 0
 
 
 func _ready():
-	print("Waiting for game start in State Machine...")
 	await get_parent().game_start
-	print("Game started in State Machine!")
 	for c in get_children():
 		if not (c is State):
 			continue

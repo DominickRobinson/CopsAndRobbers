@@ -114,9 +114,7 @@ func move_to(new_vertex:Vertex):
 	if moving: return
 	moving = true
 	if is_instance_valid(current_vertex) and new_vertex != current_vertex:
-#		print("Before: ", current_vertex.occupents)
 		current_vertex.occupents.erase(self)
-#		print("After: ", current_vertex.occupents)
 	
 	current_vertex = new_vertex
 	
@@ -156,7 +154,6 @@ func move_to(new_vertex:Vertex):
 
 
 	
-#	print("Just moved... ", self.name, ": ", get_groups())
 
 
 #func _on_animation_started(anim_name):
