@@ -31,6 +31,8 @@ func emit_change():
 		new = graph.duplicate(true)
 		old = new.duplicate(true)
 
+func empty():
+	graph = []
 
 func display():
 	var output = "Number of vertices = " + str(graph.size()) + "\n"

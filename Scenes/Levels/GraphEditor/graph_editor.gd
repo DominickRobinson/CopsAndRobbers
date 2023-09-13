@@ -189,6 +189,8 @@ func retract_strict_corners():
 func retract_corners():
 	graph.retract_corners()
 
+func empty_graph():
+	graph.empty()
 
 func refresh():
 	for e in graph.edges:

@@ -35,7 +35,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_pog42"]
+[sub_resource type="Resource" id="Resource_iyvbx"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("5_cucq3")
@@ -50,7 +50,7 @@ hovering_skin = ExtResource("6_ttoj4")
 
 [node name="Graph" parent="." instance=ExtResource("1_wsh8s")]
 graph_filepath = "res://Graphs/chordal7.json"
-vertex_style_resource = SubResource("Resource_pog42")
+vertex_style_resource = SubResource("Resource_iyvbx")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen")]
 script = ExtResource("2_kab88")

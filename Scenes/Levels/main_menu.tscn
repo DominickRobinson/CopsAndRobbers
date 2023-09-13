@@ -122,7 +122,6 @@ drag_to_rearrange_enabled = true
 layout_mode = 2
 
 [node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -165,6 +164,7 @@ script = ExtResource("4_52l23")
 level_pack = ExtResource("8_1xuos")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10

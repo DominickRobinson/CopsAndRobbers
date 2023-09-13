@@ -28,6 +28,10 @@ SceneManager="*res://Autoloads/SceneManager.tscn"
 window/size/mode=2
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom="res://Assets/Themes/MinimalUI/MinimalUI.tres"
+
 [input]
 
 delete={

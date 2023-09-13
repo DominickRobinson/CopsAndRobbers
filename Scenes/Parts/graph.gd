@@ -254,7 +254,11 @@ func fill():
 func clear():
 	graph_data.clear()
 	changed.emit()
-	
+
+func empty():
+	graph_data.empty()
+	vertex_container.remove_all()
+	changed.emit()
 
 func invert():
 	graph_data.invert()
