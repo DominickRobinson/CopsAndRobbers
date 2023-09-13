@@ -6,4 +6,4 @@
 [resource]
 script = ExtResource("1_2mlwm")
 game_resource = ExtResource("1_45ixb")
-levels_path = "res://Graphs/Offner/Minimal-1-Top"
+levels_path = "res://Graphs/Levels"

@@ -38,7 +38,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_lslub"]
+[sub_resource type="Resource" id="Resource_c8y71"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("11_cf01o")
@@ -69,7 +69,7 @@ label = NodePath("../../CanvasLayer/MarginContainer/VBoxContainer/Label")
 script = ExtResource("6_3nbrt")
 
 [node name="Graph" parent="." instance=ExtResource("7_vxu8e")]
-vertex_style_resource = SubResource("Resource_lslub")
+vertex_style_resource = SubResource("Resource_c8y71")
 
 [node name="Agents" type="Node2D" parent="."]
 
