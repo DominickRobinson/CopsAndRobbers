@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ccp73t4r2n7kf"]
+[gd_scene load_steps=26 format=3 uid="uid://ccp73t4r2n7kf"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/Level.gd" id="1_12eah"]
 [ext_resource type="PackedScene" uid="uid://dqbdvl6orfadx" path="res://Scenes/Agents/agent.tscn" id="2_885p4"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="18_b3gwf"]
 [ext_resource type="Script" path="res://Scenes/UI/NextLevelButton.gd" id="19_dco50"]
 [ext_resource type="Script" path="res://Scenes/UI/BeginScreen.gd" id="20_fir45"]
+[ext_resource type="Script" path="res://Scenes/Levels/Stopwatch.gd" id="20_iisme"]
 
 [sub_resource type="GDScript" id="GDScript_c5y8f"]
 script/source = "extends Resource
@@ -39,7 +40,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_htfxc"]
+[sub_resource type="Resource" id="Resource_n8yab"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("11_cf01o")
@@ -60,13 +61,14 @@ graph_path = "res://Graphs/Levels/1-4.json"
 agent_resource = ExtResource("2_885p4")
 next_level_path = "res://Graphs/h7_2221.json"
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label", "next_level_button")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label", "next_level_button", "stopwatch")]
 script = ExtResource("3_kock0")
 state_machine = NodePath("StateMachine")
 graph = NodePath("../Graph")
 game_over_screen = NodePath("../CanvasLayer/GameOverScreen")
 game_over_label = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/Gameover")
 next_level_button = NodePath("../CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/NextLevelButton")
+stopwatch = NodePath("../CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Stopwatch")
 
 [node name="StateMachine" parent="GameManager" node_paths=PackedStringArray("label") instance=ExtResource("4_oysjt")]
 label = NodePath("../../CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ScoreLabel")
@@ -77,7 +79,7 @@ label = NodePath("../../CanvasLayer/MarginContainer/PanelContainer/MarginContain
 script = ExtResource("6_3nbrt")
 
 [node name="Graph" parent="." instance=ExtResource("7_vxu8e")]
-vertex_style_resource = SubResource("Resource_htfxc")
+vertex_style_resource = SubResource("Resource_n8yab")
 
 [node name="Agents" type="Node2D" parent="."]
 
@@ -156,6 +158,10 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+
+[node name="Stopwatch" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("20_iisme")
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

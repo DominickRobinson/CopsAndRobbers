@@ -98,11 +98,20 @@ func load_custom_level(custom_game_resource:Game, graph_path:String):
 	new_level.game_resource = custom_game_resource
 	new_level.graph_path = graph_path
 	
-	change_scene("res://main.tscn")
+	
+	
+	PauseManager.unpause()
+	await TransitionManager.fade_out()
+
+	get_tree().change_scene_to_file("res://main.tscn")
+	
 	await get_tree().process_frame
+	
 	get_tree().current_scene.add_child(new_level)
 	
 	SoundManager.play_music_file(new_level.game_resource.game_theme.music)
+	
+	await TransitionManager.fade_in()
 
 
 func is_last_level():

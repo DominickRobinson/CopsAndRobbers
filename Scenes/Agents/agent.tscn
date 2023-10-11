@@ -243,7 +243,6 @@ _data = {
 [node name="Agent" type="Node2D" node_paths=PackedStringArray("sprite", "anim", "label") groups=["Agents"]]
 visible = false
 script = ExtResource("1_kpjln")
-show_on_start = null
 sprite = NodePath("Sprite2D")
 anim = NodePath("AnimationPlayer")
 label = NodePath("Label")

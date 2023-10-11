@@ -28,8 +28,11 @@ var robber_script : Script
 @export_file("*") var next_level_path
 @onready var next_level_button : NextLevelButton = $CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/NextLevelButton
 
+var timer
+
 func _ready():
 	
+	timer = Timer.new()
 	
 	game_theme = game_resource.game_theme
 	game_rules = game_resource.game_rules
@@ -116,10 +119,10 @@ func _ready():
 
 func create_state(script : Variant) -> State:
 	var state = State.new()
-	print(state is State)
-	print("script: ", script)
+#	print(state is State)
+#	print("script: ", script)
 	state.set_script(script)
-	print(state is State)
+#	print(state is State)
 	state = state as State
 	return state
 

@@ -12,5 +12,3 @@ game_theme = ExtResource("3_r3uhp")
 game_rules = ExtResource("2_u8fr1")
 cop_script = ExtResource("1_7u8p7")
 robber_script = ExtResource("4_xkl58")
-cop_script_path = ""
-robber_script_path = ""

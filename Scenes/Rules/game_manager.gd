@@ -13,6 +13,8 @@ signal game_over
 
 @export var next_level_button : NextLevelButton
 
+@export var stopwatch : Stopwatch
+
 var cops :
 	get: 
 		return get_tree().get_nodes_in_group("Cops")
@@ -42,8 +44,12 @@ func robber_win():
 func end():
 	if is_instance_valid(state_machine):
 		state_machine.end()
+		game_over_label.text += "\nTurns taken: " + str(state_machine.turn)
 	
-	game_over_label.text += "\nTurns taken: " + str(state_machine.turn)
+	if is_instance_valid(stopwatch):
+		stopwatch.stop()
+		game_over_label.text += "\nTime taken: " + stopwatch.get_time_string()
+	
 	game_over_screen.modulate = Color(1,1,1,0)
 	game_over_screen.show()
 	var tween = create_tween()

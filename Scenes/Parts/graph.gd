@@ -85,7 +85,8 @@ func _process(delta):
 	if is_instance_valid(graph_data_display_label):
 		graph_data_display_label.text = graph_data.display()
 
-
+func size():
+	return graph_data.size()
 
 func get_neighbors_from_vertex(vtx:Vertex) -> Array:
 	var nbors = []
