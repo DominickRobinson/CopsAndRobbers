@@ -99,72 +99,79 @@ func _on_pressed():
 func get_cop_script():
 	var str = "res://Resources/Scripts/move_"
 	match cop_strategy_button.selected:
-		0:
-			str +="player"
-		1:
-			str += "lower_way"
-		2:
-			str += "higher_way"
-		3:
-			str += "drunk"
-		4:
-			str += "drunk_nonsuicidal"
+		0: str += "player"
+		1: str += "lower_way"
+		2: str += "higher_way"
+		3: str += "drunk"
+		4: str += "drunk_nonsuicidal"
 	str += ".gd"
 	return load(str)
 
 func get_robber_script():
 	var str = "res://Resources/Scripts/move_"
 	match robber_strategy_button.selected:
-		0:
-			str +="player"
-		1:
-			str += "lower_way"
-		2:
-			str += "higher_way"
-		3:
-			str += "drunk"
-		4:
-			str += "drunk_nonsuicidal"
+		0: str += "player"
+		1: str += "lower_way"
+		2: str += "higher_way"
+		3: str += "drunk"
+		4: str += "drunk_nonsuicidal"
 	str += ".gd"
 	return load(str)
 
 func get_cop_skin():
 	var str = "res://Assets/Art/Characters/"
 	match cop_skin_button.selected:
-		0:
-			str += "empty"
-		1:
-			str += "cop"
-		2:
-			str += "firefighter"
-		3:
-			str += "zombie"
+		0: str += "empty"
+		1: str += "cop"
+		2: str += "firefighter"
+		3: str += "zombie"
 	str += ".svg"
 	return load(str)
 
 func get_robber_skin():
 	var str = "res://Assets/Art/Characters/"
 	match robber_skin_button.selected:
-		0:
-			str += "empty"
-		1:
-			str += "ninja"
-		2:
-			str += "arsonist"
-		3:
-			str += "survivor"
+		0: str += "empty"
+		1: str += "ninja"
+		2: str += "arsonist"
+		3: str += "survivor"
 	str += ".svg"
 	return load(str)
 
 func get_vertex_style():
-	pass
+	var str = "res://Resources/GameComponents/GraphStyles/VertexStyles/"
+	match edge_style_button.selected:
+		0: str += "vertex_style_basic"
+		1: str += "vertex_style_firefighter_arsonist"
+	str += ".tres"
+	return load(str)
 
 func get_edge_style():
-	pass
+	var str = "res://Resources/GameComponents/GraphStyles/EdgeStyles/"
+	match edge_style_button.selected:
+		0: str += "edge_style_basic"
+		1: str += "edge_style_basic_no_loop"
+	str += ".tres"
+	return load(str)
 
 func get_bg_image():
-	pass
+	var str = "res://Assets/Art/Backgrounds/"
+	match background_image_button.selected:
+		0: str += "white.png"
+		1: str += "light_gray.png"
+		2: str += "dark_gray.png"
+		3: str += "black.png"
+		4: str += "concrete2.JPEG"
+		5: str += "grass3.jpg"
+	return load(str)
 
 func get_music():
-	pass
+	var str = "res://Assets/Music/"
+	match music_button.selected:
+		0: return null
+		1: str += "cops_and_robbers_music.wav"
+		2: str += "arsonist.wav"
+		3: str += "Start Up.mp3"
+		4: str += "Editor.mp3"
+	return load(str)
 

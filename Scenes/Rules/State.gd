@@ -17,17 +17,26 @@ signal state_exited
 @export var agent : Agent
 @export var target : Agent
 
+var turn = 0
+var already_entered = false
 
 func _ready():
 	state_entered.connect(_on_state_entered)
 	state_exited.connect(_on_state_exited)
-
+	
 
 
 func activate():
 	state_entered.emit()
 
+func increment_turn():
+	if not already_entered:
+		already_entered = true
+	else:
+		turn += 1
+
 func deactivate():
+	increment_turn()
 	state_exited.emit()
 
 func go_to_next_state(new_state:State = next_state):
@@ -35,7 +44,8 @@ func go_to_next_state(new_state:State = next_state):
 	new_state.activate()
 
 func _on_state_entered():
-	await get_tree().create_timer(.5)
+#	await get_tree().create_timer(.5)
+	pass
 
 func _on_state_exited():
 	pass

@@ -28,7 +28,12 @@ var graph : Graph :
 	get:
 		return get_parent().graph
 
-var turn = 0
+var turn: 
+	get:
+		if is_instance_valid(first_state):
+			return first_state.turn
+		else:
+			return -1
 
 
 func _ready():
@@ -40,19 +45,20 @@ func _ready():
 		c.state_entered.connect(set.bind("curr_state", c))
 	
 	first_state.activate()
-	
-	first_state.state_entered.connect(increment_turn)
 
-
-func increment_turn():
-	turn += 1
+#	first_state.state_entered.connect(increment_turn)
+#
+#var actually_started = false
+#func increment_turn():
+#	if not actually_started: actually_started = true
+#	else: turn += 1
 
 func _process(delta):
 	
 	label.text = "Optimal capture time: " + str(graph.capture_time) + "\n"
 	
-	
-	label.text += "Total turns: " + str(turn) + "\n"
+	if is_instance_valid(first_state):
+		label.text += "Total turns: " + str(first_state.turn) + "\n"
 	
 	var vertices = graph.vertices
 	var burnt = 0
@@ -68,5 +74,5 @@ func _process(delta):
 
 func end():
 	curr_state.deactivate()
-	first_state.state_entered.disconnect(increment_turn)
+#	first_state.state_entered.disconnect(increment_turn)
 	

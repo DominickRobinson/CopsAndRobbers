@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bxdtddrm8rfaj"]
+[gd_scene load_steps=27 format=3 uid="uid://bxdtddrm8rfaj"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -14,16 +14,25 @@
 [ext_resource type="Script" path="res://Scenes/Levels/LoadGraphButton.gd" id="9_1cg40"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadCustomGameButton.gd" id="10_pcfh5"]
 [ext_resource type="Texture2D" uid="uid://dnjq8kwqdhki8" path="res://Assets/Art/UI/youtube.svg" id="11_81ldx"]
-[ext_resource type="Resource" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_undirected.tres" id="11_dyvdp"]
 [ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="11_fvfss"]
 [ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="11_q8lxc"]
 [ext_resource type="Script" path="res://Scenes/UI/LinkIconButton.gd" id="12_c1in3"]
 [ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="12_vt7vy"]
 [ext_resource type="Texture2D" uid="uid://bbnt4qcwrcnak" path="res://Assets/Art/UI/link.svg" id="13_3d1wh"]
 [ext_resource type="Resource" uid="uid://cju1g68il7m27" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style_basic.tres" id="14_eh0lr"]
+[ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style.gd" id="15_22cxp"]
 [ext_resource type="Texture2D" uid="uid://dddrfir8htm7" path="res://Assets/Art/Backgrounds/white.png" id="15_efkoq"]
 [ext_resource type="Script" path="res://Scenes/Levels/EmailButton.gd" id="15_ht1of"]
 [ext_resource type="AudioStream" uid="uid://osh0sglynqcr" path="res://Assets/Music/cops_and_robbers_music.wav" id="16_q7tx4"]
+
+[sub_resource type="Resource" id="Resource_35yqw"]
+script = ExtResource("15_22cxp")
+mode = "color"
+default_color = Color(0, 0, 0, 1)
+width_px = 5.0
+border_width_px = 1.0
+show_reflexive_loop = false
+show_directed_arrow = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ku1lq"]
 bg_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
@@ -304,7 +313,7 @@ size_flags_horizontal = 3
 alignment = 2
 item_count = 2
 selected = 0
-popup/item_0/text = "Basic (undirected)"
+popup/item_0/text = "Basic"
 popup/item_0/id = 0
 popup/item_1/text = "Basic (directed)"
 popup/item_1/id = 1
@@ -493,7 +502,7 @@ robber_strategy = ExtResource("11_q8lxc")
 cop_skin = ExtResource("11_fvfss")
 robber_skin = ExtResource("12_vt7vy")
 vertex_style = ExtResource("14_eh0lr")
-edge_style = ExtResource("11_dyvdp")
+edge_style = SubResource("Resource_35yqw")
 background_image = ExtResource("15_efkoq")
 music = ExtResource("16_q7tx4")
 

@@ -23,7 +23,7 @@ var robber_script : Script
 @onready var robbers : Node2D = $Agents/Robbers
 @onready var game_manager : Node = $GameManager
 @onready var state_machine : StateMachine = $GameManager/StateMachine
-@onready var background : Sprite2D = $ParallaxBackground/ParallaxLayer/Background
+@onready var background : TextureRect = $BackgroundLayer/Background
 
 @export_file("*") var next_level_path
 @onready var next_level_button : NextLevelButton = $CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/NextLevelButton

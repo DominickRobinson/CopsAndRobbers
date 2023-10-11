@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bhvdif8aw6u2x"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/edge.gd" id="1_ifrx8"]
-[ext_resource type="Resource" uid="uid://ddqhh1ur33j6o" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_directed.tres" id="2_ob8s5"]
+[ext_resource type="Resource" uid="uid://ddqhh1ur33j6o" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_directed.tres" id="2_juq8o"]
 [ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Assets/Art/reflexive_edge.png" id="4_coc45"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_08b4o"]
@@ -11,7 +11,7 @@ resource_local_to_scene = true
 
 [node name="Edge" type="Node2D" node_paths=PackedStringArray("line", "loop_sprite", "area")]
 script = ExtResource("1_ifrx8")
-style_resource = ExtResource("2_ob8s5")
+style_resource = ExtResource("2_juq8o")
 line = NodePath("Line2D")
 loop_sprite = NodePath("LoopSprite2")
 area = NodePath("Area2D")

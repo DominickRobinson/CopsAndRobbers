@@ -1,0 +1,31 @@
+[gd_scene load_steps=15 format=3 uid="uid://r3s6ncirqgrv"]
+
+[ext_resource type="Script" path="res://Autoloads/Sound/AudioPool.gd" id="1_7y3od"]
+[ext_resource type="AudioStream" uid="uid://c3hn1ckaqpiqo" path="res://Assets/Sound/Cops and Robbers_Regular_Intro.mp3" id="2_e6edi"]
+[ext_resource type="AudioStream" uid="uid://cll6vg385jx7b" path="res://Assets/Music/Start Up.mp3" id="2_im7go"]
+[ext_resource type="AudioStream" uid="uid://c5gvutihyue2i" path="res://Assets/Sound/Cops and Robbers_Deep_Intro.mp3" id="3_wckey"]
+[ext_resource type="AudioStream" uid="uid://cr1kk04l6bvoe" path="res://Assets/Sound/Cops and Robbers_Robotic Intro.mp3" id="4_mnr6s"]
+[ext_resource type="AudioStream" uid="uid://dm3x8hm6oywyi" path="res://Assets/Sound/bong1mp3.mp3" id="5_251pd"]
+[ext_resource type="AudioStream" uid="uid://csbfovygokbcb" path="res://Assets/Sound/thump1.mp3" id="5_pcbhb"]
+[ext_resource type="AudioStream" uid="uid://bbfy7rbhtiwrf" path="res://Assets/Sound/deepthump.mp3" id="6_a1s4l"]
+[ext_resource type="AudioStream" uid="uid://dt3dbs3vda1ri" path="res://Assets/Sound/HuhNoise.mp3" id="8_qsnbf"]
+[ext_resource type="AudioStream" uid="uid://cyej8ky5x1vyd" path="res://Assets/Sound/footsteps.wav" id="9_ft444"]
+[ext_resource type="AudioStream" uid="uid://cqvw0uj62at7w" path="res://Assets/Music/Editor.mp3" id="9_wm5er"]
+[ext_resource type="AudioStream" uid="uid://cltxy8yakt2st" path="res://Assets/Sound/laugh1.mp3" id="10_fgo5m"]
+[ext_resource type="AudioStream" uid="uid://osh0sglynqcr" path="res://Assets/Music/cops_and_robbers_music.wav" id="11_av005"]
+[ext_resource type="AudioStream" uid="uid://bdyv7i0cxrm1r" path="res://Assets/Music/zombie_music.mp3" id="14_bk1dv"]
+
+[node name="AudioPool" type="Node"]
+script = ExtResource("1_7y3od")
+sound_cops_and_robbers = Array[AudioStream]([ExtResource("3_wckey"), ExtResource("2_e6edi"), ExtResource("4_mnr6s")])
+sound_vertex_add = Array[AudioStream]([ExtResource("6_a1s4l"), ExtResource("5_pcbhb")])
+sound_vertex_remove = ExtResource("5_251pd")
+sound_edge_add_start = ExtResource("5_pcbhb")
+sound_edge_add = ExtResource("6_a1s4l")
+sound_edge_remove = ExtResource("8_qsnbf")
+sound_footsteps = ExtResource("9_ft444")
+sound_laugh = ExtResource("10_fgo5m")
+music_title = ExtResource("2_im7go")
+music_editor = ExtResource("9_wm5er")
+music_cops_and_robbers = ExtResource("11_av005")
+music_zombies_and_survivors = ExtResource("14_bk1dv")

@@ -8,5 +8,6 @@ func _ready():
 
 
 func _on_button_pressed():
+	print("pressed: ", level_pack)
 	if level_pack: 
 		SceneManager.load_level_pack(level_pack)

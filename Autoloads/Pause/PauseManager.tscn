@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://vyf6ngr5gikf"]
+[gd_scene load_steps=11 format=3 uid="uid://vyf6ngr5gikf"]
 
 [ext_resource type="Script" path="res://Autoloads/Pause/PauseManager.gd" id="1_fdy4f"]
 [ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="2_bfudg"]
@@ -8,6 +8,58 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o3wjm"]
 bg_color = Color(0, 0, 0, 0.25098)
+
+[sub_resource type="Animation" id="Animation_hfadu"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mtc8d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_olcea"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_24y1v"]
+_data = {
+"RESET": SubResource("Animation_mtc8d"),
+"fade_in": SubResource("Animation_hfadu"),
+"fade_out": SubResource("Animation_olcea")
+}
 
 [node name="PauseManager" type="CanvasLayer" node_paths=PackedStringArray("pause_menu")]
 layer = 99
@@ -77,5 +129,10 @@ text = "Go to main menu"
 icon = ExtResource("7_e5myp")
 script = ExtResource("8_pxl0a")
 scene_path = "res://Scenes/Levels/main_menu.tscn"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_24y1v")
+}
 
 [connection signal="pressed" from="PanelContainer/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="unpause"]

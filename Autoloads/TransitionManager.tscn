@@ -1,0 +1,227 @@
+[gd_scene load_steps=14 format=3 uid="uid://8sprhwmymnl4"]
+
+[ext_resource type="Script" path="res://Autoloads/TransitionManager.gd" id="1_78lai"]
+[ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="3_yrxm8"]
+[ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="4_fc376"]
+
+[sub_resource type="Animation" id="Animation_ieubu"]
+resource_name = "default"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-350, 325), Vector2(1500, 325)]
+}
+
+[sub_resource type="Animation" id="Animation_n4lea"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-350, 325)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rihof"]
+_data = {
+"RESET": SubResource("Animation_n4lea"),
+"default": SubResource("Animation_ieubu")
+}
+
+[sub_resource type="Animation" id="Animation_8lt2e"]
+resource_name = "run"
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.174533, 0.0, 0.174533, 0.0, -0.174533, 0.0, 0.174533, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.248957, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, -10), Vector2(0, 0), Vector2(0, -20), Vector2(0, 0), Vector2(0, -20), Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gp6v0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hgh8e"]
+_data = {
+"RESET": SubResource("Animation_gp6v0"),
+"run": SubResource("Animation_8lt2e")
+}
+
+[sub_resource type="Animation" id="Animation_qygm6"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pnb8e"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1ykpy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s7ns2"]
+_data = {
+"RESET": SubResource("Animation_1ykpy"),
+"fade_in": SubResource("Animation_qygm6"),
+"fade_out": SubResource("Animation_pnb8e")
+}
+
+[node name="TransitionManager" type="CanvasLayer"]
+script = ExtResource("1_78lai")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Control" parent="ColorRect"]
+process_mode = 4
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -350.0
+offset_top = 325.0
+offset_right = -350.0
+offset_bottom = 325.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect/Node2D"]
+libraries = {
+"": SubResource("AnimationLibrary_rihof")
+}
+
+[node name="Control" type="Control" parent="ColorRect/Node2D"]
+anchors_preset = 0
+offset_left = -366.0
+offset_top = -117.0
+offset_right = -326.0
+offset_bottom = -77.0
+
+[node name="Cop" type="TextureRect" parent="ColorRect/Node2D/Control"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+pivot_offset = Vector2(150, 150)
+texture = ExtResource("3_yrxm8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect/Node2D/Control/Cop"]
+libraries = {
+"": SubResource("AnimationLibrary_hgh8e")
+}
+
+[node name="Control2" type="Control" parent="ColorRect/Node2D"]
+anchors_preset = 0
+offset_left = 83.0
+offset_top = -118.0
+offset_right = 123.0
+offset_bottom = -78.0
+
+[node name="Robber" type="TextureRect" parent="ColorRect/Node2D/Control2"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 300.0
+pivot_offset = Vector2(150, 150)
+texture = ExtResource("4_fc376")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect/Node2D/Control2/Robber"]
+libraries = {
+"": SubResource("AnimationLibrary_hgh8e")
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_s7ns2")
+}

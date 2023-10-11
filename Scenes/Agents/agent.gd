@@ -7,6 +7,8 @@ signal arrived
 
 signal caught
 
+@export var show_on_start : bool = false
+
 
 @export_enum("Cop", "Robber") var mode : String = "Cop"
 
@@ -14,6 +16,7 @@ signal caught
 
 var travel_time: float = 0.5
 var current_vertex : Vertex = null
+
 
 
 @export_group("Nodes")
@@ -30,7 +33,8 @@ var movement_tween : Tween
 
 func _ready():
 	
-	hide()
+	if show_on_start: show()
+	else: hide()
 	
 	match mode:
 		"Cop":
@@ -41,7 +45,8 @@ func _ready():
 	label.text = name
 	
 #	anim.animation_started.connect(_on_animation_started)
-	play_anim("idle")
+	if not show_on_start:
+		play_anim("idle")
 	
 
 
@@ -135,8 +140,6 @@ func move_to(new_vertex:Vertex):
 	audio_player.stop()
 	reset_animation()
 	
-	
-	
 	if not (self in current_vertex.occupents): 
 		current_vertex.occupents.append(self)
 	
@@ -147,6 +150,7 @@ func move_to(new_vertex:Vertex):
 		await anim.animation_finished
 	
 	arrived.emit()
+	
 	if not visible: show()
 	moving = false
 	

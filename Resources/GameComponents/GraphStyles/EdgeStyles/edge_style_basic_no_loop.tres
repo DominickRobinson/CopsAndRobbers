@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EdgeStyle" load_steps=5 format=3 uid="uid://deywngjmudl7g"]
+
+[ext_resource type="Texture2D" uid="uid://wryqe0jivfct" path="res://Assets/Art/directed_edge.png" id="1_ombne"]
+[ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Assets/Art/reflexive_edge.png" id="2_es2re"]
+[ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style.gd" id="3_uctm2"]
+[ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Assets/Art/undirected_edge.png" id="4_efhrc"]
+
+[resource]
+script = ExtResource("3_uctm2")
+mode = "skin"
+undirected_skin = ExtResource("4_efhrc")
+directed_skin = ExtResource("1_ombne")
+reflexive_skin = ExtResource("2_es2re")
+default_color = Color(0, 0, 0, 1)
+width_px = 5.0
+border_width_px = 1.0
+show_reflexive_loop = false
+show_directed_arrow = true

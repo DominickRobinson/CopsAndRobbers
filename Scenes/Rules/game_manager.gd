@@ -11,6 +11,7 @@ signal game_over
 @export var game_over_screen : Control
 @export var game_over_label : Label
 
+@export var next_level_button : NextLevelButton
 
 var cops :
 	get: 
@@ -30,18 +31,24 @@ func _ready():
 
 func cop_win():
 	game_over_label.text = "Cops win!"
+	next_level_button.show()
 	end()
 
 func robber_win():
 	game_over_label.text = "Robbers win..."
+	next_level_button.hide()
 	end()
 
 func end():
 	if is_instance_valid(state_machine):
 		state_machine.end()
 	
-	game_over_screen.show()
 	game_over_label.text += "\nTurns taken: " + str(state_machine.turn)
+	game_over_screen.modulate = Color(1,1,1,0)
+	game_over_screen.show()
+	var tween = create_tween()
+	tween.tween_property(game_over_screen, "modulate", Color(1,1,1,1), 0.5)
+	
 
 
 func forfeit():

@@ -13,15 +13,23 @@ var is_custom_game : bool = false
 
 func change_scene(scene_path : String = "res://Scenes/Levels/level.tscn"):
 	
+	
+#	SoundManager.stop_music()
+	
 	PauseManager.unpause()
 	
-	SoundManager.stop_music()
+	await TransitionManager.fade_out()
+	
 	
 	if scene_path == null:
 		get_tree().reload_current_scene()
 	else:
 		get_tree().change_scene_to_file(scene_path)
 	
+	
+
+	
+	await TransitionManager.fade_in()
 	return true
 
 func reload_scene():
@@ -38,6 +46,9 @@ func unpack_level_pack(level_pack : Resource):
 	var levels_path = level_pack.levels_path
 	level_index = 0
 	levels = get_JSON_paths_from_dir(levels_path)
+#	print("Levels list before reversing: ", levels)
+#	levels.reverse()
+#	print("Levels list after reversing: ", levels)
 
 func load_level_pack(level_pack : Resource):
 	unpack_level_pack(level_pack)
@@ -58,11 +69,25 @@ func load_level():
 	if level_index < levels.size() - 1:
 		new_level.next_level_path = levels[level_index + 1]
 	
-	change_scene("res://main.tscn")
+	
+	PauseManager.unpause()
+	await TransitionManager.fade_out()
+
+	get_tree().change_scene_to_file("res://main.tscn")
+	
 	await get_tree().process_frame
+	
 	get_tree().current_scene.add_child(new_level)
 	
+	
+	var graph = get_tree().get_first_node_in_group("Graphs") as Graph
+	if is_instance_valid(graph):
+		print("Graph found!")
+		await graph.created
+		print("       created!")
+
 	SoundManager.play_music_file(game_resource.game_theme.music)
+	await TransitionManager.fade_in()
 
 func load_custom_level(custom_game_resource:Game, graph_path:String):
 	is_custom_game = true
@@ -104,8 +129,10 @@ func get_JSON_paths_from_dir(path:String) -> Array:
 				if file_name.get_extension() == "json":
 					var str = path + "/" + file_name
 					paths.append(str)
+					print(file_name)
 			file_name = dir.get_next()
+#		print("paths: ", paths)
 	
-	paths.reverse()
+#	paths.reverse()
 	
 	return paths

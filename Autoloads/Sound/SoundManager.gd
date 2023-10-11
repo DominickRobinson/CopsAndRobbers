@@ -52,6 +52,8 @@ func play_music(audio_name:String, fade:float=1.0, vol:float=0.0, loop:bool=true
 	return music_player
 
 func play_music_file(audio:AudioStream, fade:float=1.0, vol:float=0.0, loop:bool=true, pitch:float=1.0) -> AudioStreamPlayer:
+	if music_player.stream == audio:
+		return
 	music_player.stream = audio
 	if loop:
 		music_player.finished.connect(music_player.play)

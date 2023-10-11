@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="Game" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="Game" load_steps=6 format=3 uid="uid://sbmlogiwvjag"]
 
 [ext_resource type="Resource" path="res://Resources/GameComponents/GameRules/game_rules_cops_robbers.tres" id="1_l2qta"]
 [ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="1_vxye0"]
-[ext_resource type="Resource" uid="uid://dtgfyqw5tw1n3" path="res://Resources/GameComponents/GameThemes/game_theme_basic.tres" id="2_11gah"]
+[ext_resource type="Resource" uid="uid://b10ve1vebw77b" path="res://Resources/GameComponents/GameThemes/game_theme_basic.tres" id="2_11gah"]
 [ext_resource type="Script" path="res://Resources/Games/game.gd" id="3_3qgpt"]
 [ext_resource type="Script" path="res://Resources/Scripts/move_higher_way.gd" id="4_d0qme"]
 
