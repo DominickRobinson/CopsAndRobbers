@@ -5,7 +5,10 @@ extends GraphComponent
 signal moved
 
 
-@export var style_resource : Resource
+@export var style_resource : Resource:
+	set(value):
+		style_resource = value
+		if is_node_ready(): set_resource()
 
 #text label to be displayed if required
 @export var text : String = ""
@@ -14,8 +17,8 @@ signal moved
 @export var scr_label : Label
 @export var anim : AnimationPlayer
 
-@export var sprite : Sprite2D
-@export var fire_sprite : Sprite2D
+@onready var sprite = $Sprite2D
+@onready var fire_sprite = $FireSprite
 
 var index : int = -1
 
@@ -55,7 +58,11 @@ func _ready():
 	deselected.connect(anim.play.bind("RESET"))
 	selected.connect(set_skin)
 	
+	set_resource()
 	fire_sprite.hide()
+
+
+func set_resource():
 	sprite.texture = style_resource.default_skin
 
 

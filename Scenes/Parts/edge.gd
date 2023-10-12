@@ -8,7 +8,10 @@ var start_vertex : Vertex
 #end vertex of directed edge
 var end_vertex : Vertex 
 
-@export var style_resource : Resource
+@export var style_resource : Resource:
+	set(value):
+		style_resource = value
+		if is_node_ready(): set_resource()
 
 @export_group("Properties")
 var reflexive : bool = false
@@ -24,10 +27,16 @@ var area_shape
 
 
 func _ready():
+	set_resource()
+	super._ready()
+	
+	#anchor edge at origin for consistency
+	position = Vector2(0,0)
+
+func set_resource():
 	loop_sprite.hide()
 	area_shape = area.get_children()[0]
 	reflexive = start_vertex == end_vertex
-	
 	
 	match style_resource.mode:
 		"skin":
@@ -44,12 +53,6 @@ func _ready():
 			line.default_color = style_resource.default_color
 			line.texture = null
 			line.width = style_resource.width_px
-	
-	super._ready()
-	
-	#anchor edge at origin for consistency
-	position = Vector2(0,0)
-
 
 func _process(delta):
 	if can_draw():

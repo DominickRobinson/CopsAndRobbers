@@ -100,14 +100,12 @@ _data = {
 "selected": SubResource("Animation_i3lfj")
 }
 
-[node name="Vertex" type="Node2D" node_paths=PackedStringArray("label", "scr_label", "anim", "sprite", "fire_sprite", "area")]
+[node name="Vertex" type="Node2D" node_paths=PackedStringArray("label", "scr_label", "anim", "area")]
 script = ExtResource("1_cri6f")
 style_resource = ExtResource("2_imd5n")
 label = NodePath("Sprite2D/VBoxContainer/Label")
 scr_label = NodePath("Sprite2D/VBoxContainer/SCRLabel")
 anim = NodePath("AnimationPlayer")
-sprite = NodePath("Sprite2D")
-fire_sprite = NodePath("FireSprite")
 area = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

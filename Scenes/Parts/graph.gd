@@ -29,8 +29,16 @@ signal vertex_selected(vtx:Vertex)
 @export_group("Resources")
 @export var vertex_resource : Resource
 @export var edge_resource : Resource
-@export var vertex_style_resource : Resource
-@export var edge_style_resource : Resource
+@export var vertex_style_resource : VertexStyle :
+	set(value):
+		vertex_style_resource = value
+		if is_node_ready():
+			vertex_container.vertex_style_resource = vertex_style_resource
+@export var edge_style_resource : EdgeStyle:
+	set(value):
+		edge_style_resource = value
+		if is_node_ready():
+			edge_container.edge_style_resource = edge_style_resource
 
 
 @export_group("Debug")

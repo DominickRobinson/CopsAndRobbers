@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://4x6gs1h86s42" path="res://Assets/Art/Backgrounds/concrete2_1152x648.jpeg" id="1_4vxbc"]
 [ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="2_jw5gs"]
-[ext_resource type="Resource" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_undirected.tres" id="3_fvuww"]
+[ext_resource type="Resource" uid="uid://dr8eufjbtnibp" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_undirected.tres" id="3_fvuww"]
 [ext_resource type="AudioStream" uid="uid://osh0sglynqcr" path="res://Assets/Music/cops_and_robbers_music.wav" id="4_vduee"]
 [ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="5_6lg88"]
 [ext_resource type="Script" path="res://Resources/GameComponents/GameThemes/game_theme.gd" id="6_phshk"]

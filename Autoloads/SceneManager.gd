@@ -64,6 +64,7 @@ func load_next_level():
 func load_level():
 	is_custom_game = false
 	var new_level = level_resource.instantiate()
+	print("changing game resource")
 	new_level.game_resource = game_resource
 	new_level.graph_path = levels[level_index]
 	if level_index < levels.size() - 1:

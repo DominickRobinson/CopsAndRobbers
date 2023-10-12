@@ -2,8 +2,12 @@ class_name VertexContainer
 extends GraphComponentContainer
 
 
-var vertex_style_resource : Resource
-
+var vertex_style_resource : Resource :
+	set(value):
+		vertex_style_resource = value
+		for v in vertices:
+			v = v as Vertex
+			v.style_resource = vertex_style_resource
 
 var vertices :
 	get:

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EdgeStyle" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="EdgeStyle" load_steps=2 format=3 uid="uid://dr8eufjbtnibp"]
 
 [ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style.gd" id="1_t1uh8"]
 
@@ -6,7 +6,7 @@
 script = ExtResource("1_t1uh8")
 mode = "color"
 default_color = Color(0, 0, 0, 1)
-border_color = Color(0, 0, 0, 1)
 width_px = 5.0
 border_width_px = 1.0
 show_reflexive_loop = false
+show_directed_arrow = false

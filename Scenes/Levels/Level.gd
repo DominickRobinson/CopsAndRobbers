@@ -31,11 +31,15 @@ var robber_script : Script
 var timer
 
 func _ready():
-	
-	timer = Timer.new()
-	
 	game_theme = game_resource.game_theme
 	game_rules = game_resource.game_rules
+	vertex_style_resource = game_theme.vertex_style_resource
+	edge_style_resource = game_theme.edge_style_resource
+	
+	graph.edge_style_resource = edge_style_resource
+	graph.vertex_style_resource = vertex_style_resource
+	
+	timer = Timer.new()
 	
 	background.texture = game_theme.background_skin
 	
@@ -51,10 +55,6 @@ func _ready():
 
 #	cop_script = load(game_resource.cop_script_path)
 #	robber_script = load(game_resource.robber_script_path)
-	
-	#load graph
-	graph.edge_style_resource = edge_style_resource
-	graph.vertex_style_resource = vertex_style_resource
 	
 	#create all agents
 	for i in game_rules.number_of_cops:

@@ -29,7 +29,7 @@
 script = ExtResource("15_22cxp")
 mode = "color"
 default_color = Color(0, 0, 0, 1)
-width_px = 5.0
+width_px = 30.0
 border_width_px = 1.0
 show_reflexive_loop = false
 show_directed_arrow = false
@@ -141,6 +141,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="LevelPackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20

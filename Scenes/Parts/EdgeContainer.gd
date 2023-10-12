@@ -2,7 +2,12 @@ class_name EdgeContainer
 extends GraphComponentContainer
 
 
-var edge_style_resource : Resource
+var edge_style_resource : Resource:
+	set(value):
+		edge_style_resource = value
+		for e in edges:
+			e = e as Edge
+			e.style_resource = edge_style_resource
 
 var edges:
 	get:
