@@ -14,6 +14,7 @@ signal game_over
 @export var next_level_button : NextLevelButton
 
 @export var stopwatch : Stopwatch
+@export var star_container : StarContainer
 
 var cops :
 	get: 
@@ -30,16 +31,24 @@ func _ready():
 	game_start.emit()
 	
 	
+	
 
 func cop_win():
 	game_over_label.text = "Cops win!"
 	next_level_button.show()
-	end()
+	await end()
+	
+	if state_machine.turn <= graph.capture_time:
+		await star_container.show_stars(3)
+	elif state_machine.turn <= 2 * graph.capture_time:
+		await star_container.show_stars(2)
+	else:
+		await star_container.show_stars(1)
 
 func robber_win():
 	game_over_label.text = "Robbers win..."
 	next_level_button.hide()
-	end()
+	await end()
 
 func end():
 	if is_instance_valid(state_machine):
@@ -52,9 +61,14 @@ func end():
 	
 	game_over_screen.modulate = Color(1,1,1,0)
 	game_over_screen.show()
-	var tween = create_tween()
+	var tween = create_tween() as Tween
 	tween.tween_property(game_over_screen, "modulate", Color(1,1,1,1), 0.5)
 	
+	await tween.finished
+	
+	return true
+
+
 
 
 func forfeit():
