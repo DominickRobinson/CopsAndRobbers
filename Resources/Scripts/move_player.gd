@@ -1,6 +1,10 @@
 extends State
 
 
+func _ready():
+	super._ready()
+	agent.player = true
+	pass
 
 func _on_state_entered():
 	super._on_state_entered()

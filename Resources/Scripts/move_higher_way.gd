@@ -1,5 +1,6 @@
 extends State
 
+
 var cops : Array :
 	get:
 		return get_tree().get_nodes_in_group("Cops")
@@ -100,8 +101,10 @@ func _on_state_entered():
 	
 	agent.move_to(move)
 	
+	var first_placement = not already_entered
+	
 	await agent.arrived
-	if move.is_top:
+	if move.is_top or first_placement:
 		agent.laugh()
 
 

@@ -17,7 +17,8 @@ signal caught
 var travel_time: float = 0.5
 var current_vertex : Vertex = null
 
-
+var target : Agent = null
+var player = false
 
 @export_group("Nodes")
 @export var sprite : Sprite2D
@@ -51,10 +52,11 @@ func _ready():
 
 
 func _unhandled_input(event):
-	if moving and Input.is_action_just_pressed("select"):
-		movement_tween.set_speed_scale(2)
-		await movement_tween.finished
-		movement_tween.set_speed_scale(1)
+#	if moving and Input.is_action_just_pressed("select"):
+#		movement_tween.set_speed_scale(2)
+#		await movement_tween.finished
+#		movement_tween.set_speed_scale(1)
+	pass
 
 
 func get_captured():
@@ -126,9 +128,13 @@ func move_to(new_vertex:Vertex):
 	movement_tween = get_tree().create_tween()
 	if visible:
 		movement_tween.tween_property(self, "global_position", new_vertex.global_position, travel_time)
+		play_anim("move")
 	else:
-		movement_tween.tween_property(self, "global_position", new_vertex.global_position, 0)
-	play_anim("move")
+		global_position = new_vertex.global_position
+		movement_tween.tween_property(self, "modulate", modulate, travel_time)
+		play_anim("enter")
+		await get_tree().process_frame
+		show()
 	departed.emit()
 	
 	if arsonist and is_instance_valid(old_vtx) and old_vtx.get_occupents().size() == 0:
@@ -151,7 +157,7 @@ func move_to(new_vertex:Vertex):
 	
 	arrived.emit()
 	
-	if not visible: show()
+#	if not visible: show()
 	moving = false
 	
 	
@@ -206,3 +212,10 @@ func get_vertex():
 
 func set_sprite(texture:Texture2D):
 	sprite.texture = texture
+
+
+func is_player():
+	return player
+
+func get_target():
+	return target

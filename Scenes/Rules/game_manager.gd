@@ -15,6 +15,8 @@ signal game_over
 
 @export var stopwatch : Stopwatch
 @export var star_container : StarContainer
+@export var hint_button : Button
+
 
 var cops :
 	get: 
@@ -30,17 +32,58 @@ func _ready():
 #	graph.created.connect(emit_signal.bind("game_start"))
 	game_start.emit()
 	
+	state_machine.state_entered.connect(_on_state_entered)
 	
+	#if first time in first state
+	if state_machine.curr_state == state_machine.first_state:
+		_on_state_entered()
+
+
+func _on_state_entered():
+	print("State changed")
+	#shows/hides hint button depending on if a player is moving
+	print(state_machine.get_current_state().name)
+	var agent = state_machine.get_agent() as Agent
+	print("Agent: ", agent.name)
 	
+	if agent.is_player():
+		print(" is player")
+		if agent.is_cop():
+			print(" is cop")
+			hint_button.pressed.connect(_on_get_best_cop_move)
+			agent.departed.connect(_on_player_cop_departed)
+			hint_button.show()
+		else:
+			hint_button.hide()
+	else:
+		hint_button.hide()
+
+func _on_player_cop_departed():
+	hint_button.pressed.disconnect(_on_get_best_cop_move)
+
+
+func _on_get_best_cop_move():
+	hint_button.pressed.disconnect(_on_get_best_cop_move)
+	hint_button.hide()
+	print("pressed")
+	var agent = state_machine.get_agent() as Agent
+	var best_move = graph.get_best_cop_move(agent) as Vertex
+	for v in graph.get_vertices():
+		v = v as Vertex
+		if v == best_move:
+			best_move.emphasize()
+		else:
+			v.deemphasize()
+
 
 func cop_win():
 	game_over_label.text = "Cops win!"
-	next_level_button.show()
+#	next_level_button.show()
 	await end()
 	
 	if state_machine.turn <= graph.capture_time:
 		await star_container.show_stars(3)
-	elif state_machine.turn <= 2 * graph.capture_time:
+	elif state_machine.turn <= 3 * graph.capture_time:
 		await star_container.show_stars(2)
 	else:
 		await star_container.show_stars(1)
@@ -71,6 +114,9 @@ func end():
 
 
 
-func forfeit():
-	if state_machine.curr_state.agent.is_cop(): robber_win()
-	elif state_machine.curr_state.agent.is_robber(): cop_win()
+#func forfeit():
+#	if state_machine.curr_state.agent.is_cop(): robber_win()
+#	elif state_machine.curr_state.agent.is_robber(): cop_win()
+
+func get_agent():
+	return state_machine.get_agent()

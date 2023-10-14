@@ -1,7 +1,7 @@
 extends Control
 
 @onready var anim = $AnimationPlayer
-
+"res://Resources/level_packs/packs/pack4.tres"
 @export_file var next_scene 
 
 func _ready():

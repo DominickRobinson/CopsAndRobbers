@@ -1,8 +1,7 @@
 class_name StateMachine
 extends Node
 
-signal state_changed
-
+signal state_entered
 
 @export var first_state : State
 
@@ -20,9 +19,10 @@ var robbers : Array :
 
 var curr_state : State :
 	set(value):
-		if value != curr_state or curr_state != null:
-			state_changed.emit()
+		var old_state = curr_state
 		curr_state = value
+		if curr_state != old_state:
+			state_entered.emit()
 
 var graph : Graph :
 	get:
@@ -43,8 +43,10 @@ func _ready():
 			continue
 		c = c as State
 		c.state_entered.connect(set.bind("curr_state", c))
+		c.state_entered.connect(emit_signal.bind(state_entered))
 	
 	first_state.activate()
+
 
 #	first_state.state_entered.connect(increment_turn)
 #
@@ -75,4 +77,12 @@ func _process(delta):
 func end():
 	curr_state.deactivate()
 #	first_state.state_entered.disconnect(increment_turn)
-	
+
+func get_agent():
+	if is_instance_valid(curr_state):
+		return curr_state.agent
+	else:
+		return null
+
+func get_current_state():
+	return curr_state

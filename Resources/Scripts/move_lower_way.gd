@@ -27,10 +27,8 @@ func _on_state_entered():
 	
 	agent.arrived.connect(go_to_next_state)
 	
-	
-	
-	
-	graph.get_Fk_mappings()
+	#updates mappings?
+#	graph.get_Fk_mappings()
 	
 	#chooses random neighbor to move to
 	var move : Vertex = null
@@ -61,6 +59,8 @@ func _on_state_entered():
 			return
 		else:
 			target = robbers[randi() % robbers.size()]
+	
+	agent.target = target
 	
 	var moves = []
 	#in each mapping, check if robber shadow is found

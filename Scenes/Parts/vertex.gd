@@ -134,6 +134,11 @@ func burn():
 	sprite.texture = style_resource.burnt_skin
 	burnt = true
 
+func emphasize():
+	anim.play("emphasize")
+
+func deemphasize():
+	anim.play("RESET")
 
 func check_if_set_default_skin():
 	if sprite.texture == null: sprite.texture = style_resource.default_skin

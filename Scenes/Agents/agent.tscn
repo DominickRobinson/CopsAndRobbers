@@ -65,6 +65,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_erfn7"]
 resource_name = "capture"
@@ -136,6 +148,47 @@ tracks/3/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_jx5y0"]
+resource_name = "enter"
+length = 0.5
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 6.28319, 12.5664]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -100), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_xqtkv"]
 resource_name = "idle"
 loop_mode = 1
@@ -199,49 +252,18 @@ tracks/1/keys = {
 "values": [0.0, -0.174533, 0.0, 0.174533, 0.0, -0.174533, 0.0, 0.174533, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_jx5y0"]
-resource_name = "move2"
-length = 0.5
-loop_mode = 1
-step = 0.0625
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, -10), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 6.28319, 12.5664]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6chvc"]
 _data = {
 "RESET": SubResource("Animation_vh7pb"),
 "capture": SubResource("Animation_erfn7"),
 "captured": SubResource("Animation_mbduo"),
+"enter": SubResource("Animation_jx5y0"),
 "idle": SubResource("Animation_xqtkv"),
 "laugh": SubResource("Animation_vitxc"),
-"move": SubResource("Animation_ibhqf"),
-"move2": SubResource("Animation_jx5y0")
+"move": SubResource("Animation_ibhqf")
 }
 
 [node name="Agent" type="Node2D" node_paths=PackedStringArray("sprite", "anim", "label") groups=["Agents"]]
-visible = false
 script = ExtResource("1_kpjln")
 sprite = NodePath("Sprite2D")
 anim = NodePath("AnimationPlayer")

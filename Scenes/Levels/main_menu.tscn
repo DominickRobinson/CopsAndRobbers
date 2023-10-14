@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bxdtddrm8rfaj"]
+[gd_scene load_steps=26 format=3 uid="uid://bxdtddrm8rfaj"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -7,10 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://bus8m1x10u3y4" path="res://Scenes/UI/settings.tscn" id="4_4fkob"]
 [ext_resource type="Script" path="res://Scenes/UI/LevelPackButton.gd" id="4_52l23"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ag7rd"]
-[ext_resource type="Resource" uid="uid://hjqetla2gcmv" path="res://Resources/level_packs/CopsAndRobbersBasic/basic_level_pack_1.tres" id="5_fsk6h"]
-[ext_resource type="Resource" uid="uid://b1vohjp56flf4" path="res://Resources/level_packs/CopsAndRobbers/cops_robbers_level_pack_2.tres" id="6_jh50r"]
-[ext_resource type="Resource" uid="uid://bmclpx4sgq0wi" path="res://Resources/level_packs/CopsAndRobbers/cops_robbers_level_pack_1.tres" id="6_rswi2"]
-[ext_resource type="Resource" uid="uid://bnf4k60udmi2h" path="res://Resources/level_packs/FirefightersAndArsonists/firefighter_arsonist_level_pack_1.tres" id="8_1xuos"]
+[ext_resource type="Resource" uid="uid://c86aj66pisjmf" path="res://Resources/level_packs/packs/pack1.tres" id="5_6jhin"]
+[ext_resource type="Resource" uid="uid://boa7oxddug3nh" path="res://Resources/level_packs/packs/pack2.tres" id="6_gouf6"]
+[ext_resource type="Resource" uid="uid://cbwp7ttk0lloo" path="res://Resources/level_packs/packs/pack3.tres" id="7_bwkcj"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadGraphButton.gd" id="9_1cg40"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadCustomGameButton.gd" id="10_pcfh5"]
 [ext_resource type="Texture2D" uid="uid://dnjq8kwqdhki8" path="res://Assets/Art/UI/youtube.svg" id="11_81ldx"]
@@ -141,37 +140,27 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="LevelPackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Basic level pack #1"
+text = "Pack #1"
 script = ExtResource("4_52l23")
-level_pack = ExtResource("5_fsk6h")
+level_pack = ExtResource("5_6jhin")
 
 [node name="LevelPackButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Cops and robbers #1"
+text = "Pack #2"
 script = ExtResource("4_52l23")
-level_pack = ExtResource("6_rswi2")
+level_pack = ExtResource("6_gouf6")
 
 [node name="LevelPackButton3" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Cops and robbers #2"
+text = "Pack #3"
 script = ExtResource("4_52l23")
-level_pack = ExtResource("6_jh50r")
+level_pack = ExtResource("7_bwkcj")
 
 [node name="LevelPackButton4" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Firefighters and arsonists #1"
+text = "Pack #4"
 script = ExtResource("4_52l23")
-level_pack = ExtResource("8_1xuos")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
 visible = false
