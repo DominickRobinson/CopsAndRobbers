@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcn6ms0i1e81s"]
+[gd_scene load_steps=6 format=3 uid="uid://dcn6ms0i1e81s"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphDataEditor/graph_data_editor.gd" id="1_wglko"]
 [ext_resource type="PackedScene" uid="uid://bd6nyi2cnfc0w" path="res://Scenes/Parts/graph_data.tscn" id="2_uf1l8"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_usybr"]
 [ext_resource type="PackedScene" uid="uid://bm7gd48dg50ke" path="res://Scenes/music_player.tscn" id="4_ga8o0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvfpu"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
 
 [node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "vertex_index", "edge_start_index", "edge_end_index", "save_file_dialog", "load_file_dialog")]
 layout_mode = 3
@@ -20,6 +23,17 @@ edge_start_index = NodePath("MarginContainer/Control/VBoxContainer/EdgeActions/H
 edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/VBoxContainer/EdgeEndIndex")
 save_file_dialog = NodePath("SaveFileDialog")
 load_file_dialog = NodePath("LoadFileDialog")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Panel" type="Panel" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jvfpu")
 
 [node name="GraphData" parent="." instance=ExtResource("2_uf1l8")]
 

@@ -52,11 +52,11 @@ func _on_state_entered():
 			print(" is cop")
 			hint_button.pressed.connect(_on_get_best_cop_move)
 			agent.departed.connect(_on_player_cop_departed)
-			hint_button.show()
+			hint_button.disabled = false
 		else:
-			hint_button.hide()
+			hint_button.disabled = true
 	else:
-		hint_button.hide()
+		hint_button.disabled = true
 
 func _on_player_cop_departed():
 	hint_button.pressed.disconnect(_on_get_best_cop_move)
@@ -64,7 +64,7 @@ func _on_player_cop_departed():
 
 func _on_get_best_cop_move():
 	hint_button.pressed.disconnect(_on_get_best_cop_move)
-	hint_button.hide()
+	hint_button.disabled = true
 	print("pressed")
 	var agent = state_machine.get_agent() as Agent
 	var best_move = graph.get_best_cop_move(agent) as Vertex

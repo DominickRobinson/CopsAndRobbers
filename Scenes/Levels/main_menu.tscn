@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bxdtddrm8rfaj"]
+[gd_scene load_steps=28 format=3 uid="uid://bxdtddrm8rfaj"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://c86aj66pisjmf" path="res://Resources/level_packs/packs/pack1.tres" id="5_6jhin"]
 [ext_resource type="Resource" uid="uid://boa7oxddug3nh" path="res://Resources/level_packs/packs/pack2.tres" id="6_gouf6"]
 [ext_resource type="Resource" uid="uid://cbwp7ttk0lloo" path="res://Resources/level_packs/packs/pack3.tres" id="7_bwkcj"]
+[ext_resource type="Resource" uid="uid://c6boaiaxocxiy" path="res://Resources/level_packs/packs/pack4.tres" id="8_unhl1"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadGraphButton.gd" id="9_1cg40"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadCustomGameButton.gd" id="10_pcfh5"]
 [ext_resource type="Texture2D" uid="uid://dnjq8kwqdhki8" path="res://Assets/Art/UI/youtube.svg" id="11_81ldx"]
@@ -23,6 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://dddrfir8htm7" path="res://Assets/Art/Backgrounds/white.png" id="15_efkoq"]
 [ext_resource type="Script" path="res://Scenes/Levels/EmailButton.gd" id="15_ht1of"]
 [ext_resource type="AudioStream" uid="uid://osh0sglynqcr" path="res://Assets/Music/cops_and_robbers_music.wav" id="16_q7tx4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6nab7"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_35yqw"]
 script = ExtResource("15_22cxp")
@@ -55,6 +59,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6nab7")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -161,6 +166,7 @@ level_pack = ExtResource("7_bwkcj")
 layout_mode = 2
 text = "Pack #4"
 script = ExtResource("4_52l23")
+level_pack = ExtResource("8_unhl1")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
 visible = false
