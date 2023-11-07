@@ -3,10 +3,16 @@ extends GraphComponent
 
 
 #start vertex of directed edge
-var start_vertex : Vertex
+var start_vertex : Vertex : 
+	set(value):
+		start_vertex = value
+
 
 #end vertex of directed edge
-var end_vertex : Vertex 
+var end_vertex : Vertex :
+	set(value):
+		end_vertex = value
+
 
 @export var style_resource : Resource:
 	set(value):
@@ -23,8 +29,9 @@ var reflexive : bool = false
 @export var loop_sprite : Sprite2D
 #@export var path : Path2D
 
-var area_shape 
+@onready var area_shape = $Area2D/CollisionShape2D
 
+var prev_position : Vector2 = position
 
 func _ready():
 	set_resource()
@@ -32,10 +39,13 @@ func _ready():
 	
 	#anchor edge at origin for consistency
 	position = Vector2(0,0)
+	if can_draw():
+		draw()
+	
+	
 
 func set_resource():
 	loop_sprite.hide()
-	area_shape = area.get_children()[0]
 	reflexive = start_vertex == end_vertex
 	
 	match style_resource.mode:
@@ -55,17 +65,13 @@ func set_resource():
 			line.width = style_resource.width_px
 
 func _process(delta):
-	if can_draw():
+	if can_draw() and (start_vertex.moving or end_vertex.moving):
 		draw()
-	else:
-		erase()
-	
 
 
 func draw():
 	if start_vertex != end_vertex:
 		position = Vector2.ZERO
-
 		
 		line.clear_points()
 		#draw line

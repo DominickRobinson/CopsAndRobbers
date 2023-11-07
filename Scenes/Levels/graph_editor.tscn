@@ -34,7 +34,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_7recc"]
+[sub_resource type="Resource" id="Resource_8phq8"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("8_hn86l")
@@ -47,7 +47,7 @@ hovering_skin = ExtResource("9_216bl")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxaq5"]
 
-[node name="GraphEditor" type="Node2D" node_paths=PackedStringArray("graph", "vertex_spawn_position", "add_vertex_button", "selected_label", "vertex_mode_button", "edge_mode_button", "new_edge_line", "corner_spinbox", "title_text_edit", "author_text_edit", "description_text_edit", "citation_text_edit", "save_file_dialog", "load_file_dialog")]
+[node name="GraphEditor" type="Node2D" node_paths=PackedStringArray("graph", "vertex_spawn_position", "add_vertex_button", "selected_label", "vertex_mode_button", "edge_mode_button", "new_edge_line", "corner_spinbox", "zoom_spinbox", "title_text_edit", "author_text_edit", "description_text_edit", "citation_text_edit", "save_file_dialog", "load_file_dialog")]
 script = ExtResource("1_afr4a")
 graph = NodePath("Graph")
 vertex_spawn_position = NodePath("VertexSpawnPosition")
@@ -57,6 +57,7 @@ vertex_mode_button = NodePath("GUI/MarginContainer/HBoxContainer/Mode/VertexMode
 edge_mode_button = NodePath("GUI/MarginContainer/HBoxContainer/Mode/EdgeMode")
 new_edge_line = NodePath("NewEdgeLine")
 corner_spinbox = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/HBoxContainer/SpinBox")
+zoom_spinbox = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/SetCameraZoom")
 title_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/TitleTextEdit")
 author_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/AuthorTextEdit")
 description_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/DescriptionTextEdit")
@@ -302,6 +303,14 @@ prefix = "Prob = "
 layout_mode = 2
 text = "Organize by ranking"
 
+[node name="SetCameraZoom" type="SpinBox" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 0.05
+max_value = 2.0
+step = 0.05
+value = 1.0
+prefix = "Zoom: "
+
 [node name="Misc" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar"]
 visible = false
 layout_mode = 2
@@ -449,7 +458,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_7recc")
+vertex_style_resource = SubResource("Resource_8phq8")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -500,9 +509,6 @@ default_color = Color(0.192157, 0.639216, 1, 1)
 [node name="MusicPlayer" parent="." instance=ExtResource("13_fqo07")]
 music_track_name = "music_editor"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Buttons/AddVertex" to="." method="add_vertex"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Buttons/Refresh" to="." method="refresh"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Mode/VertexMode" to="." method="set_vertex_mode"]
@@ -523,6 +529,7 @@ anchor_mode = 0
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/Button" to="." method="add_corner"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/Button2" to="." method="add_strict_corner"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/OrganizeByRankingButton" to="." method="organize_by_ranking"]
+[connection signal="value_changed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/SetCameraZoom" to="Graph" method="set_zoom_scale"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc/HBoxContainer/GraphActions/PrintMappings" to="." method="print_mappings"]
 [connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions/TextSidebar/ToggleSCRs" to="Graph" method="show_strict_corner_rankings"]
 [connection signal="toggled" from="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Button" to="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" method="set_visible"]

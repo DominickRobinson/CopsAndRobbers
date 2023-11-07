@@ -13,6 +13,7 @@ extends Node2D
 @export var edge_mode_button : Button
 @export var new_edge_line : Line2D
 @export var corner_spinbox : SpinBox
+@export var zoom_spinbox : SpinBox
 
 @export_group("Metadata text edits")
 @export var title_text_edit : TextEdit
@@ -59,7 +60,12 @@ func _ready():
 	author_text_edit.text_changed.connect(set_author)
 	description_text_edit.text_changed.connect(set_description)
 	citation_text_edit.text_changed.connect(set_citation)
+	
+	graph.changed.connect(graph.set_graph_data_display_label)
+	graph.changed.connect(set_zoom_label)
 
+func set_zoom_label():
+	zoom_spinbox.value = graph.get_zoom_scale()
 
 func load_graph(path):
 	graph.load_graph(path)
@@ -109,7 +115,7 @@ func _unhandled_input(event):
 		selected_vertex = null
 
 func _process(delta):
-	display_selected_vertex()
+#	display_selected_vertex()
 	
 	if mode == Modes.EdgeMode and selected_vertex != null:
 		new_edge_line.points = PackedVector2Array([selected_vertex.position, get_global_mouse_position()])

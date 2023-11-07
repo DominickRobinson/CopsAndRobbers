@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://drpi6jihu1vex"]
+[gd_scene load_steps=10 format=3 uid="uid://drpi6jihu1vex"]
 
 [ext_resource type="Script" path="res://Scenes/Parts/graph.gd" id="1_yxyr6"]
 [ext_resource type="PackedScene" uid="uid://bhvdif8aw6u2x" path="res://Scenes/Parts/edge.tscn" id="2_un6rm"]
@@ -8,12 +8,14 @@
 [ext_resource type="Resource" uid="uid://cju1g68il7m27" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style_basic.tres" id="4_fnoi2"]
 [ext_resource type="Resource" uid="uid://ddqhh1ur33j6o" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_directed.tres" id="5_ajlyn"]
 [ext_resource type="Script" path="res://Scenes/Parts/VertexContainer.gd" id="5_p56fu"]
+[ext_resource type="Script" path="res://Scenes/Levels/LevelCamera.gd" id="9_5ab8u"]
 
-[node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container") groups=["Graphs"]]
+[node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container", "camera") groups=["Graphs"]]
 script = ExtResource("1_yxyr6")
 graph_data = NodePath("GraphData")
 vertex_container = NodePath("Vertices")
 edge_container = NodePath("Edges")
+camera = NodePath("LevelCamera")
 vertex_resource = ExtResource("3_t7qd1")
 edge_resource = ExtResource("2_un6rm")
 vertex_style_resource = ExtResource("4_fnoi2")
@@ -26,3 +28,7 @@ script = ExtResource("4_5lpg6")
 script = ExtResource("5_p56fu")
 
 [node name="GraphData" parent="." instance=ExtResource("4_e23mg")]
+
+[node name="LevelCamera" type="Camera2D" parent="."]
+position = Vector2(477, 226)
+script = ExtResource("9_5ab8u")

@@ -46,6 +46,8 @@ var selectable :
 var occupents : Array = []
 var old_occupents : Array = []
 
+var moving = false
+
 
 func _ready():
 	super._ready()
@@ -72,10 +74,12 @@ func _unhandled_input(_event):
 			await get_tree().process_frame
 			if mouse_inside_area:
 				mouse_offset = global_position - get_global_mouse_position()
+				moving = true
 		if Input.is_action_just_released("select"):
 			draggable = false
 			deselected.emit()
 			moved.emit()
+			moving = false
 	
 	if Input.is_action_just_released("select") and selectable:
 		await get_tree().process_frame
@@ -177,3 +181,7 @@ func has_cop():
 
 func show_strict_corner_ranking(show:bool=true):
 	scr_label.visible = show
+
+
+func is_moving():
+	return moving

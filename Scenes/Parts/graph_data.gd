@@ -34,26 +34,28 @@ func emit_change():
 func empty():
 	graph = []
 
-func display():
+func display(show_adj_matrix = true):
 	var output = "Number of vertices = " + str(graph.size()) + "\n"
 	output += "SCR: " + str(get_max_ranking()) + "\n"
-	output += "Ranking array: " + str(get_strict_corner_ranking()) + "\n" 
+	if show_adj_matrix:
+		output += "Ranking array: " + str(get_strict_corner_ranking()) + "\n" 
 	output += "Reflexive: " + str(is_reflexive()) + "\n"
 	output += "Undirected: " + str(is_undirected()) + "\n"
 	output += "Clique: " + str(is_clique()) + "\n"
 	output += "Connected: " + str(is_connected_graph()) + "\n"
-	output += "Zero top: " + str(is_zero_top()) + "\n"
-	output += "One top: " + str(is_one_top()) + "\n"
-	output += "Capture time: " + str(get_capture_time()) + "\n"
+#	output += "Zero top: " + str(is_zero_top()) + "\n"
+#	output += "One top: " + str(is_one_top()) + "\n"
+#	output += "Capture time: " + str(get_capture_time()) + "\n"
 	
-	#for each row
-	for i in graph.size():
-		output += "[ "
-		#for each column
-		for j in graph.size():
-			output += str(int(graph[i][j])) + " "
-		output += "]\n"
-	
+	if show_adj_matrix:
+		#for each row
+		for i in graph.size():
+			output += "[ "
+			#for each column
+			for j in graph.size():
+				output += str(int(graph[i][j])) + " "
+			output += "]\n"
+		
 	
 	return output
 
@@ -424,12 +426,12 @@ func create_identity(s : int):
 
 func get_max_ranking(G:GraphData=self):
 	#strict corner ranking
-	var scr = G.get_strict_corner_ranking()
+#	var scr = G.get_strict_corner_ranking()
 	
 	#number of graphs in our result
-	var max_ranking = scr.max()
+	var max_ranking = strict_corner_ranking.max()
 	#add one more graph if it is robber win
-	if scr.has(-1):
+	if strict_corner_ranking.has(-1):
 		max_ranking += 1
 	
 	return max_ranking

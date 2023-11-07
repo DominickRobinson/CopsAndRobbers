@@ -21,9 +21,10 @@ signal vertex_selected(vtx:Vertex)
 
 
 #sets of vertices and edges
-@export_group("Container Nodes")
+@export_group("Nodes")
 @export var vertex_container : VertexContainer
 @export var edge_container : EdgeContainer
+@export var camera : LevelCamera
 
 #resources
 @export_group("Resources")
@@ -89,9 +90,10 @@ func get_vertex_from_index(index:int):
 func get_edges():
 	return edge_container.edges
 
-func _process(delta):
+
+func set_graph_data_display_label():
 	if is_instance_valid(graph_data_display_label):
-		graph_data_display_label.text = graph_data.display()
+		graph_data_display_label.text = graph_data.display(false)
 
 func size():
 	return graph_data.size()
@@ -334,17 +336,17 @@ func refresh():
 	await refresh_vertices()
 	await refresh_edges()
 	
-	var scr = graph_data.get_strict_corner_ranking()
-	
-	for v in vertices:
-		v = v as Vertex
-		if v.index < scr.size():
-			v.strict_corner_ranking = scr[v.index]
-		v.is_top = (v.strict_corner_ranking == get_max_ranking())
-	
-	
-	mappings = get_Fk_mappings()
-	capture_time = get_capture_time()
+#	var scr = graph_data.get_strict_corner_ranking()
+#
+#	for v in vertices:
+#		v = v as Vertex
+#		if v.index < scr.size():
+#			v.strict_corner_ranking = scr[v.index]
+#		v.is_top = (v.strict_corner_ranking == get_max_ranking())
+#
+#
+#	mappings = get_Fk_mappings()
+#	capture_time = get_capture_time()
 	
 	refreshed.emit()
 
@@ -369,7 +371,7 @@ func refresh_edges():
 				new_edge.directed = not graph_data.graph[j][i]
 				
 				edge_container.add_edge(new_edge)
-	
+				
 	return true
 
 func get_max_ranking():
@@ -427,7 +429,8 @@ func save_graph(path : String):
 		"title" : title,
 		"author" : author,
 		"description" : description,
-		"citation" : citation
+		"citation" : citation,
+		"zoom_scale" : get_zoom_scale()
 	}
 	var json_string = JSON.stringify(dict)
 	save_file.store_string(json_string)
@@ -468,6 +471,9 @@ func load_graph(path : String):
 			
 			if "citation" in keys: citation = json_as_dict["citation"]
 			else: citation = ""
+			
+			if "zoom_scale" in keys: set_zoom_scale(json_as_dict["zoom_scale"])
+			else: set_zoom_scale()
 			
 		"csv":
 			var array = []
@@ -650,3 +656,13 @@ func get_best_cop_move(agent:Agent) -> Vertex:
 				move = nbor
 	
 	return move
+
+
+func get_zoom_scale():
+	if is_instance_valid(camera):
+		return camera.get_zoom_scale()
+	return 1
+
+func set_zoom_scale(s : float = 1.0):
+	if is_instance_valid(camera):
+		camera.set_zoom_scale(s)
