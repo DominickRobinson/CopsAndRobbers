@@ -213,6 +213,8 @@ func refresh():
 		set_vertex_mode()
 	elif mode == Modes.EdgeMode:
 		set_edge_mode()
+	
+	graph.refresh_edges()
 
 
 

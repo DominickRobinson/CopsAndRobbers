@@ -120,6 +120,7 @@ layout_mode = 2
 text = "Add vertex"
 
 [node name="Refresh" type="Button" parent="GUI/MarginContainer/HBoxContainer/Buttons"]
+visible = false
 layout_mode = 2
 text = "Refresh"
 
@@ -524,11 +525,9 @@ default_color = Color(0.192157, 0.639216, 1, 1)
 [node name="MusicPlayer" parent="." instance=ExtResource("13_fqo07")]
 music_track_name = "music_editor"
 
-[node name="EditManager" type="Node" parent="." node_paths=PackedStringArray("graph", "undo_button", "redo_button")]
+[node name="EditManager" type="Node" parent="." node_paths=PackedStringArray("graph")]
 script = ExtResource("14_k61wu")
 graph = NodePath("../Graph")
-undo_button = NodePath("../GUI/MarginContainer/HBoxContainer/EditButtons/UndoButton")
-redo_button = NodePath("../GUI/MarginContainer/HBoxContainer/EditButtons/RedoButton")
 
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/EditButtons/UndoButton" to="EditManager" method="undo"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/EditButtons/RedoButton" to="EditManager" method="redo"]

@@ -74,7 +74,8 @@ func _ready():
 	await refreshed
 	created.emit()
 	
-	
+func _physics_process(delta):
+	set_graph_data_display_label()
 
 
 func _on_graph_data_changed(old,new):
@@ -93,7 +94,7 @@ func get_edges():
 
 func set_graph_data_display_label():
 	if is_instance_valid(graph_data_display_label):
-		graph_data_display_label.text = graph_data.display(false)
+		graph_data_display_label.text = graph_data.display(true)
 
 func size():
 	return graph_data.size()
@@ -119,7 +120,7 @@ func get_neighbors_from_index(index:int) -> Array:
 
 
 
-func add_vertex(pos):
+func add_vertex(pos, emit_change = true):
 #	var new_vtx = vertex_container.add_new_vertex(vertex_resource, pos)
 
 	var new_vtx = vertex_resource.instantiate() as Vertex
@@ -135,8 +136,10 @@ func add_vertex(pos):
 #	positions.append(pos)
 	graph_data.add_vertex()
 	
-	changed.emit()
-#	return new_vtx
+	if emit_change:
+		changed.emit()
+	
+	return new_vtx
 
 func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	if vertices.size() == 0:
@@ -186,13 +189,12 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 		fill()
 		return
 	
-	
 	add_vertex(pos)
 	await changed
 	make_reflexive()
 	await changed
 	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
-	var new_vtx = vertices[-1]
+	var new_vtx = vertices[vertices.size() - 1]
 	
 	#add edges
 	add_edge(old_vtx, new_vtx, true)
@@ -202,31 +204,47 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	for nbor in old_vtx.get_neighbors():
 		var my_random_number = rng.randf_range(0.0, 1.0)
 		if my_random_number <= probability:
-			add_edge(new_vtx, nbor, true)
+			await add_edge(new_vtx, nbor, true)
 	
 	await changed
+	
 	if new_vtx.neighbors.size() == old_vtx.neighbors.size():
 		var vtxs = new_vtx.neighbors
 #		vtxs.erase(old_vtx)
 #		vtxs.erase(new_vtx)
-		remove_edge_given_vertices(new_vtx, vtxs[randi() % vtxs.size()], true)
+		var vtx_to_remove = vtxs[randi() % vtxs.size()]
+		while (vtx_to_remove == old_vtx) or (vtx_to_remove == new_vtx):
+			vtx_to_remove = vtxs[randi() % vtxs.size()]
+		
+		remove_edge_given_vertices(new_vtx, vtx_to_remove, true)
 	
 	set_positions_by_ranking()
 	make_reflexive()
 	
 	changed.emit()
+	
+	refresh_edges()
 
-func remove_vertex(vtx : Vertex):
+func remove_vertex(vtx : Vertex, emit_change = true):
 #	positions.remove_at(vtx.index)
 	vertex_container.remove_vertex(vtx)
 	graph_data.remove_vertex(vtx.index)
-	changed.emit()
+	if emit_change:
+		changed.emit()
 
 
 func add_edge(start_vtx : Vertex, end_vtx : Vertex, undirected : bool = false):
 	graph_data.add_edge(start_vtx.index, end_vtx.index)
+	var new_edge = edge_resource.instantiate() as Edge
+	new_edge.start_vertex = start_vtx
+	new_edge.end_vertex = end_vtx
+	edge_container.add_edge(new_edge)
 	if undirected:
 		graph_data.add_edge(end_vtx.index, start_vtx.index)
+		var new_edge2 = edge_resource.instantiate() as Edge
+		new_edge2.start_vertex = end_vtx
+		new_edge2.end_vertex = start_vtx
+		edge_container.add_edge(new_edge2)
 	
 	changed.emit()
 
@@ -249,6 +267,7 @@ func remove_edge_given_vertices(v1:Vertex, v2:Vertex, undirected:bool=false):
 
 func make_reflexive():
 	graph_data.make_reflexive()
+	
 	changed.emit()
 	
 
@@ -258,12 +277,14 @@ func make_undirected():
 	
 
 func fill():
-	graph_data.fill()
+	await graph_data.fill()
+	refresh_edges()
 	changed.emit()
 	
 
 func clear():
-	graph_data.clear()
+	await graph_data.clear()
+	refresh_edges()
 	changed.emit()
 
 func empty():
@@ -414,6 +435,11 @@ func set_edge_mode():
 
 func save_graph(path : String):
 	var save_file = FileAccess.open(path, FileAccess.WRITE)
+	var json_string = get_graph_as_JSON()
+	save_file.store_string(json_string)
+
+
+func get_graph_as_JSON():
 	var array = graph_data.bool_to_int()
 
 	var positions_string_array = []
@@ -433,48 +459,24 @@ func save_graph(path : String):
 		"zoom_scale" : get_zoom_scale()
 	}
 	var json_string = JSON.stringify(dict)
-	save_file.store_string(json_string)
+	return json_string
 
+func remove_vertices(emit_change = false):
+	for v in vertices:
+		remove_vertex(v, emit_change)
+	return
 
 func load_graph(path : String):
-	for v in vertices:
-		remove_vertex(v)
+	remove_vertices(false)
 	
 	var load_file = FileAccess.open(path, FileAccess.READ)
-	
 	var adjacency_matrix = []
 	var positions = []
 	
 	match path.get_extension():
 		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
-			var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
-			adjacency_matrix = json_as_dict["adjacency_matrix"]
-			var positions_array = str_to_var(json_as_dict["positions"])
-			for p in positions_array:
-				positions.append(str_to_var(p))
-			
-			for i in adjacency_matrix.size():
-				add_vertex(positions[i])
-			
-			graph_data.graph = adjacency_matrix
-			
-			var keys = json_as_dict.keys()
-			if "title" in keys: title = json_as_dict["title"]
-			else: title = ""
-			
-			if "author" in keys: author = json_as_dict["author"]
-			else: author = ""
-			
-			if "description" in keys: description = json_as_dict["description"]
-			else: description = ""
-			
-			if "citation" in keys: citation = json_as_dict["citation"]
-			else: citation = ""
-			
-			if "zoom_scale" in keys: set_zoom_scale(json_as_dict["zoom_scale"])
-			else: set_zoom_scale()
-			
+			make_graph_from_JSON(json_as_text)
 		"csv":
 			var array = []
 			var i = 0
@@ -511,6 +513,41 @@ func load_graph(path : String):
 	return true
 #	if positions == []:
 #		positions = generate_default_positions(graph_data.size())
+
+
+func make_graph_from_JSON(json_as_text:String):
+	var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
+	var adjacency_matrix = json_as_dict["adjacency_matrix"]
+#	print("adjacency matrix:", adjacency_matrix)
+	var positions_array = str_to_var(json_as_dict["positions"])
+	var positions = []
+	for p in positions_array:
+		positions.append(str_to_var(p))
+	
+	for i in adjacency_matrix.size():
+		add_vertex(positions[i], false)
+#		print(" adding vertex ", i)
+	
+	graph_data.graph = adjacency_matrix
+	
+	var keys = json_as_dict.keys()
+	if "title" in keys: title = json_as_dict["title"]
+	else: title = ""
+	
+	if "author" in keys: author = json_as_dict["author"]
+	else: author = ""
+	
+	if "description" in keys: description = json_as_dict["description"]
+	else: description = ""
+	
+	if "citation" in keys: citation = json_as_dict["citation"]
+	else: citation = ""
+	
+	if "zoom_scale" in keys: set_zoom_scale(json_as_dict["zoom_scale"])
+	else: set_zoom_scale()
+	
+	refresh_edges()
+	
 
 
 

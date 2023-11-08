@@ -13,10 +13,14 @@ var edges:
 	get:
 		return get_children()
 
+func add_edge_from_vertices(start_vtx : Vertex, end_vtx : Vertex):
+	pass
+
 func add_edge(e:Edge):
 	if is_instance_valid(edge_style_resource):
 		e.style_resource = edge_style_resource
 	add_child(e)
+	return e
 
 func remove_edge(e:Edge):
 	e.remove()
