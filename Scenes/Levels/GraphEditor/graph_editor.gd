@@ -46,12 +46,12 @@ var clicked_on_edge = false
 
 var click_global_position : Vector2
 
-var edits : Array
 
 
 func _ready():
-	graph.changed.connect(_on_graph_changed)
-	graph.refreshed.connect(refresh)
+#	graph.changed.connect(_on_graph_changed)
+#	graph.refreshed.connect(refresh)
+	graph.changed.connect(refresh)
 	
 	save_file_dialog.file_selected.connect(graph.save_graph)
 	load_file_dialog.file_selected.connect(load_graph)
@@ -93,6 +93,8 @@ func _unhandled_input(event):
 	
 	match mode:
 		Modes.VertexMode:
+			if Input.is_action_just_pressed("select") and hovering_vertex == null:
+				add_vertex()
 			if Input.is_action_just_released("delete") and hovering_vertex != null:
 				remove_vertex()
 		Modes.EdgeMode:
@@ -125,13 +127,20 @@ func _process(delta):
 
 
 
-func add_vertex():
+func add_vertex2():
 	var pos = await vertex_spawn_position.find_open_position()
 	var v = graph.add_vertex(pos) as Vertex
 	
 	SoundManager.play_sound("sound_vertex_add")
 	
 	set_vertex_mode()
+	
+
+func add_vertex():
+	var pos = get_global_mouse_position()
+	var v = graph.add_vertex(pos) as Vertex
+	
+	SoundManager.play_sound("sound_vertex_add")
 
 
 func add_corner():
@@ -199,6 +208,8 @@ func empty_graph():
 	graph.empty()
 
 func refresh():
+	await graph.refresh()
+	
 	for e in graph.edges:
 		e.mouse_entered.connect(set_hovering_edge.bind(e))
 		e.mouse_exited.connect(set_hovering_edge.bind(null))
@@ -213,8 +224,8 @@ func refresh():
 		set_vertex_mode()
 	elif mode == Modes.EdgeMode:
 		set_edge_mode()
-	
-	graph.refresh_edges()
+
+
 
 
 

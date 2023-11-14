@@ -48,6 +48,8 @@ var old_occupents : Array = []
 
 var moving = false
 
+var old_position : Vector2 = position
+
 
 func _ready():
 	super._ready()
@@ -75,10 +77,13 @@ func _unhandled_input(_event):
 			if mouse_inside_area:
 				mouse_offset = global_position - get_global_mouse_position()
 				moving = true
+				old_position = position
 		if Input.is_action_just_released("select"):
 			draggable = false
 			deselected.emit()
-			moved.emit()
+			if (old_position - position).length() > 5:
+				moved.emit()
+				print("moved")
 			moving = false
 	
 	if Input.is_action_just_released("select") and selectable:

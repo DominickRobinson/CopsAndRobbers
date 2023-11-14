@@ -8,7 +8,7 @@ signal refreshed
 signal created
 
 signal vertex_selected(vtx:Vertex)
-
+signal vertex_moved()
 
 #graph data
 @export_group("data structures")
@@ -128,8 +128,9 @@ func add_vertex(pos, emit_change = true):
 	new_vtx.position = pos
 #	new_vtx.position = positions[i]
 #	new_vtx.moved.connect(update_positions.bind(new_vtx))
-	new_vtx.selected.connect(emit_signal.bind("vertex_selected", new_vtx))
 	new_vtx.name = "Vertex " + str(new_vtx.index)
+	new_vtx.selected.connect(emit_signal.bind("vertex_selected", new_vtx))
+	new_vtx.moved.connect(emit_signal.bind("vertex_moved"))
 	
 	vertex_container.add_vertex(new_vtx)
 	
@@ -172,9 +173,10 @@ func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 			add_edge(new_vtx, nbor, true)
 	
 	await changed
-	set_positions_by_ranking()
+	await set_positions_by_ranking()
 	
 	changed.emit()
+	return
 
 func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	if vertices.size() == 0:
@@ -218,12 +220,14 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 		
 		remove_edge_given_vertices(new_vtx, vtx_to_remove, true)
 	
-	set_positions_by_ranking()
-	make_reflexive()
+	await set_positions_by_ranking()
+	await make_reflexive()
 	
 	changed.emit()
 	
-	refresh_edges()
+	await refresh_edges()
+	
+	return
 
 func remove_vertex(vtx : Vertex, emit_change = true):
 #	positions.remove_at(vtx.index)
@@ -249,12 +253,13 @@ func add_edge(start_vtx : Vertex, end_vtx : Vertex, undirected : bool = false):
 	changed.emit()
 
 
-func remove_edge(edge : Edge, reflexive : bool = false):
+func remove_edge(edge : Edge, reflexive : bool = false, emit_change = true):
 	graph_data.remove_edge(edge.start_vertex.index, edge.end_vertex.index)
 	if reflexive:
 		graph_data.remove_edge(edge.end_vertex.index, edge.start_vertex.index)
 	
-	changed.emit()
+	if emit_change:
+		changed.emit()
 	
 
 func remove_edge_given_vertices(v1:Vertex, v2:Vertex, undirected:bool=false):
@@ -267,52 +272,56 @@ func remove_edge_given_vertices(v1:Vertex, v2:Vertex, undirected:bool=false):
 
 func make_reflexive():
 	graph_data.make_reflexive()
-	
 	changed.emit()
-	
+	return true
 
 func make_undirected():
-	graph_data.make_undirected()
+	await graph_data.make_undirected()
 	changed.emit()
-	
+	return true
 
 func fill():
 	await graph_data.fill()
-	refresh_edges()
 	changed.emit()
-	
+	return true
 
 func clear():
 	await graph_data.clear()
-	refresh_edges()
 	changed.emit()
+	return true
 
 func empty():
-	graph_data.empty()
-	vertex_container.remove_all()
+	await graph_data.empty()
+	await vertex_container.remove_all()
 	changed.emit()
+	return true
 
 func invert():
-	graph_data.invert()
+	await graph_data.invert()
 	changed.emit()
+	return true
 
 func square():
-	graph_data.square()
+	await graph_data.square()
 	changed.emit()
+	return true
 
 func retract_strict_corners():
-	graph_data.retract_strict_corners()
+	await graph_data.retract_strict_corners()
 	changed.emit()
+	return true
 
 
 func retract_corners():
-	graph_data.retract_corners()
+	await graph_data.retract_corners()
 	changed.emit()
+	return true
 
 func clear_graph():
-	edge_container.remove_all()
-	vertex_container.remove_all()
+	await edge_container.remove_all()
+	await vertex_container.remove_all()
 	changed.emit()
+	return true
 
 func get_capture_time():
 	return graph_data.get_capture_time()
@@ -463,11 +472,18 @@ func get_graph_as_JSON():
 
 func remove_vertices(emit_change = false):
 	for v in vertices:
-		remove_vertex(v, emit_change)
+		await remove_vertex(v, emit_change)
+	return
+
+func remove_edges(emit_change = false):
+	for e in edges:
+		await remove_edge(e, true, false)
 	return
 
 func load_graph(path : String):
-	remove_vertices(false)
+	
+	await remove_edges(false)
+	await remove_vertices(false)
 	
 	var load_file = FileAccess.open(path, FileAccess.READ)
 	var adjacency_matrix = []
@@ -546,7 +562,7 @@ func make_graph_from_JSON(json_as_text:String):
 	if "zoom_scale" in keys: set_zoom_scale(json_as_dict["zoom_scale"])
 	else: set_zoom_scale()
 	
-	refresh_edges()
+	changed.emit()
 	
 
 

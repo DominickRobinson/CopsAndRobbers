@@ -13,8 +13,13 @@ var undo_edits : Array = []
 
 func _ready():
 	graph.changed.connect(add_edit)
+	graph.vertex_moved.connect(add_edit)
+	graph.vertex_moved.connect(abc)
 	add_edit()
 
+
+func abc():
+	print("vertex moved...")
 
 # Add a new edit to the array
 func add_edit() -> void:
@@ -42,8 +47,9 @@ func undo() -> void:
 		pass
 #		print("Cannot undo further.")
 	
-	graph.refresh_edges()
+#	graph.changed.emit()
 	graph.changed.connect(add_edit)
+	
 	
 	print_edits()
 	undo_button.disabled = false
@@ -62,6 +68,7 @@ func redo() -> void:
 #		print("Nothing to redo.")
 		pass
 	
+#	graph.changed.emit()
 	graph.changed.connect(add_edit)
 	
 	print_edits()
@@ -74,7 +81,6 @@ func clear_redo_edits() -> void:
 
 
 func print_edits():
-	return
 	
 	print("Edits:", edits.size())
 	for str in edits:
@@ -82,3 +88,4 @@ func print_edits():
 		var a = dict["adjacency_matrix"]
 		print("   ", a)
 	print("Undo edits: ", undo_edits.size())
+	print("")
