@@ -63,6 +63,7 @@ var author : String = ""
 var description : String = ""
 var citation : String = ""
 
+var strict_corner_ranking : Array
 
 func _ready():
 	graph_data.changed.connect(_on_graph_data_changed)
@@ -77,10 +78,12 @@ func _ready():
 	created.emit()
 	
 func _physics_process(delta):
-	set_graph_data_display_label()
+#	set_graph_data_display_label()
+	pass
 
 
 func _on_graph_data_changed(old,new):
+	set_graph_data_display_label()
 #	changed.emit()
 #	refresh()
 	pass
@@ -97,7 +100,9 @@ func get_edges():
 
 func set_graph_data_display_label():
 	if is_instance_valid(graph_data_display_label):
-		graph_data_display_label.text = graph_data.display(true, true)
+		var show_matrix = graph_data.size() < 10
+		var show_rankings = graph_data.size() < 20
+		graph_data_display_label.text = graph_data.display(show_matrix, show_rankings)
 
 func size():
 	return graph_data.size()
@@ -125,7 +130,6 @@ func get_neighbors_from_index(index:int) -> Array:
 
 func add_vertex(pos, emit_change = true):
 #	var new_vtx = vertex_container.add_new_vertex(vertex_resource, pos)
-
 	var new_vtx = vertex_resource.instantiate() as Vertex
 	new_vtx.index = vertices.size()
 	new_vtx.position = pos
@@ -180,7 +184,7 @@ func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	changed.emit()
 	return
 
-func wait(time=0.5):
+func wait(time=0.0):
 	await get_tree().create_timer(time).timeout
 	return true
 
@@ -210,16 +214,16 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 	
 	#add edges
 	await add_edge(old_vtx, new_vtx, true, false)
-	await wait()
+	await wait(0)
 	await add_edge(new_vtx, new_vtx, true, false)
-	await wait()
+	await wait(0)
 	
 	var rng = RandomNumberGenerator.new()
 	for nbor in old_vtx.get_neighbors():
 		var my_random_number = rng.randf_range(0.0, 1.0)
 		if my_random_number <= probability:
-			await add_edge(new_vtx, nbor, true)
-			await wait()
+			await add_edge(new_vtx, nbor, true, false)
+			await wait(0)
 	
 	
 	if new_vtx.neighbors.size() == old_vtx.neighbors.size():
@@ -238,9 +242,9 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 func remove_vertex(vtx : Vertex, emit_change = true):
 #	positions.remove_at(vtx.index)
 	await graph_data.remove_vertex(vtx.index)
-	await wait()
+#	await wait(0)
 	await vertex_container.remove_vertex(vtx)
-	await wait()
+	await wait(0)
 	if emit_change:
 		changed.emit()
 	return true
@@ -309,6 +313,13 @@ func clear(emit_change=true):
 func empty(emit_change=true):
 	await graph_data.empty()
 	await vertex_container.remove_all()
+	await edge_container.remove_all()
+	
+#	for v in vertices:
+#		await remove_vertex(v, false)
+#
+#	await refresh_edges()
+	
 	if emit_change:
 		changed.emit()
 	return true
@@ -330,7 +341,11 @@ func retract_strict_corner(emit_change=true):
 		v = v as Vertex
 		if v.is_isolated():
 			print("Vertex ", v.index, " is isolated...")
-			await remove_vertex(v, true)
+			await remove_vertex(v, false)
+#			await wait()
+			await refresh_vertices()
+#			await refresh()
+#			await wait()
 			return true
 	return true
 
@@ -363,7 +378,8 @@ func clear_graph(emit_change=true):
 	return true
 
 func get_capture_time():
-	return graph_data.get_capture_time()
+	capture_time = graph_data.get_capture_time()
+	return capture_time
 
 #func get_Fk_mapping(k:int) -> Dictionary:
 #	var mapping : Dictionary = {}
@@ -388,7 +404,7 @@ func get_capture_time():
 
 
 func get_Fk_mappings() -> Array:
-	var mappings : Array
+	mappings = []
 	var graph_data_mappings : Array = graph_data.get_F_k_mappings(graph_data)
 	for m in graph_data_mappings:
 		var mapping : Dictionary = {}
@@ -399,13 +415,16 @@ func get_Fk_mappings() -> Array:
 				var vtx_b = vertex_container.get_vertex_from_index(b)
 				mapping[vtx_a].append(vtx_b)
 		mappings.append(mapping)
+	get_capture_time()
 	return mappings
 
 func refresh():
 	await refresh_vertices()
 	await refresh_edges()
 	
-#	var scr = graph_data.get_strict_corner_ranking()
+	await wait(0)
+	
+	await recalculate_strict_corner_ranking()
 #
 #	for v in vertices:
 #		v = v as Vertex
@@ -526,7 +545,6 @@ func remove_edges(emit_change = false):
 
 func load_graph(path : String):
 	
-	
 	var load_file = FileAccess.open(path, FileAccess.READ)
 	var adjacency_matrix = []
 	var positions = []
@@ -578,9 +596,10 @@ func load_graph(path : String):
 
 
 func make_graph_from_JSON(json_as_text:String):
-	await clear_graph(false)
+	await empty(false)
+	await wait(0)
 	var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
-	var adjacency_matrix = json_as_dict["adjacency_matrix"]
+	var matrix = json_as_dict["adjacency_matrix"]
 #	print("adjacency matrix:", adjacency_matrix)
 	var positions_array = str_to_var(json_as_dict["positions"])
 	var positions = []
@@ -588,20 +607,23 @@ func make_graph_from_JSON(json_as_text:String):
 		positions.append(str_to_var(p))
 	
 	
-	for i in adjacency_matrix.size():
+	for i in positions.size():
+#		await wait()
 		await add_vertex(positions[i], false)
 #		print(" adding vertex ", i)
+	
+	graph_data.graph = matrix
 	
 	for i in graph_data.graph.size():
 		var vertex_i = get_vertex_from_index(i)
 		for j in graph_data.graph.size():
 			var vertex_j = get_vertex_from_index(j)
 			if graph_data.edge_exists(i, j):
-				add_edge(vertex_i, vertex_j, false, false)
+				await add_edge(vertex_i, vertex_j, false, false)
 
 	
-	graph_data.graph = adjacency_matrix
-	await recalculate_strict_corner_ranking()
+#	graph_data.graph = adjacency_matrix
+#	await recalculate_strict_corner_ranking()
 	
 	var keys = json_as_dict.keys()
 	if "title" in keys: title = json_as_dict["title"]
@@ -703,7 +725,7 @@ func get_best_cop_move(agent:Agent) -> Vertex:
 	if not is_copwin():
 		return neighbors[0]
 	
-	var mappings = get_mappings()
+	mappings = get_mappings()
 	
 	var target = agent.get_target()
 	
@@ -778,9 +800,9 @@ func set_zoom_scale(s : float = 1.0):
 
 
 func recalculate_strict_corner_ranking():
-	var rankings = await graph_data.get_strict_corner_ranking()
+	strict_corner_ranking = await graph_data.get_strict_corner_ranking()
 	
-	for i in rankings.size():
-		vertices[i].strict_corner_ranking = rankings[i]
+	for i in vertices.size():
+		vertices[i].strict_corner_ranking = strict_corner_ranking[i]
 	
 	return graph_data.strict_corner_ranking

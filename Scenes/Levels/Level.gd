@@ -45,6 +45,7 @@ func _ready():
 	
 	await graph.load_graph(graph_path)
 	await graph.refresh()
+	await graph.get_Fk_mappings()
 	
 	if next_level_path == null: 
 		next_level_button.hide()

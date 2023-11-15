@@ -191,7 +191,7 @@ func has_cop():
 
 
 func show_strict_corner_ranking(show:bool=true):
-	scr_label.text = "SCR: " + str(strict_corner_ranking)
+#	scr_label.text = "SCR: " + str(strict_corner_ranking)
 	scr_label.visible = show
 
 
