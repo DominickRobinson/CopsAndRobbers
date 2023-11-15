@@ -135,6 +135,7 @@ drag_to_rearrange_enabled = true
 layout_mode = 2
 
 [node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -169,7 +170,6 @@ script = ExtResource("4_52l23")
 level_pack = ExtResource("8_unhl1")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -377,7 +377,7 @@ text = "Number of cops: "
 [node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops"]
 layout_mode = 2
 min_value = 1.0
-max_value = 20.0
+max_value = 1000.0
 value = 1.0
 
 [node name="NumberOfRobbers" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
@@ -390,7 +390,7 @@ text = "Number of robbers: "
 [node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers"]
 layout_mode = 2
 min_value = 1.0
-max_value = 20.0
+max_value = 1000.0
 value = 1.0
 
 [node name="CopSpeed" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
@@ -429,7 +429,7 @@ text = "Agent travel time (seconds): "
 [node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime"]
 layout_mode = 2
 max_value = 5.0
-step = 0.1
+step = 0.01
 value = 0.5
 
 [node name="CopArsonist" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
