@@ -14,12 +14,19 @@ var undo_edits : Array = []
 func _ready():
 	graph.changed.connect(add_edit)
 	graph.vertex_moved.connect(add_edit)
-	graph.vertex_moved.connect(abc)
 	add_edit()
 
 
-func abc():
-	print("vertex moved...")
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("undo"):
+		if not undo_button.disabled:
+			undo_button.pressed.emit()
+	
+	if Input.is_action_just_pressed("redo"):
+		if not redo_button.disabled:
+			redo_button.pressed.emit()
+
+
 
 # Add a new edit to the array
 func add_edit() -> void:
@@ -30,6 +37,8 @@ func add_edit() -> void:
 	graph.changed.connect(add_edit)
 	
 	print_edits()
+	
+	adjust_buttons()
 
 
 # Undo the last edit
@@ -41,18 +50,19 @@ func undo() -> void:
 		undo_edits.append(last_edit)
 		
 		var new_state = edits[edits.size()-1]
-		await graph.remove_vertices()
 		await graph.make_graph_from_JSON(new_state)
 	else:
 		pass
 #		print("Cannot undo further.")
 	
-#	graph.changed.emit()
+	await graph.refresh()
 	graph.changed.connect(add_edit)
 	
 	
 	print_edits()
 	undo_button.disabled = false
+	
+	adjust_buttons()
 
 
 # Redo the last undone edit
@@ -62,18 +72,19 @@ func redo() -> void:
 	if undo_edits.size() > 0:
 		var edit_to_redo : String = undo_edits.pop_back()
 		edits.append(edit_to_redo)
-		await graph.remove_vertices()
 		await graph.make_graph_from_JSON(edit_to_redo)
 	else:
 #		print("Nothing to redo.")
 		pass
 	
-#	graph.changed.emit()
+	await graph.refresh()
 	graph.changed.connect(add_edit)
 	
 	print_edits()
 	
 	redo_button.disabled = false
+	
+	adjust_buttons()
 
 # Clear redo history
 func clear_redo_edits() -> void:
@@ -81,6 +92,7 @@ func clear_redo_edits() -> void:
 
 
 func print_edits():
+	return
 	
 	print("Edits:", edits.size())
 	for str in edits:
@@ -88,4 +100,14 @@ func print_edits():
 		var a = dict["adjacency_matrix"]
 		print("   ", a)
 	print("Undo edits: ", undo_edits.size())
+	for str in undo_edits:
+		var dict = JSON.parse_string(str)
+		var a = dict["adjacency_matrix"]
+		print("   ", a)
 	print("")
+
+
+func adjust_buttons():
+	undo_button.disabled = edits.size() < 2
+	redo_button.disabled = undo_edits.size() == 0
+

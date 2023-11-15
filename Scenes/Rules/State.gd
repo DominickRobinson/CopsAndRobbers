@@ -52,6 +52,7 @@ func _on_state_exited():
 
 
 func print_mapping(mapping:Dictionary):
+	return
 	var output = "Mapping:\n"
 	for vtx in mapping:
 		output += str(vtx.index) + ":"

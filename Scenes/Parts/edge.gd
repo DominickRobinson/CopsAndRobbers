@@ -6,12 +6,14 @@ extends GraphComponent
 var start_vertex : Vertex : 
 	set(value):
 		start_vertex = value
+		if can_draw(): draw()
 
 
 #end vertex of directed edge
 var end_vertex : Vertex :
 	set(value):
 		end_vertex = value
+		if can_draw(): draw()
 
 
 @export var style_resource : Resource:
@@ -104,7 +106,7 @@ func contains_vertex(vertex : Vertex):
 	return start_vertex == vertex or end_vertex == vertex
 
 func can_draw():
-	return is_instance_valid(start_vertex) and is_instance_valid(end_vertex)
+	return is_instance_valid(start_vertex) and is_instance_valid(end_vertex) and is_instance_valid(area_shape)
 
 
 

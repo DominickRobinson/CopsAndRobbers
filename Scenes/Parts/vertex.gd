@@ -20,9 +20,18 @@ signal moved
 @onready var sprite = $Sprite2D
 @onready var fire_sprite = $FireSprite
 
-var index : int = -1
+var index : int = -1 :
+	set(value):
+		index = value
+		label.text = str(index)
+		name = "Vertex " + str(index)
+	
 
-var strict_corner_ranking : int = 0
+var strict_corner_ranking : int = 0 :
+	set(value):
+		strict_corner_ranking = value
+		scr_label.text = str(strict_corner_ranking)
+
 var is_top : bool = false
 
 var mouse_offset = Vector2.ZERO
@@ -48,11 +57,12 @@ var old_occupents : Array = []
 
 var moving = false
 
-var old_position : Vector2 = position
+var old_position : Vector2
 
 
 func _ready():
 	super._ready()
+	old_position = position
 	selected.connect(_on_selected)
 	sprite.texture_changed.connect(check_if_set_default_skin)
 	vertex_container = get_parent()
@@ -83,7 +93,7 @@ func _unhandled_input(_event):
 			deselected.emit()
 			if (old_position - position).length() > 5:
 				moved.emit()
-				print("moved")
+#				print("moved")
 			moving = false
 	
 	if Input.is_action_just_released("select") and selectable:
@@ -117,14 +127,10 @@ func set_text():
 #	label.text = str(strict_corner_ranking)
 #	label.text = str(self)
 #	label.text = str(index)
-	label.text = ""
+#	label.text = ""
+	pass
 
 
-func display_scr_text(show:bool=true):
-	if show:
-		scr_label.text = "SCR: " + str(strict_corner_ranking)
-	else:
-		scr_label.text = ""
 
 func get_neighbors():
 	return neighbors
@@ -185,8 +191,12 @@ func has_cop():
 
 
 func show_strict_corner_ranking(show:bool=true):
+	scr_label.text = "SCR: " + str(strict_corner_ranking)
 	scr_label.visible = show
 
 
 func is_moving():
 	return moving
+
+func is_isolated():
+	return strict_corner_ranking == -1

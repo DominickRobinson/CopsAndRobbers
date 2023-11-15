@@ -88,13 +88,20 @@ func set_citation(): graph.citation = citation_text_edit.text
 
 func _unhandled_input(event):
 	
+	if Input.is_action_just_pressed("zoom_in"):
+		zoom_spinbox.value += zoom_spinbox.step
+	if Input.is_action_just_pressed("zoom_out"):
+		zoom_spinbox.value -= zoom_spinbox.step
+	
+	
 	if Input.is_action_just_pressed("select") and hovering_vertex != null:
 		hovering_vertex.selected.emit()
 	
 	match mode:
 		Modes.VertexMode:
 			if Input.is_action_just_pressed("select") and hovering_vertex == null:
-				add_vertex()
+#				add_vertex()
+				pass
 			if Input.is_action_just_released("delete") and hovering_vertex != null:
 				remove_vertex()
 		Modes.EdgeMode:

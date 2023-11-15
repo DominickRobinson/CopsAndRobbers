@@ -29,12 +29,19 @@ func add_new_vertex(vtx_resource: Resource, pos:Vector2=Vector2(0,0)):
 	return new_vtx
 
 func remove_vertex(vtx:Vertex):
-	for v in vertices:
-		v = v as Vertex
-		if v.index > vtx.index:
-			v.index -= 1
+#	for v in vertices:
+#		v = v as Vertex
+#		if v.index > vtx.index:
+#			v.index -= 1
+#
+#	await vtx.remove()
 	
-	vtx.remove()
+	await vtx.remove()
+	
+	for i in vertices.size():
+		vertices[i].index = i
+	
+	return true
 
 
 func make_vertices_editable(editable:bool=true):

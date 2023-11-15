@@ -11,6 +11,7 @@ var graph : Array = []
 var strict_corner_ranking : Array
 var corner_ranking : Array
 
+var F : Dictionary = {}
 
 var old:Array = graph.duplicate(true)
 var new:Array
@@ -34,11 +35,11 @@ func emit_change():
 func empty():
 	graph = []
 
-func display(show_adj_matrix = true):
+func display(show_adj_matrix = true, show_ranking_array = true):
 	var output = "Number of vertices = " + str(graph.size()) + "\n"
 	output += "SCR: " + str(get_max_ranking()) + "\n"
-	if show_adj_matrix:
-		output += "Ranking array: " + str(get_strict_corner_ranking()) + "\n" 
+	if show_ranking_array:
+		output += "Ranking array: " + str(strict_corner_ranking) + "\n" 
 	output += "Reflexive: " + str(is_reflexive()) + "\n"
 	output += "Undirected: " + str(is_undirected()) + "\n"
 	output += "Clique: " + str(is_clique()) + "\n"
@@ -111,7 +112,9 @@ func add_strict_corner(probability:float=0.5, dom_vtx:int = -1):
 
 func remove_vertex(v : int):
 	#check for validity of vertex
-	if not is_valid_vertex(v) or graph.size() == 0: return
+	if not is_valid_vertex(v) or graph.size() == 0: 
+		print("tried removing invalid index in graph_data: ", v)
+		return
 	#remove column
 	for i in graph.size():
 		graph[i].remove_at(v)
@@ -119,6 +122,8 @@ func remove_vertex(v : int):
 	graph.remove_at(v)
 	
 	emit_change()
+	
+	return true
 
 
 
@@ -480,7 +485,9 @@ func get_strict_corner_ranking() -> Array:
 		
 		current_ranking += 1
 	
-	return ranking_array
+	strict_corner_ranking = ranking_array
+	
+	return strict_corner_ranking
 
 func get_strict_corner_retractions() -> Array:
 	#output, beginning with the identity
@@ -557,7 +564,6 @@ func get_F_k_mappings(G:GraphData=self) -> Array:
 	return result
 
 func print_F_k_mappings(G:GraphData=self):
-	
 	if G.size() == 0:
 		return
 	
