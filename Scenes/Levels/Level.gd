@@ -44,6 +44,7 @@ func _ready():
 	background.texture = game_theme.background_skin
 	
 	await graph.load_graph(graph_path)
+	await graph.show_strict_corner_rankings(false)
 	await graph.refresh()
 	await graph.get_Fk_mappings()
 	

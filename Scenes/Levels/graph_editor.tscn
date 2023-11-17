@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c086hshnh55j5"]
+[gd_scene load_steps=20 format=3 uid="uid://c086hshnh55j5"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_afr4a"]
 [ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_lg68n"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://Scenes/Levels/DoTheThingButton.gd" id="4_vlmgg"]
 [ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="5_a50cc"]
 [ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="6_c4vs8"]
-[ext_resource type="Resource" uid="uid://ddqhh1ur33j6o" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic.tres" id="6_vjgid"]
 [ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="7_rgooi"]
 [ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="8_hn86l"]
 [ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="9_216bl"]
@@ -21,7 +20,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8qdk"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
 
-[sub_resource type="Resource" id="Resource_a4yex"]
+[sub_resource type="Resource" id="Resource_hld73"]
 resource_local_to_scene = true
 script = ExtResource("12_bxg82")
 default_skin = ExtResource("8_hn86l")
@@ -308,7 +307,6 @@ prefix = "Prob = "
 layout_mode = 2
 text = "Do the thing"
 script = ExtResource("4_vlmgg")
-how_many_times = 50
 
 [node name="OrganizeByRankingButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -475,8 +473,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_a4yex")
-edge_style_resource = ExtResource("6_vjgid")
+vertex_style_resource = SubResource("Resource_hld73")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]

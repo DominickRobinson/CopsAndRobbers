@@ -188,21 +188,26 @@ func wait(time=0.0):
 	await get_tree().create_timer(time).timeout
 	return true
 
-func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
+func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=true):
 	if vertices.size() == 0:
 		await wait()
 		await add_vertex(pos, false)
 		await wait()
-		await make_reflexive()
+		await make_reflexive(false)
+		if emit_change:
+			changed.emit()
 		return true
 	
 	if vertices.size() == 1:
 		await wait()
 		await add_vertex(pos, false)
 		await wait()
-		await fill()
+		await fill(false)
+		if emit_change:
+			changed.emit()
 		return true
 	
+	await refresh_vertices()
 	
 	await wait()
 	await add_vertex(pos, false)
@@ -236,7 +241,8 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
 		
 		await remove_edge_given_vertices(new_vtx, vtx_to_remove, true)
 	
-	changed.emit()
+	if emit_change:
+		changed.emit()
 	return true
 
 func remove_vertex(vtx : Vertex, emit_change = true):
@@ -278,13 +284,14 @@ func remove_edge(edge : Edge, reflexive : bool = false, emit_change = true):
 		changed.emit()
 	
 
-func remove_edge_given_vertices(v1:Vertex, v2:Vertex, undirected:bool=false):
+func remove_edge_given_vertices(v1:Vertex, v2:Vertex, undirected:bool=false, emit_change=true):
 	graph_data.remove_edge(v1.index, v2.index)
 	if undirected:
 		graph_data.remove_edge(v2.index, v1.index)
 	
-	changed.emit()
-	
+	if emit_change:
+		changed.emit()
+	return true
 
 func make_reflexive(emit_change=true):
 	graph_data.make_reflexive()
@@ -346,6 +353,9 @@ func retract_strict_corner(emit_change=true):
 			await refresh_vertices()
 #			await refresh()
 #			await wait()
+			if emit_change:
+				changed.emit()
+			
 			return true
 	return true
 
@@ -445,6 +455,7 @@ func refresh_vertices():
 		var v = vertices[i] as Vertex
 		v.index = i
 		v.neighbors = get_neighbors_from_vertex(v)
+	await recalculate_strict_corner_ranking()
 	return true
 
 func refresh_edges():
@@ -472,7 +483,7 @@ func update_positions(vtx:Vertex):
 #	positions[vtx.index] = vtx.position
 	pass
 
-func set_positions_by_ranking():
+func set_positions_by_ranking(emit_change = true):
 	var start_pos = Vector2(150,100)
 	var row_sep = 100
 	var col_sep = 100
@@ -494,7 +505,10 @@ func set_positions_by_ranking():
 			x_pos_offset = abs(x_pos_offset) + col_sep
 			v.position = start_pos + Vector2(x_pos_offset, y_pos_offset)
 	
-	changed.emit()
+	if emit_change:
+		changed.emit()
+	
+	return true
 
 func set_vertex_mode():
 	vertex_container.make_vertices_editable(true)

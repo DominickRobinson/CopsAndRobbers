@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bxdtddrm8rfaj"]
+[gd_scene load_steps=23 format=3 uid="uid://bxdtddrm8rfaj"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -13,16 +13,12 @@
 [ext_resource type="Resource" uid="uid://c6boaiaxocxiy" path="res://Resources/level_packs/packs/pack4.tres" id="8_unhl1"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadGraphButton.gd" id="9_1cg40"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadCustomGameButton.gd" id="10_pcfh5"]
-[ext_resource type="Texture2D" uid="uid://dnjq8kwqdhki8" path="res://Assets/Art/UI/youtube.svg" id="11_81ldx"]
 [ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="11_fvfss"]
 [ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="11_q8lxc"]
-[ext_resource type="Script" path="res://Scenes/UI/LinkIconButton.gd" id="12_c1in3"]
 [ext_resource type="Texture2D" uid="uid://cbcspe5lhr0ot" path="res://Assets/Art/Characters/ninja.svg" id="12_vt7vy"]
-[ext_resource type="Texture2D" uid="uid://bbnt4qcwrcnak" path="res://Assets/Art/UI/link.svg" id="13_3d1wh"]
 [ext_resource type="Resource" uid="uid://cju1g68il7m27" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style_basic.tres" id="14_eh0lr"]
 [ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style.gd" id="15_22cxp"]
 [ext_resource type="Texture2D" uid="uid://dddrfir8htm7" path="res://Assets/Art/Backgrounds/white.png" id="15_efkoq"]
-[ext_resource type="Script" path="res://Scenes/Levels/EmailButton.gd" id="15_ht1of"]
 [ext_resource type="AudioStream" uid="uid://osh0sglynqcr" path="res://Assets/Music/cops_and_robbers_music.wav" id="16_q7tx4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6nab7"]
@@ -36,13 +32,6 @@ width_px = 30.0
 border_width_px = 1.0
 show_reflexive_loop = false
 show_directed_arrow = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ku1lq"]
-bg_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -135,7 +124,6 @@ drag_to_rearrange_enabled = true
 layout_mode = 2
 
 [node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -170,6 +158,7 @@ script = ExtResource("4_52l23")
 level_pack = ExtResource("8_unhl1")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -538,7 +527,7 @@ text = "Graph data editor"
 script = ExtResource("3_f3unt")
 scene_path = "res://Scenes/Levels/graph_data_editor.tscn"
 
-[node name="Settings" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+[node name="Misc" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 25
@@ -546,148 +535,8 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="Settings" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Settings" instance=ExtResource("4_4fkob")]
+[node name="Misc" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Misc" instance=ExtResource("4_4fkob")]
 layout_mode = 2
-
-[node name="Credits" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
-layout_mode = 2
-
-[node name="People" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="People" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
-layout_mode = 2
-text = "PEOPLE:"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
-layout_mode = 2
-
-[node name="Dom" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer"]
-layout_mode = 2
-text = "Dominick Robinson - programmer"
-
-[node name="YouTube" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-icon = ExtResource("11_81ldx")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("12_c1in3")
-url = "https://www.youtube.com/@DomonationYT"
-
-[node name="Website" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-icon = ExtResource("13_3d1wh")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("12_c1in3")
-url = "https://domonation.dev/"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
-layout_mode = 2
-
-[node name="Offner" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer2"]
-layout_mode = 2
-text = "David Offner - research advisor"
-
-[node name="Website2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People/HBoxContainer2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-icon = ExtResource("13_3d1wh")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("12_c1in3")
-url = "https://davidoffner.wordpress.com/"
-
-[node name="Gabe" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
-layout_mode = 2
-text = "Gabriel Prado - music"
-
-[node name="Aleca" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/People"]
-layout_mode = 2
-text = "Alexa Carl - art"
-
-[node name="HSeparator" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-
-[node name="Things" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Things" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
-layout_mode = 2
-text = "THINGS:"
-
-[node name="Godot" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
-layout_mode = 2
-text = "Godot Engine - amazing free game engine used"
-
-[node name="OpenMoji" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
-layout_mode = 2
-text = "OpenMoji - free emoji art assets"
-
-[node name="FreeSound" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
-layout_mode = 2
-text = "FreeSound - free songs and sound effects"
-
-[node name="itch" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
-layout_mode = 2
-text = "itch.io - hosting the game"
-
-[node name="Wikimedia Commons" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer/Things"]
-layout_mode = 2
-text = "Wikimedia Commons - free stock art"
-
-[node name="VSeparator" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Email us!" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_ku1lq")
-text = "Email us here!"
-script = ExtResource("15_ht1of")
-
-[node name="References" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/References"]
-layout_mode = 2
-
-[node name="LinkButton" type="LinkButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/References/VBoxContainer"]
-layout_mode = 2
-text = "D. Offner and K. Ojakian, Cop-Win Graphs: Optimal Strategies and Corner Rank, preprint."
-uri = "https://davidoffner.files.wordpress.com/2016/05/copwinstrategiescurrent.pdf"
-
-[node name="LinkButton2" type="LinkButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/References/VBoxContainer"]
-layout_mode = 2
-text = "Graphical Examples of cop-win graphs"
-uri = "https://davidoffner.files.wordpress.com/2019/03/graphicalexamples.pdf"
 
 [node name="MusicPlayer" parent="." instance=ExtResource("4_ag7rd")]
 music_track_name = "music_title"
@@ -695,4 +544,3 @@ music_track_name = "music_title"
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadGraph/LoadGraph" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadFileDialog" method="show"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2/LoadCustomGameButton" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2/LoadCustomGameButton" method="_on_pressed"]
 [connection signal="file_selected" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadFileDialog" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadGraph/LoadGraph" method="_on_load_file_dialog_file_selected"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer2/Email us!" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Credits/VBoxContainer/HBoxContainer2/Email us!" method="_on_pressed"]

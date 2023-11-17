@@ -11,6 +11,11 @@ func _ready():
 
 func do_the_thing():
 	for i in how_many_times - 1:
-		await graph.add_strict_corner()
+		await graph.add_strict_corner(Vector2(0,0), 0.5, false)
 	
-	await graph.set_positions_by_ranking()
+	await graph.refresh_vertices()
+	await get_tree().create_timer(0).timeout
+	await graph.set_positions_by_ranking(false)
+	
+	graph.changed.emit()
+	
