@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bxdtddrm8rfaj"]
+[gd_scene load_steps=24 format=3 uid="uid://bxdtddrm8rfaj"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://cbwp7ttk0lloo" path="res://Resources/level_packs/packs/pack3.tres" id="7_bwkcj"]
 [ext_resource type="Resource" uid="uid://c6boaiaxocxiy" path="res://Resources/level_packs/packs/pack4.tres" id="8_unhl1"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadGraphButton.gd" id="9_1cg40"]
+[ext_resource type="Script" path="res://Scenes/Levels/LoadAutoLevel.gd" id="9_himp4"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadCustomGameButton.gd" id="10_pcfh5"]
 [ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="11_fvfss"]
 [ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="11_q8lxc"]
@@ -156,6 +157,14 @@ layout_mode = 2
 text = "Pack #4"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("8_unhl1")
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadAutoLevel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+layout_mode = 2
+text = "Automatically generated level"
+script = ExtResource("9_himp4")
 
 [node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
 visible = false

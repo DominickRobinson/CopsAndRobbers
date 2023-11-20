@@ -10,6 +10,7 @@ var game_resource : Game
 var custom_game_resource : Game
 var custom_graph_path : String
 var is_custom_game : bool = false
+var is_auto_game : bool = false
 
 func change_scene(scene_path : String = "res://Scenes/Levels/level.tscn"):
 	
@@ -34,10 +35,15 @@ func change_scene(scene_path : String = "res://Scenes/Levels/level.tscn"):
 
 func reload_scene():
 	get_tree().reload_current_scene()
+	return true
 
 func reload_level():
 	if is_custom_game:
 		load_custom_level(custom_game_resource, custom_graph_path)
+	elif is_auto_game:
+		await TransitionManager.fade_out()
+		await reload_scene()
+		await TransitionManager.fade_in()
 	else:
 		load_level()
 
@@ -63,6 +69,7 @@ func load_next_level():
 
 func load_level():
 	is_custom_game = false
+	is_auto_game = false
 	var new_level = level_resource.instantiate()
 	print("changing game resource")
 	new_level.game_resource = game_resource
@@ -91,6 +98,7 @@ func load_level():
 	await TransitionManager.fade_in()
 
 func load_custom_level(custom_game_resource:Game, graph_path:String):
+	is_auto_game = false
 	is_custom_game = true
 	self.custom_game_resource = custom_game_resource
 	self.custom_graph_path = graph_path
@@ -114,6 +122,11 @@ func load_custom_level(custom_game_resource:Game, graph_path:String):
 	
 	await TransitionManager.fade_in()
 
+func load_auto_level():
+	is_custom_game = false
+	is_auto_game = true
+	await change_scene("res://Scenes/Levels/auto_level.tscn")
+	
 
 func is_last_level():
 	return level_index >= levels.size() - 1

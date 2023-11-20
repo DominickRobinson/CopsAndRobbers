@@ -290,6 +290,12 @@ func retract_twins():
 func neighborhood(v : int):
 	return graph[v]
 
+func get_number_of_neighbors(v:int):
+	var ctr = 0
+	for n in neighborhood(v):
+		if n:
+			ctr += 1
+	return ctr
 
 func is_reflexive():
 	for i in graph.size():

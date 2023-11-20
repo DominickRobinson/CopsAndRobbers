@@ -10,6 +10,8 @@ signal created
 signal vertex_selected(vtx:Vertex)
 signal vertex_moved()
 
+signal vertices_repositioned
+
 #graph data
 @export_group("data structures")
 @export var graph_data : GraphData
@@ -77,9 +79,7 @@ func _ready():
 	await refreshed
 	created.emit()
 	
-func _physics_process(delta):
-#	set_graph_data_display_label()
-	pass
+
 
 
 func _on_graph_data_changed(old,new):
@@ -343,11 +343,25 @@ func square(emit_change=true):
 		changed.emit()
 	return true
 
-func retract_strict_corner(emit_change=true):
+
+func retract_twins(emit_change=true):
+	await graph_data.retract_twins()
+	
+	for i in size():
+		await recalculate_strict_corner_ranking()
+		await retract_isolated_vertex(false)
+	
+	await recalculate_strict_corner_ranking()
+	
+	if emit_change:
+		changed.emit()
+	return true
+
+func retract_isolated_vertex(emit_change=true):
 	for v in vertices:
 		v = v as Vertex
 		if v.is_isolated():
-			print("Vertex ", v.index, " is isolated...")
+#			print("Vertex ", v.index, " is isolated...")
 			await remove_vertex(v, false)
 #			await wait()
 			await refresh_vertices()
@@ -362,12 +376,12 @@ func retract_strict_corner(emit_change=true):
 
 func retract_strict_corners(emit_change=true):
 	await graph_data.retract_strict_corners()
-	await recalculate_strict_corner_ranking()
 	
-	while not is_copwin():
+	for i in size():
 		await recalculate_strict_corner_ranking()
-		await retract_strict_corner(false)
+		await retract_isolated_vertex(false)
 	
+	await recalculate_strict_corner_ranking()
 	
 	if emit_change:
 		changed.emit()
@@ -451,10 +465,15 @@ func refresh():
 
 
 func refresh_vertices():
+	await wait(0)
 	for i in vertices.size():
 		var v = vertices[i] as Vertex
 		v.index = i
 		v.neighbors = get_neighbors_from_vertex(v)
+		
+		v.selected.connect(emit_signal.bind("vertex_selected", v))
+		v.moved.connect(emit_signal.bind("vertex_moved"))
+		
 	await recalculate_strict_corner_ranking()
 	return true
 
@@ -473,7 +492,7 @@ func refresh_edges():
 				new_edge.directed = not graph_data.graph[j][i]
 				
 				await edge_container.add_edge(new_edge)
-				
+	
 	return true
 
 func get_max_ranking():
@@ -530,7 +549,7 @@ func get_graph_as_JSON():
 
 	var positions_string_array = []
 	for v in vertices:
-		var p = v.position
+		var p = v.global_position
 		positions_string_array.append(var_to_str(p))
 	var positions_string = var_to_str(positions_string_array)
 
@@ -691,7 +710,7 @@ func get_positions() -> Array:
 func set_positions(array:Array):
 	assert(array.size() == vertex_container.vertices.size())
 	for i in vertex_container.vertices.size():
-		vertex_container.vertices[i].position = array[i]
+		vertex_container.vertices[i].global_position = array[i]
 
 
 func is_copwin():
@@ -820,3 +839,98 @@ func recalculate_strict_corner_ranking():
 		vertices[i].strict_corner_ranking = strict_corner_ranking[i]
 	
 	return graph_data.strict_corner_ranking
+
+
+var apply_forces = false
+func create_force_diagram():
+	await refresh_vertices()
+	apply_forces = not apply_forces
+	return
+	
+	#add node to contain the nodes for calculating positions
+	var physics_container = Node2D.new()
+	physics_container.name = "PhysicsContainer"
+	add_child(physics_container)
+	
+	#add rigid bodies representing the vertices
+	var rb_container = Node2D.new()
+	var rb_array = []
+	rb_container.name = "RigidBodyContainer"
+	physics_container.add_child(rb_container)
+	
+	for v in vertices:
+		var rb = RigidBody2D.new()
+		rb.name = "rb" + str(v.index)
+		rb.gravity_scale = 0
+		rb.global_position = v.global_position
+		rb.mass = 100
+		rb.can_sleep = false
+		rb_container.add_child(rb)
+		
+		var rb_shape = CollisionShape2D.new()
+		rb_shape.shape = CircleShape2D.new()
+		rb_shape.shape.radius = 30
+		rb.add_child(rb_shape)
+		
+		rb_array.append(rb)
+	
+	
+	
+	#make springs
+	var spring_container = Node2D.new()
+	spring_container.name = "SpringContainer"
+	physics_container.add_child(spring_container)
+	for i in graph_data.graph.size():
+		for j in range(i+1, graph_data.graph[0].size()):
+			var spring = DampedSpringJoint2D.new() as DampedSpringJoint2D
+			spring.node_a = get_path_to(rb_array[i])
+			spring.node_b = get_path_to(rb_array[j])
+			spring.name = "rb" + str(i) + "->rb" + str(j)
+			spring.global_position = rb_array[i].global_position
+			spring.stiffness = 100
+			spring.length = 1000
+			
+			if graph_data.edge_exists(i, j):
+				spring.rest_length = 10000
+			else:
+				spring.rest_length = 1
+			
+			spring_container.add_child(spring)
+	
+
+
+var k = 10
+var rest_length = 200 
+func _physics_process(delta):
+	if apply_forces:
+		var n = graph_data.size()
+		for i in graph_data.graph.size():
+			var vtx_i = vertices[i] as Vertex
+			for j in range(i+1, graph_data.graph.size()):
+				var displacement = vertices[j].position - vertices[i].position
+				if graph_data.edge_exists(i, j):
+					var F = k * (displacement.length() - rest_length) * displacement.normalized()
+					vertices[i].add_force(F)
+					vertices[j].add_force(-F)
+				else:
+					var F = k * 100000 * vtx_i.strict_corner_ranking**2 * get_number_of_neighbors_from_index(i) / (displacement.length_squared()) * displacement.normalized()
+					vertices[i].add_force(-F)
+					vertices[j].add_force(F)
+		
+		var total_displacement = 0
+		for v in vertices:
+			total_displacement += v.apply_force(delta).length()
+		
+		await refresh_edges()
+		
+		if abs(total_displacement) < 0.1 * size():
+			
+			apply_forces = false
+			vertices_repositioned.emit()
+
+
+func get_number_of_neighbors_from_index(v:int):
+	return graph_data.get_number_of_neighbors(v)
+
+func get_number_of_neighbors(v:Vertex):
+	return get_number_of_neighbors_from_index(v.index)

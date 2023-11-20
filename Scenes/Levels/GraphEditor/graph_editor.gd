@@ -205,6 +205,9 @@ func invert():
 func square():
 	graph.square()
 
+func retract_twins():
+	graph.retract_twins()
+
 func retract_strict_corners():
 	graph.retract_strict_corners()
 

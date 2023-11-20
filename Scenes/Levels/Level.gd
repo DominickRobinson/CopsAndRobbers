@@ -3,6 +3,8 @@ extends Node2D
 
 signal level_ready
 
+@export var do_the_thing_button : DoTheThingButton
+
 @export var game_resource : Game
 var game_theme : GameTheme
 var game_rules : GameRules
@@ -43,7 +45,12 @@ func _ready():
 	
 	background.texture = game_theme.background_skin
 	
+
 	await graph.load_graph(graph_path)
+	await graph.wait(0)
+	if do_the_thing_button:
+		do_the_thing_button.pressed.emit()
+		await do_the_thing_button.thing_done
 	await graph.show_strict_corner_rankings(false)
 	await graph.refresh()
 	await graph.get_Fk_mappings()

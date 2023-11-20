@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvqojcli42a4f"]
+
+[ext_resource type="PackedScene" uid="uid://ccp73t4r2n7kf" path="res://Scenes/Levels/level.tscn" id="1_1r4il"]
+[ext_resource type="Script" path="res://Scenes/Levels/DoTheThingButton.gd" id="2_7cirj"]
+[ext_resource type="Script" path="res://Scenes/Levels/AutoProgressBar.gd" id="3_5mqsk"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Level" parent="." node_paths=PackedStringArray("do_the_thing_button") instance=ExtResource("1_1r4il")]
+do_the_thing_button = NodePath("../DoTheThingButton")
+graph_path = "res://Graphs/null.json"
+next_level_path = ""
+
+[node name="DoTheThingButton" type="Button" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_7cirj")
+how_many_times = 20
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/CenterContainer/VBoxContainer" node_paths=PackedStringArray("thing_doer")]
+layout_mode = 2
+script = ExtResource("3_5mqsk")
+thing_doer = NodePath("../../../../DoTheThingButton")
+
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Loading level..."
+
+[connection signal="thing_done" from="DoTheThingButton" to="CanvasLayer" method="hide"]

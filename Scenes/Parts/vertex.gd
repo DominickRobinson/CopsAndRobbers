@@ -60,6 +60,9 @@ var moving = false
 var old_position : Vector2
 
 
+
+
+
 func _ready():
 	super._ready()
 	old_position = position
@@ -200,3 +203,16 @@ func is_moving():
 
 func is_isolated():
 	return strict_corner_ranking == -1
+
+
+
+var net_force : Vector2 = Vector2.ZERO
+func add_force(force : Vector2 = Vector2.ZERO):
+	net_force += force
+func apply_force(delta):
+	var d = net_force * delta
+	position += d
+	net_force *= 0
+	return d
+#func _physics_process(delta):
+#	apply_force(delta)
