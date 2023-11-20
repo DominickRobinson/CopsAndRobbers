@@ -36,6 +36,7 @@ func do_the_thing():
 	await graph.refresh()
 	await get_tree().create_timer(0).timeout
 	await graph.set_positions_by_ranking(false)
+	await graph.set_positions_in_circle()
 	await graph.retract_twins(false)
 	await graph.refresh()
 	graph.create_force_diagram()
@@ -59,11 +60,14 @@ func do_the_thing():
 		lower_left.y = min(lower_left.y, pos.y)
 		upper_right.x = max(upper_right.x, pos.x)
 		upper_right.y = max(upper_right.y, pos.y)
-		
+	
+	#move top of frame so that graph doesn't go under UI
+	lower_left.y -= 200
+	
 	avg /= graph.size()
 	
 	var frame_size = upper_right - lower_left
-	frame_size += Vector2.ONE * 200 * log(graph.size())
+	frame_size += Vector2.ONE * 100 #* log(graph.size())
 	
 	var vp_size = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),
 							ProjectSettings.get_setting("display/window/size/viewport_height"))

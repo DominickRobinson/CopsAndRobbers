@@ -597,7 +597,7 @@ func load_graph(path : String):
 					array[i].append(int(row[j]))
 				i += 1
 			array.pop_back()
-			positions = generate_default_positions(array.size())
+			positions = generate_circle_positions(array.size())
 			for j in array.size():
 				await add_vertex(positions[j])
 			graph_data.graph = array
@@ -614,7 +614,7 @@ func load_graph(path : String):
 					array[i].append(int(row[j]))
 				i += 1
 			array.pop_back()
-			positions = generate_default_positions(array.size())
+			positions = generate_circle_positions(array.size())
 			for j in array.size():
 				await add_vertex(positions[j])
 			graph_data.graph = array
@@ -685,11 +685,12 @@ func set_citation(str:String): citation = str
 
 
 func set_positions_in_circle():
-	var positions = generate_default_positions(graph_data.size())
+	var positions = generate_circle_positions(graph_data.size())
 	for i in vertices.size():
 		vertices[i].position = positions[i]
+	return true
 
-func generate_default_positions(num:int) -> Array:
+func generate_circle_positions(num:int) -> Array:
 	var array = []
 	var center = get_viewport_rect().size / 2
 	var radius = min(get_viewport_rect().size.x, get_viewport_rect().size.y) / 3

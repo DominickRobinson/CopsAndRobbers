@@ -42,7 +42,7 @@ script/source = "extends Resource
 
 "
 
-[sub_resource type="Resource" id="Resource_g3dw1"]
+[sub_resource type="Resource" id="Resource_ke32g"]
 resource_local_to_scene = true
 script = SubResource("GDScript_c5y8f")
 default_skin = ExtResource("11_cf01o")
@@ -63,16 +63,17 @@ graph_path = "res://Graphs/Levels/1-4.json"
 agent_resource = ExtResource("2_885p4")
 next_level_path = "res://Graphs/h7_2221.json"
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label", "next_level_button", "stopwatch", "star_container", "hint_button")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("state_machine", "graph", "game_over_screen", "game_over_label", "next_level_button", "stopwatch", "star_container", "hint_button", "buttons_container")]
 script = ExtResource("3_kock0")
 state_machine = NodePath("StateMachine")
 graph = NodePath("../Graph")
 game_over_screen = NodePath("../LevelScreens/GameOverScreen")
 game_over_label = NodePath("../LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/Gameover")
-next_level_button = NodePath("../LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/NextLevelButton")
+next_level_button = NodePath("../LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/ButtonsContainer/NextLevelButton")
 stopwatch = NodePath("../LevelScreens/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Stopwatch")
 star_container = NodePath("../LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/StarContainer")
 hint_button = NodePath("../LevelScreens/MarginContainer/HBoxContainer/HintButton")
+buttons_container = NodePath("../LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/ButtonsContainer")
 
 [node name="StateMachine" parent="GameManager" node_paths=PackedStringArray("label") instance=ExtResource("4_oysjt")]
 label = NodePath("../../LevelScreens/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ScoreLabel")
@@ -83,7 +84,7 @@ label = NodePath("../../LevelScreens/MarginContainer/PanelContainer/MarginContai
 script = ExtResource("6_3nbrt")
 
 [node name="Graph" parent="." instance=ExtResource("7_vxu8e")]
-vertex_style_resource = SubResource("Resource_g3dw1")
+vertex_style_resource = SubResource("Resource_ke32g")
 
 [node name="Agents" type="Node2D" parent="."]
 
@@ -224,21 +225,24 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 texture = ExtResource("21_ru67o")
 
-[node name="NextLevelButton" type="Button" parent="LevelScreens/GameOverScreen/CenterContainer/VBoxContainer"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="LevelScreens/GameOverScreen/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NextLevelButton" type="Button" parent="LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Next level"
 script = ExtResource("19_dco50")
 
-[node name="Retry" type="Button" parent="LevelScreens/GameOverScreen/CenterContainer/VBoxContainer"]
+[node name="Retry" type="Button" parent="LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Retry level"
 script = ExtResource("16_hgfn3")
 
-[node name="MainMenu" type="Button" parent="LevelScreens/GameOverScreen/CenterContainer/VBoxContainer"]
+[node name="MainMenu" type="Button" parent="LevelScreens/GameOverScreen/CenterContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30

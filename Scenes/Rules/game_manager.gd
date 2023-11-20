@@ -16,6 +16,7 @@ signal game_over
 @export var stopwatch : Stopwatch
 @export var star_container : StarContainer
 @export var hint_button : Button
+@export var buttons_container : VBoxContainer
 
 
 var cops :
@@ -37,6 +38,8 @@ func _ready():
 	#if first time in first state
 	if state_machine.curr_state == state_machine.first_state:
 		_on_state_entered()
+	
+	buttons_container.modulate = Color(1,1,1,0)
 
 
 func _on_state_entered():
@@ -87,6 +90,10 @@ func cop_win():
 		await star_container.show_stars(2)
 	else:
 		await star_container.show_stars(1)
+	
+	await create_tween().tween_property(buttons_container, "modulate", Color(1,1,1,1), 0.5).finished
+	
+	
 
 func robber_win():
 	game_over_label.text = "Robbers win..."

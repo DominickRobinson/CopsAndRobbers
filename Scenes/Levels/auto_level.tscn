@@ -16,7 +16,7 @@ visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_7cirj")
-how_many_times = 20
+how_many_times = 15
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100

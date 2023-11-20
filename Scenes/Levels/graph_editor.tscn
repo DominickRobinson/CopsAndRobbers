@@ -20,7 +20,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8qdk"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
 
-[sub_resource type="Resource" id="Resource_f68nl"]
+[sub_resource type="Resource" id="Resource_nx4f4"]
 resource_local_to_scene = true
 script = ExtResource("12_bxg82")
 default_skin = ExtResource("8_hn86l")
@@ -484,7 +484,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_f68nl")
+vertex_style_resource = SubResource("Resource_nx4f4")
 graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]

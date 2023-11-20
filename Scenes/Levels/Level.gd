@@ -125,6 +125,10 @@ func _ready():
 	state_machine.first_state = first_state
 	
 	level_ready.emit()
+	
+	if do_the_thing_button:
+		var best_cop_move = await graph.get_best_cop_move(cops.get_children()[0])
+		best_cop_move.selected.emit()
 
 func create_state(script : Variant) -> State:
 	var state = State.new()
