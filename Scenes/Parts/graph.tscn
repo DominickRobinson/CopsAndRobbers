@@ -30,4 +30,5 @@ script = ExtResource("5_p56fu")
 [node name="GraphData" parent="." instance=ExtResource("4_e23mg")]
 
 [node name="LevelCamera" type="Camera2D" parent="."]
+visible = false
 script = ExtResource("9_5ab8u")

@@ -29,6 +29,10 @@ TransitionManager="*res://Autoloads/TransitionManager.tscn"
 window/size/mode=2
 window/stretch/mode="viewport"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
+
 [gui]
 
 theme/custom="res://Assets/Themes/MinimalUI/MinimalUI.tres"

@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://c086hshnh55j5"]
+[gd_scene load_steps=22 format=3 uid="uid://c086hshnh55j5"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_afr4a"]
 [ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_lg68n"]
 [ext_resource type="PackedScene" uid="uid://drysmthmgro6c" path="res://Autoloads/Pause/PauseButton.tscn" id="3_o7u82"]
 [ext_resource type="PackedScene" uid="uid://drpi6jihu1vex" path="res://Scenes/Parts/graph.tscn" id="4_7hxle"]
+[ext_resource type="Script" path="res://Scenes/Levels/ShowHideButton.gd" id="4_u6u1w"]
 [ext_resource type="Script" path="res://Scenes/Levels/DoTheThingButton.gd" id="4_vlmgg"]
 [ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="5_a50cc"]
 [ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="6_c4vs8"]
@@ -20,7 +21,14 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8qdk"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
 
-[sub_resource type="Resource" id="Resource_nx4f4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_soibn"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="Resource" id="Resource_inpg4"]
 resource_local_to_scene = true
 script = ExtResource("12_bxg82")
 default_skin = ExtResource("8_hn86l")
@@ -42,12 +50,12 @@ selected_label = NodePath("GUI/MarginContainer/SelectedLabel")
 vertex_mode_button = NodePath("GUI/MarginContainer/HBoxContainer/Mode/VertexMode")
 edge_mode_button = NodePath("GUI/MarginContainer/HBoxContainer/Mode/EdgeMode")
 new_edge_line = NodePath("NewEdgeLine")
-corner_spinbox = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/HBoxContainer/SpinBox")
-zoom_spinbox = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/SetCameraZoom")
-title_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/TitleTextEdit")
-author_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/AuthorTextEdit")
-description_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/DescriptionTextEdit")
-citation_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar/CitationTextEdit")
+corner_spinbox = NodePath("GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner/HBoxContainer/SpinBox")
+zoom_spinbox = NodePath("GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/SetCameraZoom")
+title_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer/TitleTextEdit")
+author_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer/AuthorTextEdit")
+description_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer/DescriptionTextEdit")
+citation_text_edit = NodePath("GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer/CitationTextEdit")
 save_file_dialog = NodePath("SaveFileDialog")
 load_file_dialog = NodePath("LoadFileDialog")
 
@@ -94,7 +102,7 @@ layout_mode = 2
 text = "Redo"
 
 [node name="HSeparator5" type="HSeparator" parent="GUI/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(25, 0)
+custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
 [node name="AddVertex" type="Button" parent="GUI/MarginContainer/HBoxContainer"]
@@ -102,10 +110,11 @@ layout_mode = 2
 text = "Add vertex"
 
 [node name="HSeparator4" type="HSeparator" parent="GUI/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(25, 0)
+custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
 [node name="Buttons" type="HBoxContainer" parent="GUI/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Refresh" type="Button" parent="GUI/MarginContainer/HBoxContainer/Buttons"]
@@ -113,7 +122,8 @@ layout_mode = 2
 text = "Refresh"
 
 [node name="HSeparator" type="HSeparator" parent="GUI/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(25, 0)
+visible = false
+custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
 [node name="Mode" type="HBoxContainer" parent="GUI/MarginContainer/HBoxContainer"]
@@ -134,19 +144,23 @@ button_group = ExtResource("2_lg68n")
 text = "Edge mode"
 
 [node name="HSeparator2" type="HSeparator" parent="GUI/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(25, 0)
+custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
 [node name="SaveLoad" type="HBoxContainer" parent="GUI/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="SaveGraph" type="Button" parent="GUI/MarginContainer/HBoxContainer/SaveLoad"]
+[node name="AddGraph" type="Button" parent="GUI/MarginContainer/HBoxContainer/SaveLoad"]
 layout_mode = 2
-text = "Save Graph"
+text = "Add graph"
 
 [node name="LoadGraph" type="Button" parent="GUI/MarginContainer/HBoxContainer/SaveLoad"]
 layout_mode = 2
-text = "Load Graph"
+text = "Load graph"
+
+[node name="SaveGraph" type="Button" parent="GUI/MarginContainer/HBoxContainer/SaveLoad"]
+layout_mode = 2
+text = "Save graph"
 
 [node name="UploadGraph" type="Button" parent="GUI/MarginContainer/HBoxContainer/SaveLoad"]
 visible = false
@@ -154,152 +168,134 @@ layout_mode = 2
 text = "Upload Graph"
 
 [node name="HSeparator3" type="HSeparator" parent="GUI/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(25, 0)
+custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
 [node name="PauseButton" parent="GUI/MarginContainer/HBoxContainer" instance=ExtResource("3_o7u82")]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 0
 
 [node name="ShowHideButton" type="Button" parent="GUI/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 toggle_mode = true
-button_pressed = true
-text = "Show/hide"
+text = "Show advanced controls"
+script = ExtResource("4_u6u1w")
 
-[node name="TabContainer" type="TabContainer" parent="GUI/MarginContainer/VBoxContainer"]
+[node name="AdvancedGraphActions" type="PanelContainer" parent="GUI/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_soibn")
 
-[node name="Actions" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ActionsSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions"]
+[node name="ScrollContainer" type="ScrollContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer"]
-layout_mode = 2
-text = "Graph properties:"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(15, 0)
-layout_mode = 2
-
-[node name="GraphProperties" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MakeReflexive" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties"]
-layout_mode = 2
-text = "Make reflexive"
-
-[node name="MakeUndirected" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties"]
-layout_mode = 2
-text = "Make undirected"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar"]
+[node name="AdvancedButtons" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2"]
+[node name="ActionsSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
+layout_mode = 2
+
+[node name="GraphActions" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions"]
 layout_mode = 2
 text = "Graph actions:"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions"]
 layout_mode = 2
 
-[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer"]
+[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer"]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
-[node name="GraphActions" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer"]
+[node name="GraphActions" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Fill" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="MakeReflexive" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
+layout_mode = 2
+text = "Make reflexive"
+
+[node name="MakeUndirected" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
+layout_mode = 2
+text = "Make undirected"
+
+[node name="Fill" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Fill"
 
-[node name="Clear" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="Clear" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Clear"
 
-[node name="Invert" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="Invert" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Invert"
 
-[node name="Square" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="Square" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Square"
 
-[node name="RetractTwins" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="RetractTwins" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Retract twins"
 
-[node name="RetractStrictCorners" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="RetractStrictCorner" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
+layout_mode = 2
+text = "Retract strict corner"
+
+[node name="RetractStrictCorners" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Retract strict corners"
 
-[node name="RetractCorners" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="RetractCorners" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 visible = false
 layout_mode = 2
 text = "Retract corners"
 
-[node name="EraseGraph" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions"]
+[node name="EraseGraph" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
-text = "Erase Graph"
+text = "Erase graph"
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3"]
-layout_mode = 2
-text = "Other:"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3"]
+[node name="AddCorner" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
 
-[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer"]
-custom_minimum_size = Vector2(15, 0)
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer"]
-layout_mode = 2
-
-[node name="AddCorner" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="AddCornerButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner"]
+[node name="AddCornerButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner"]
+visible = false
 layout_mode = 2
 text = "Add corner"
 
-[node name="AddSCRButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner"]
+[node name="AddSCRButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner"]
 layout_mode = 2
 text = "Add strict corner"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner"]
 layout_mode = 2
 
-[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/HBoxContainer"]
+[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner/HBoxContainer"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="SpinBox" type="SpinBox" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner/HBoxContainer"]
 custom_minimum_size = Vector2(123, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -308,18 +304,20 @@ step = 0.05
 value = 0.5
 prefix = "Prob = "
 
-[node name="DoTheThingButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner"]
+[node name="DoTheThingButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner"]
 layout_mode = 2
 text = "Do the thing"
 script = ExtResource("4_vlmgg")
-how_many_times = 20
-auto_start = true
 
-[node name="OrganizeByRankingButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer"]
+[node name="OrganizeByRankingButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 layout_mode = 2
-text = "Organize by ranking"
+text = "Organize by ranking (vertically)"
 
-[node name="SetCameraZoom" type="SpinBox" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer"]
+[node name="OrganizeBySprings" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
+layout_mode = 2
+text = "Organize using force diagram"
+
+[node name="SetCameraZoom" type="SpinBox" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions"]
 visible = false
 layout_mode = 2
 min_value = 0.05
@@ -328,121 +326,142 @@ step = 0.01
 value = 1.0
 prefix = "Zoom: "
 
-[node name="Misc" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar"]
+[node name="Misc" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar"]
 visible = false
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc"]
+[node name="Label2" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/Misc"]
 layout_mode = 2
 text = "Miscellaneous:"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/Misc"]
 layout_mode = 2
 
-[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc/HBoxContainer"]
+[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/Misc/HBoxContainer"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="GraphActions" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc/HBoxContainer"]
+[node name="GraphActions" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/Misc/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PrintMappings" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc/HBoxContainer/GraphActions"]
+[node name="PrintMappings" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/Misc/HBoxContainer/GraphActions"]
 layout_mode = 2
 text = "Print mappings"
 
-[node name="TextActions" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
-visible = false
+[node name="VSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="TextSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions"]
+[node name="TextSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="ToggleSCRs" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions/TextSidebar"]
+[node name="Label" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar"]
+layout_mode = 2
+text = "Miscellaneous:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar"]
+layout_mode = 2
+
+[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer"]
+layout_mode = 2
+
+[node name="ToggleSCRs" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 toggle_mode = true
 text = "Toggle strict corner rankings"
 
-[node name="RecalculateStrictCornerRankingsButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions/TextSidebar"]
+[node name="RecalculateStrictCornerRankingsButton" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Recalculate strict
 corner rankings"
 
-[node name="Metadata" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
-visible = false
+[node name="VSeparator2" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="TextSidebar" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata"]
+[node name="MetadataContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="TitleTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
+[node name="Label" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+text = "Edit graph metadata:
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 placeholder_text = "Title"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="AuthorTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
+[node name="AuthorTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+size_flags_vertical = 3
 placeholder_text = "Author"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="DescriptionTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
+[node name="DescriptionTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+size_flags_vertical = 3
 placeholder_text = "Description"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="CitationTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Metadata/TextSidebar"]
+[node name="CitationTextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/MetadataContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+size_flags_vertical = 3
 placeholder_text = "Citation"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="Tips" type="MarginContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer"]
+[node name="VSeparator3" type="VSeparator" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
 visible = false
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips"]
+[node name="Tips" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
+visible = false
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="RightClick" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips/VBoxContainer"]
+[node name="RightClick" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Tips"]
 layout_mode = 2
 text = "Right click to deleted an edge or vertex."
 
-[node name="VertexMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips/VBoxContainer"]
+[node name="VertexMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Tips"]
 layout_mode = 2
 text = "You can move and delete vertices in vertex mode."
 
-[node name="EdgeMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/TabContainer/Tips/VBoxContainer"]
+[node name="EdgeMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Tips"]
 layout_mode = 2
 text = "You can only create and delete edges in edge mode."
 
-[node name="PanelContainer" type="PanelContainer" parent="GUI/MarginContainer"]
+[node name="GraphDataDisplay" type="PanelContainer" parent="GUI/MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_soibn")
 
-[node name="MarginContainer" type="MarginContainer" parent="GUI/MarginContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="GUI/MarginContainer/GraphDataDisplay"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -450,42 +469,37 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/GraphDataDisplay/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Graph display:"
 horizontal_alignment = 1
 
-[node name="GraphTextDisplay" type="Label" parent="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="GraphTextDisplay" type="Label" parent="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Button" type="Button" parent="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer"]
 layout_mode = 2
 toggle_mode = true
 button_pressed = true
 text = "Show/hide metadata"
 
-[node name="CreateForceDiagram" type="Button" parent="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Create force diagram"
-
 [node name="SelectedLabel" type="Label" parent="GUI/MarginContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_nx4f4")
-graph_data_display_label = NodePath("../GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
+vertex_style_resource = SubResource("Resource_inpg4")
+graph_data_display_label = NodePath("../GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
 position = Vector2i(300, 100)
@@ -547,26 +561,28 @@ redo_button = NodePath("../GUI/MarginContainer/HBoxContainer/EditButtons/RedoBut
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Buttons/Refresh" to="." method="refresh"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Mode/VertexMode" to="." method="set_vertex_mode"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/Mode/EdgeMode" to="." method="set_edge_mode"]
-[connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/SaveGraph" to="SaveFileDialog" method="show"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/LoadGraph" to="LoadFileDialog" method="show"]
+[connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/SaveGraph" to="SaveFileDialog" method="show"]
 [connection signal="pressed" from="GUI/MarginContainer/HBoxContainer/SaveLoad/UploadGraph" to="UploadFileDialog" method="show"]
-[connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/ShowHideButton" to="GUI/MarginContainer/VBoxContainer/TabContainer" method="set_visible"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties/MakeReflexive" to="." method="make_reflexive"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer/HBoxContainer/GraphProperties/MakeUndirected" to="." method="make_undirected"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/Fill" to="." method="fill"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/Clear" to="." method="clear"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/Invert" to="." method="invert"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/Square" to="." method="square"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/RetractTwins" to="." method="retract_twins"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/RetractStrictCorners" to="." method="retract_strict_corners"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/RetractCorners" to="." method="retract_corners"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer2/HBoxContainer/GraphActions/EraseGraph" to="." method="empty_graph"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/AddCornerButton" to="." method="add_corner"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/AddCorner/AddSCRButton" to="." method="add_strict_corner"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/OrganizeByRankingButton" to="." method="organize_by_ranking"]
-[connection signal="value_changed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/VBoxContainer3/HBoxContainer/VBoxContainer/SetCameraZoom" to="Graph" method="set_zoom_scale"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/Actions/ActionsSidebar/Misc/HBoxContainer/GraphActions/PrintMappings" to="." method="print_mappings"]
-[connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions/TextSidebar/ToggleSCRs" to="Graph" method="show_strict_corner_rankings"]
-[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/TabContainer/TextActions/TextSidebar/RecalculateStrictCornerRankingsButton" to="Graph" method="recalculate_strict_corner_ranking"]
-[connection signal="toggled" from="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Button" to="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" method="set_visible"]
-[connection signal="pressed" from="GUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/CreateForceDiagram" to="Graph" method="create_force_diagram"]
+[connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/ShowHideButton" to="GUI/MarginContainer/GraphDataDisplay" method="set_visible"]
+[connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/ShowHideButton" to="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions" method="set_visible"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/MakeReflexive" to="." method="make_reflexive"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/MakeUndirected" to="." method="make_undirected"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/Fill" to="." method="fill"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/Clear" to="." method="clear"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/Invert" to="." method="invert"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/Square" to="." method="square"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/RetractTwins" to="." method="retract_twins"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/RetractStrictCorner" to="." method="retract_strict_corner"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/RetractStrictCorners" to="." method="retract_strict_corners"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/RetractCorners" to="." method="retract_corners"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/EraseGraph" to="." method="empty_graph"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner/AddCornerButton" to="." method="add_corner"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/AddCorner/AddSCRButton" to="." method="add_strict_corner"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/OrganizeByRankingButton" to="." method="organize_by_ranking"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/OrganizeBySprings" to="Graph" method="create_force_diagram"]
+[connection signal="value_changed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/GraphActions/HBoxContainer/GraphActions/SetCameraZoom" to="Graph" method="set_zoom_scale"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/Misc/HBoxContainer/GraphActions/PrintMappings" to="." method="print_mappings"]
+[connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer/ToggleSCRs" to="Graph" method="show_strict_corner_rankings"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer/RecalculateStrictCornerRankingsButton" to="Graph" method="recalculate_strict_corner_ranking"]
+[connection signal="toggled" from="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/Button" to="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer" method="set_visible"]

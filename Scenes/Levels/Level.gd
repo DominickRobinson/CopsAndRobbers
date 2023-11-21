@@ -30,6 +30,8 @@ var robber_script : Script
 @export_file("*") var next_level_path
 @onready var next_level_button : NextLevelButton = $CanvasLayer/GameOverScreen/CenterContainer/VBoxContainer/NextLevelButton
 
+@export var stopwatch : Stopwatch
+
 var timer
 
 func _ready():
@@ -124,11 +126,15 @@ func _ready():
 	prev_state.next_state = first_state
 	state_machine.first_state = first_state
 	
+	level_ready.connect(stopwatch.start)
+	
 	level_ready.emit()
 	
-	if do_the_thing_button:
-		var best_cop_move = await graph.get_best_cop_move(cops.get_children()[0])
-		best_cop_move.selected.emit()
+	
+	
+#	if do_the_thing_button:
+#		var best_cop_move = await graph.get_best_cop_move(cops.get_children()[0])
+#		best_cop_move.selected.emit()
 
 func create_state(script : Variant) -> State:
 	var state = State.new()

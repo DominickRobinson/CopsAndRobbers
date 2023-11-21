@@ -24,12 +24,14 @@ func do_the_thing():
 	progress = 0
 	
 	await graph.empty(false)
+	await graph.wait(0)
 	
 	for i in how_many_times - 1:
 		var prob = float(i+1)/float(how_many_times)
-		prob = 0.5
-		print("prob: ", prob)
+#		prob = 0.5
 		await graph.add_strict_corner(Vector2(0,0), prob, false)
+		await graph.wait(0)
+		
 	
 	progress = 40
 	
@@ -71,7 +73,6 @@ func do_the_thing():
 	
 	var vp_size = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),
 							ProjectSettings.get_setting("display/window/size/viewport_height"))
-	print(vp_size)
 	
 	var new_zoom = Vector2(vp_size.x / frame_size.x, 
 							vp_size.y / frame_size.y)

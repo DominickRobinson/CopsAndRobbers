@@ -208,6 +208,9 @@ func square():
 func retract_twins():
 	graph.retract_twins()
 
+func retract_strict_corner():
+	graph.retract_strict_corner()
+
 func retract_strict_corners():
 	graph.retract_strict_corners()
 

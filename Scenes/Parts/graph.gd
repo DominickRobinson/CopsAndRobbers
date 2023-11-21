@@ -103,6 +103,7 @@ func set_graph_data_display_label():
 		var show_matrix = graph_data.size() < 10
 		var show_rankings = graph_data.size() < 20
 		graph_data_display_label.text = graph_data.display(show_matrix, show_rankings)
+	return true
 
 func size():
 	return graph_data.size()
@@ -148,47 +149,7 @@ func add_vertex(pos, emit_change = true):
 	
 	return new_vtx
 
-func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5):
-	if vertices.size() == 0:
-		add_vertex(pos)
-		await changed
-		make_reflexive()
-		return
-	
-	if vertices.size() == 1:
-		add_vertex(pos)
-		await changed
-		fill()
-		return
-	
-	add_vertex(pos)
-	await changed
-	make_reflexive()
-	await changed
-	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
-	var new_vtx = vertices[-1]
-	
-	#add edges
-	add_edge(old_vtx, new_vtx, true)
-	add_edge(new_vtx, new_vtx)
-	
-	var rng = RandomNumberGenerator.new()
-	for nbor in old_vtx.get_neighbors():
-		var my_random_number = rng.randf_range(0.0, 1.0)
-		if my_random_number <= probability:
-			add_edge(new_vtx, nbor, true)
-	
-	await changed
-	await set_positions_by_ranking()
-	
-	changed.emit()
-	return
-
-func wait(time=0.0):
-	await get_tree().create_timer(time).timeout
-	return true
-
-func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=true):
+func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=true):
 	if vertices.size() == 0:
 		await wait()
 		await add_vertex(pos, false)
@@ -230,9 +191,61 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_cha
 			await add_edge(new_vtx, nbor, true, false)
 			await wait(0)
 	
+	if emit_change:
+		changed.emit()
+	return true
+
+
+func wait(time=0.0):
+	await get_tree().create_timer(time).timeout
+	return true
+
+func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=true):
+	print("vertices.size(): ", vertices.size())
+	if vertices.size() == 0:
+		await wait()
+		await add_vertex(pos, false)
+		await wait()
+		await make_reflexive(false)
+		if emit_change:
+			changed.emit()
+		return true
 	
-	if new_vtx.neighbors.size() == old_vtx.neighbors.size():
-		var vtxs = new_vtx.neighbors
+	if vertices.size() == 1:
+		await wait()
+		await add_vertex(pos, false)
+		await wait()
+		await fill(false)
+		if emit_change:
+			changed.emit()
+		return true
+	
+	await refresh_vertices()
+	
+	await wait(0)
+	await add_vertex(pos, false)
+	await wait(0)
+	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
+	var new_vtx = vertices[vertices.size() - 1]
+	
+	#add edges
+	await add_edge(old_vtx, new_vtx, true, false)
+	await wait(0)
+	await add_edge(new_vtx, new_vtx, true, false)
+	await wait(0)
+	
+	var rng = RandomNumberGenerator.new()
+	for nbor in old_vtx.get_neighbors():
+		var my_random_number = rng.randf_range(0.0, 1.0)
+		if my_random_number <= probability:
+			await add_edge(new_vtx, nbor, true, false)
+			await wait(0)
+	
+	await refresh_vertices()
+	
+	if new_vtx.get_neighbors().size() == old_vtx.get_neighbors().size():
+		var vtxs = new_vtx.get_neighbors()
+		print("vtxs.size(): ", vtxs.size())
 #		vtxs.erase(old_vtx)
 #		vtxs.erase(new_vtx)
 		var vtx_to_remove = vtxs[randi() % vtxs.size()]
@@ -374,6 +387,18 @@ func retract_isolated_vertex(emit_change=true):
 	return true
 
 
+func retract_strict_corner(emit_change=true):
+	await graph_data.retract_strict_corner()
+	
+	await recalculate_strict_corner_ranking()
+	await retract_isolated_vertex(false)
+	
+	await recalculate_strict_corner_ranking()
+	
+	if emit_change:
+		changed.emit()
+	return true
+
 func retract_strict_corners(emit_change=true):
 	await graph_data.retract_strict_corners()
 	
@@ -390,6 +415,13 @@ func retract_strict_corners(emit_change=true):
 
 func retract_corners(emit_change=true):
 	await graph_data.retract_corners()
+	
+	for i in size():
+		await recalculate_strict_corner_ranking()
+		await retract_isolated_vertex(false)
+	
+	await recalculate_strict_corner_ranking()
+	
 	if emit_change:
 		changed.emit()
 	return true
@@ -449,6 +481,8 @@ func refresh():
 	await wait(0)
 	
 	await recalculate_strict_corner_ranking()
+	
+	await set_graph_data_display_label()
 #
 #	for v in vertices:
 #		v = v as Vertex
@@ -846,58 +880,6 @@ var apply_forces = false
 func create_force_diagram():
 	await refresh_vertices()
 	apply_forces = not apply_forces
-	return
-	
-	#add node to contain the nodes for calculating positions
-	var physics_container = Node2D.new()
-	physics_container.name = "PhysicsContainer"
-	add_child(physics_container)
-	
-	#add rigid bodies representing the vertices
-	var rb_container = Node2D.new()
-	var rb_array = []
-	rb_container.name = "RigidBodyContainer"
-	physics_container.add_child(rb_container)
-	
-	for v in vertices:
-		var rb = RigidBody2D.new()
-		rb.name = "rb" + str(v.index)
-		rb.gravity_scale = 0
-		rb.global_position = v.global_position
-		rb.mass = 100
-		rb.can_sleep = false
-		rb_container.add_child(rb)
-		
-		var rb_shape = CollisionShape2D.new()
-		rb_shape.shape = CircleShape2D.new()
-		rb_shape.shape.radius = 30
-		rb.add_child(rb_shape)
-		
-		rb_array.append(rb)
-	
-	
-	
-	#make springs
-	var spring_container = Node2D.new()
-	spring_container.name = "SpringContainer"
-	physics_container.add_child(spring_container)
-	for i in graph_data.graph.size():
-		for j in range(i+1, graph_data.graph[0].size()):
-			var spring = DampedSpringJoint2D.new() as DampedSpringJoint2D
-			spring.node_a = get_path_to(rb_array[i])
-			spring.node_b = get_path_to(rb_array[j])
-			spring.name = "rb" + str(i) + "->rb" + str(j)
-			spring.global_position = rb_array[i].global_position
-			spring.stiffness = 100
-			spring.length = 1000
-			
-			if graph_data.edge_exists(i, j):
-				spring.rest_length = 10000
-			else:
-				spring.rest_length = 1
-			
-			spring_container.add_child(spring)
-	
 
 
 var k = 10
@@ -925,7 +907,6 @@ func _physics_process(delta):
 		await refresh_edges()
 		
 		if abs(total_displacement) < 0.1 * size():
-			
 			apply_forces = false
 			vertices_repositioned.emit()
 

@@ -13,12 +13,16 @@ func _process(delta: float) -> void:
 	
 	text = "Time elapsed: " + get_time_string()
 
+func start():
+	time_elapsed = 0
+	stopped = false
+
 func stop():
 	stopped = true
 
 func get_time_string():
 	var str = str(round(time_elapsed/60)) + ":"
-	if round(fmod(time_elapsed,60)) < 10:
+	if round(fmod(time_elapsed, 60)) < 10:
 		str += "0"
 	str += str(round(fmod(time_elapsed, 60)))
 	return str
