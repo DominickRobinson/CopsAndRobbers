@@ -13,10 +13,11 @@ func _ready() -> void:
 	value_changed.connect(_on_value_changed)
 
 
-func _on_value_changed(value: float) -> void:
-	if value == 1.00:
-		value *= 100
+func _on_value_changed(new_value: float) -> void:
+	# cursed audio
+	if new_value == 1.00:
+		new_value *= 100
 	if audio_bus_name == "Sound":
-		SoundManager.change_volume_sound(value)
+		SoundManager.change_volume_sound(new_value)
 	elif audio_bus_name == "Music":
-		SoundManager.change_volume_music(value)
+		SoundManager.change_volume_music(new_value)

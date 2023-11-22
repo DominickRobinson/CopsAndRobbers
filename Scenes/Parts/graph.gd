@@ -66,6 +66,7 @@ var description : String = ""
 var citation : String = ""
 
 var strict_corner_ranking : Array
+var distance_matrix : Array
 
 func _ready():
 	graph_data.changed.connect(_on_graph_data_changed)
@@ -82,7 +83,7 @@ func _ready():
 
 
 
-func _on_graph_data_changed(old,new):
+func _on_graph_data_changed(_old, _new):
 	set_graph_data_display_label()
 #	changed.emit()
 #	refresh()
@@ -129,7 +130,7 @@ func get_neighbors_from_index(index:int) -> Array:
 
 
 
-func add_vertex(pos, emit_change = true):
+func add_vertex(pos, emit_change = true, change_graph_data = true):
 #	var new_vtx = vertex_container.add_new_vertex(vertex_resource, pos)
 	var new_vtx = vertex_resource.instantiate() as Vertex
 	new_vtx.index = vertices.size()
@@ -142,7 +143,8 @@ func add_vertex(pos, emit_change = true):
 	vertex_container.add_vertex(new_vtx)
 	
 #	positions.append(pos)
-	graph_data.add_vertex()
+	if change_graph_data:
+		graph_data.add_vertex()
 	
 	if emit_change:
 		changed.emit()
@@ -151,18 +153,18 @@ func add_vertex(pos, emit_change = true):
 
 func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=true):
 	if vertices.size() == 0:
-		await wait()
-		await add_vertex(pos, false)
-		await wait()
+		await Globals.wait()
+		add_vertex(pos, false)
+		await Globals.wait()
 		await make_reflexive(false)
 		if emit_change:
 			changed.emit()
 		return true
 	
 	if vertices.size() == 1:
-		await wait()
-		await add_vertex(pos, false)
-		await wait()
+		await Globals.wait()
+		add_vertex(pos, false)
+		await Globals.wait()
 		await fill(false)
 		if emit_change:
 			changed.emit()
@@ -170,51 +172,48 @@ func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=tru
 	
 	await refresh_vertices()
 	
-	await wait()
-	await add_vertex(pos, false)
-	await wait()
+	await Globals.wait()
+	add_vertex(pos, false)
+	await Globals.wait()
 	await make_reflexive(false)
-	await wait()
+	await Globals.wait()
 	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
 	var new_vtx = vertices[vertices.size() - 1]
 	
 	#add edges
 	await add_edge(old_vtx, new_vtx, true, false)
-	await wait(0)
+	await Globals.wait(0)
 	await add_edge(new_vtx, new_vtx, true, false)
-	await wait(0)
+	await Globals.wait(0)
 	
 	var rng = RandomNumberGenerator.new()
 	for nbor in old_vtx.get_neighbors():
 		var my_random_number = rng.randf_range(0.0, 1.0)
 		if my_random_number <= probability:
 			await add_edge(new_vtx, nbor, true, false)
-			await wait(0)
+			await Globals.wait(0)
 	
 	if emit_change:
 		changed.emit()
 	return true
 
 
-func wait(time=0.0):
-	await get_tree().create_timer(time).timeout
-	return true
 
 func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=true):
 	print("vertices.size(): ", vertices.size())
 	if vertices.size() == 0:
-		await wait()
-		await add_vertex(pos, false)
-		await wait()
+		await Globals.wait()
+		add_vertex(pos, false)
+		await Globals.wait()
 		await make_reflexive(false)
 		if emit_change:
 			changed.emit()
 		return true
 	
 	if vertices.size() == 1:
-		await wait()
-		await add_vertex(pos, false)
-		await wait()
+		await Globals.wait()
+		add_vertex(pos, false)
+		await Globals.wait()
 		await fill(false)
 		if emit_change:
 			changed.emit()
@@ -222,24 +221,24 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_cha
 	
 	await refresh_vertices()
 	
-	await wait(0)
-	await add_vertex(pos, false)
-	await wait(0)
+	await Globals.wait(0)
+	add_vertex(pos, false)
+	await Globals.wait(0)
 	var old_vtx = vertices[randi_range(0, vertices.size() - 2)] as Vertex
 	var new_vtx = vertices[vertices.size() - 1]
 	
 	#add edges
 	await add_edge(old_vtx, new_vtx, true, false)
-	await wait(0)
+	await Globals.wait(0)
 	await add_edge(new_vtx, new_vtx, true, false)
-	await wait(0)
+	await Globals.wait(0)
 	
 	var rng = RandomNumberGenerator.new()
 	for nbor in old_vtx.get_neighbors():
 		var my_random_number = rng.randf_range(0.0, 1.0)
 		if my_random_number <= probability:
 			await add_edge(new_vtx, nbor, true, false)
-			await wait(0)
+			await Globals.wait(0)
 	
 	await refresh_vertices()
 	
@@ -261,9 +260,9 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_cha
 func remove_vertex(vtx : Vertex, emit_change = true):
 #	positions.remove_at(vtx.index)
 	await graph_data.remove_vertex(vtx.index)
-#	await wait(0)
+#	await Globals.wait(0)
 	await vertex_container.remove_vertex(vtx)
-	await wait(0)
+	await Globals.wait(0)
 	if emit_change:
 		changed.emit()
 	return true
@@ -274,13 +273,11 @@ func add_edge(start_vtx : Vertex, end_vtx : Vertex, undirected : bool = false, e
 	var new_edge = edge_resource.instantiate() as Edge
 	new_edge.start_vertex = start_vtx
 	new_edge.end_vertex = end_vtx
-	edge_container.add_edge(new_edge)
 	if undirected:
 		graph_data.add_edge(end_vtx.index, start_vtx.index)
 		var new_edge2 = edge_resource.instantiate() as Edge
 		new_edge2.start_vertex = end_vtx
 		new_edge2.end_vertex = start_vtx
-		edge_container.add_edge(new_edge2)
 	
 	if emit_change:
 		changed.emit()
@@ -376,10 +373,10 @@ func retract_isolated_vertex(emit_change=true):
 		if v.is_isolated():
 #			print("Vertex ", v.index, " is isolated...")
 			await remove_vertex(v, false)
-#			await wait()
+#			await Globals.wait()
 			await refresh_vertices()
 #			await refresh()
-#			await wait()
+#			await Globals.wait()
 			if emit_change:
 				changed.emit()
 			
@@ -478,11 +475,14 @@ func refresh():
 	await refresh_vertices()
 	await refresh_edges()
 	
-	await wait(0)
+	await Globals.wait(0)
 	
 	await recalculate_strict_corner_ranking()
 	
-	await set_graph_data_display_label()
+	await recalculate_distance_matrix()
+	
+	
+	set_graph_data_display_label()
 #
 #	for v in vertices:
 #		v = v as Vertex
@@ -499,31 +499,40 @@ func refresh():
 
 
 func refresh_vertices():
-	await wait(0)
+	await Globals.wait(0)
 	for i in vertices.size():
 		var v = vertices[i] as Vertex
 		v.index = i
 		v.neighbors = get_neighbors_from_vertex(v)
 		
-		v.selected.connect(emit_signal.bind("vertex_selected", v))
-		v.moved.connect(emit_signal.bind("vertex_moved"))
+#		bool is_connected(signal: String, target: Object, method: String) const
 		
+		
+		if not v.is_connected("selected", emit_signal.bind("vertex_selected", v)):
+			v.selected.connect(emit_signal.bind("vertex_selected", v))
+		
+		if not v.is_connected("moved", emit_signal.bind("vertex_moved", v)):
+			v.moved.connect(emit_signal.bind("vertex_moved"))
+	
 	await recalculate_strict_corner_ranking()
 	return true
 
 func refresh_edges():
 	edge_container.remove_all()
+	await Globals.wait()
 	
-	for i in graph_data.size():
-		for j in graph_data.size():
-			if graph_data.graph[i][j]:
+	var n = vertices.size()
+	
+	for i in n:
+		for j in n:
+			if graph_data.edge_exists(i, j):
 				var new_edge = edge_resource.instantiate() as Edge
 #				new_edge.start_vertex = vertex_container.get_vertex_from_index(i)
 				new_edge.start_vertex = vertices[i]
 #				new_edge.end_vertex = vertex_container.get_vertex_from_index(j)
 				new_edge.end_vertex = vertices[j]
 				
-				new_edge.directed = not graph_data.graph[j][i]
+				new_edge.directed = not graph_data.edge_exists(j, i)
 				
 				await edge_container.add_edge(new_edge)
 	
@@ -532,9 +541,7 @@ func refresh_edges():
 func get_max_ranking():
 	return graph_data.get_max_ranking()
 
-func update_positions(vtx:Vertex):
-#	positions[vtx.index] = vtx.position
-	pass
+
 
 func set_positions_by_ranking(emit_change = true):
 	var start_pos = Vector2(150,100)
@@ -595,7 +602,8 @@ func get_graph_as_JSON():
 		"author" : author,
 		"description" : description,
 		"citation" : citation,
-		"zoom_scale" : get_zoom_scale()
+		"zoom_scale" : get_zoom_scale(),
+		"camera_global_position" : camera.global_position
 	}
 	var json_string = JSON.stringify(dict)
 	return json_string
@@ -608,18 +616,20 @@ func remove_vertices(emit_change = false):
 func remove_edges(emit_change = false):
 	for e in edges:
 		await remove_edge(e, true, false)
+	if emit_change:
+		changed.emit()
 	return true
 
 func load_graph(path : String):
 	
 	var load_file = FileAccess.open(path, FileAccess.READ)
-	var adjacency_matrix = []
 	var positions = []
 	
 	match path.get_extension():
 		"json":
 			var json_as_text = FileAccess.get_file_as_string(path)
 			await make_graph_from_JSON(json_as_text)
+			changed.emit()
 		"csv":
 			await clear_graph(false)
 			var array = []
@@ -633,7 +643,7 @@ func load_graph(path : String):
 			array.pop_back()
 			positions = generate_circle_positions(array.size())
 			for j in array.size():
-				await add_vertex(positions[j])
+				add_vertex(positions[j])
 			graph_data.graph = array
 			changed.emit()
 			
@@ -650,7 +660,7 @@ func load_graph(path : String):
 			array.pop_back()
 			positions = generate_circle_positions(array.size())
 			for j in array.size():
-				await add_vertex(positions[j])
+				add_vertex(positions[j])
 			graph_data.graph = array
 			changed.emit()
 			
@@ -661,10 +671,56 @@ func load_graph(path : String):
 #	if positions == []:
 #		positions = generate_default_positions(graph_data.size())
 
+func add_graph(path : String):
+	
+	var load_file = FileAccess.open(path, FileAccess.READ)
+	var positions = []
+	
+	match path.get_extension():
+		"json":
+			var json_as_text = FileAccess.get_file_as_string(path)
+			await add_graph_from_JSON(json_as_text)
+			changed.emit()
+		"csv":
+			var array = []
+			var i = 0
+			while !load_file.eof_reached():
+				array.append([])
+				var row = load_file.get_csv_line(",")
+				for j in row.size():
+					array[i].append(int(row[j]))
+				i += 1
+			array.pop_back()
+			positions = generate_circle_positions(array.size())
+			for j in array.size():
+				add_vertex(positions[j])
+			await graph_data.add_graph_from_adjacency_matrix(array)
+			changed.emit()
+			
+		"tsv":
+			var array = []
+			var i = 0
+			while !load_file.eof_reached():
+				array.append([])
+				var row = load_file.get_csv_line("\t")
+				for j in row.size():
+					array[i].append(int(row[j]))
+				i += 1
+			array.pop_back()
+			positions = generate_circle_positions(array.size())
+			for j in array.size():
+				add_vertex(positions[j])
+			await graph_data.add_graph_from_adjacency_matrix(array)
+			changed.emit()
+			
+	
+#	await get_tree().create_timer(0.5).timeout
+	
+	return true
 
 func make_graph_from_JSON(json_as_text:String):
 	await empty(false)
-	await wait(0)
+	await Globals.wait(0)
 	var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
 	var matrix = json_as_dict["adjacency_matrix"]
 #	print("adjacency matrix:", adjacency_matrix)
@@ -675,8 +731,8 @@ func make_graph_from_JSON(json_as_text:String):
 	
 	
 	for i in positions.size():
-#		await wait()
-		await add_vertex(positions[i], false)
+#		await Globals.wait()
+		add_vertex(positions[i], false)
 #		print(" adding vertex ", i)
 	
 	graph_data.graph = matrix
@@ -686,36 +742,32 @@ func make_graph_from_JSON(json_as_text:String):
 		for j in graph_data.graph.size():
 			var vertex_j = get_vertex_from_index(j)
 			if graph_data.edge_exists(i, j):
-				await add_edge(vertex_i, vertex_j, false, false)
+				add_edge(vertex_i, vertex_j, false, false)
+	
 
+func add_graph_from_JSON(json_as_text:String):
+	var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
+	var matrix = json_as_dict["adjacency_matrix"]
+	var positions_array = str_to_var(json_as_dict["positions"])
+	var positions = []
+	for p in positions_array:
+		positions.append(str_to_var(p))
 	
-#	graph_data.graph = adjacency_matrix
-#	await recalculate_strict_corner_ranking()
+	for i in positions.size():
+#		await Globals.wait()
+		add_vertex(positions[i], false, false)
+#		print(" adding vertex ", i)
 	
-	var keys = json_as_dict.keys()
-	if "title" in keys: title = json_as_dict["title"]
-	else: title = ""
+	await graph_data.add_graph_from_adjacency_matrix(matrix)
 	
-	if "author" in keys: author = json_as_dict["author"]
-	else: author = ""
-	
-	if "description" in keys: description = json_as_dict["description"]
-	else: description = ""
-	
-	if "citation" in keys: citation = json_as_dict["citation"]
-	else: citation = ""
-	
-	if "zoom_scale" in keys: set_zoom_scale(json_as_dict["zoom_scale"])
-	else: set_zoom_scale()
-	
-	changed.emit()
+	return true
 
 
 
-func set_title(str:String): title = str
-func set_author(str:String): author = str
-func set_description(str:String): description = str
-func set_citation(str:String): citation = str
+func set_title(s:String): title = s
+func set_author(s:String): author = s
+func set_description(s:String): description = s
+func set_citation(s:String): citation = s
 
 
 func set_positions_in_circle():
@@ -760,9 +812,9 @@ func is_copwin():
 func get_mappings():
 	return mappings
 
-func show_strict_corner_rankings(show:bool=true):
+func show_strict_corner_rankings(show_scr:bool=true):
 	for v in vertices:
-		v.show_strict_corner_ranking(show)
+		v.show_strict_corner_ranking(show_scr)
 
 
 
@@ -868,7 +920,7 @@ func set_zoom_scale(s : float = 1.0):
 
 
 func recalculate_strict_corner_ranking():
-	strict_corner_ranking = await graph_data.get_strict_corner_ranking()
+	strict_corner_ranking = graph_data.get_strict_corner_ranking()
 	
 	for i in vertices.size():
 		vertices[i].strict_corner_ranking = strict_corner_ranking[i]
@@ -887,9 +939,9 @@ var rest_length = 200
 func _physics_process(delta):
 	if apply_forces:
 		var n = graph_data.size()
-		for i in graph_data.graph.size():
+		for i in n:
 			var vtx_i = vertices[i] as Vertex
-			for j in range(i+1, graph_data.graph.size()):
+			for j in range(i+1, n):
 				var displacement = vertices[j].position - vertices[i].position
 				if graph_data.edge_exists(i, j):
 					var F = k * (displacement.length() - rest_length) * displacement.normalized()
@@ -906,7 +958,7 @@ func _physics_process(delta):
 		
 		await refresh_edges()
 		
-		if abs(total_displacement) < 0.1 * size():
+		if abs(total_displacement) < 0.1 * n:
 			apply_forces = false
 			vertices_repositioned.emit()
 
@@ -916,3 +968,44 @@ func get_number_of_neighbors_from_index(v:int):
 
 func get_number_of_neighbors(v:Vertex):
 	return get_number_of_neighbors_from_index(v.index)
+
+
+func recalculate_distance_matrix():
+	distance_matrix = graph_data.calculate_distance_matrix()
+	return distance_matrix
+
+func get_distance_matrix():
+	return distance_matrix
+
+func get_farthest_neighbor_away_from_vertex(v_curr:Vertex, v_from:Vertex):
+	var farthest_vertex = v_curr.neighbors[0]
+	for v in v_curr.neighbors:
+		if distance_matrix[v_from.index][v.index] > distance_matrix[v_from.index][farthest_vertex.index]:
+			farthest_vertex = v
+		#choose random vertex in case of equidistant vertices (to spice it u)
+		elif distance_matrix[v_from.index][v.index] == distance_matrix[v_from.index][farthest_vertex.index]:
+			if randi()%2:
+				farthest_vertex = v
+	return farthest_vertex
+
+func get_closest_neighbor_to_vertex(v_curr:Vertex, v_to:Vertex):
+	var farthest_vertex = v_curr.neighbors[0]
+	for v in v_curr.neighbors:
+		if distance_matrix[v_to.index][v.index] < distance_matrix[v_to.index][farthest_vertex.index]:
+			farthest_vertex = v
+		#choose random vertex in case of equidistant vertices (to spice it u)
+		elif distance_matrix[v_to.index][v.index] == distance_matrix[v_to.index][farthest_vertex.index]:
+			if randi()%2:
+				farthest_vertex = v
+	return farthest_vertex
+
+func get_farthest_vertex_from_vertex(v_from:Vertex):
+	var farthest_vertex = vertices[0]
+	for v in vertices:
+		if distance_matrix[v_from.index][v.index] > distance_matrix[v_from.index][farthest_vertex.index]:
+			farthest_vertex = v
+		#choose random vertex in case of equidistant vertices (to spice it u)
+		elif distance_matrix[v_from.index][v.index] == distance_matrix[v_from.index][farthest_vertex.index]:
+			if randi()%2:
+				farthest_vertex = v
+	return farthest_vertex

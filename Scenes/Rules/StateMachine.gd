@@ -55,7 +55,7 @@ func _ready():
 #	if not actually_started: actually_started = true
 #	else: turn += 1
 
-func _process(delta):
+func _process(_delta):
 	
 	label.text = "Optimal capture time: " + str(graph.capture_time) + "\n"
 	

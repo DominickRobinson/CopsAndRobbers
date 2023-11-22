@@ -6,7 +6,7 @@ extends TextureRect
 @export var low : Texture2D
 @export var medium : Texture2D
 @export var high : Texture2D
-@export var max : Texture2D
+@export var maximum : Texture2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -27,4 +27,4 @@ func change_icon(new_value):
 	elif new_value < 1.00:
 		texture = high
 	elif new_value == 1.00:
-		texture = max
+		texture = maximum

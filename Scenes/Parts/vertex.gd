@@ -108,7 +108,7 @@ func _unhandled_input(_event):
 #			remove()
 
 
-func _process(delta):
+func _process(_delta):
 	set_text()
 	if draggable: follow_mouse()
 	
@@ -129,7 +129,7 @@ func set_text():
 #	label.text += "SCR: " + str(strict_corner_ranking) 
 #	label.text = str(strict_corner_ranking)
 #	label.text = str(self)
-#	label.text = str(index)
+	label.text = str(index)
 #	label.text = ""
 	pass
 
@@ -163,16 +163,16 @@ func check_if_set_default_skin():
 
 func set_skin():
 	if not can_change_skin: return
-	var has_cop = false
-	var has_robber = false
+	var cop_present = false
+	var robber_present = false
 	for o in occupents:
 		o = o as Agent
-		if o.is_robber(): if not o.captured: has_robber = true
-		if o.is_cop(): has_cop = true
+		if o.is_robber(): if not o.captured: robber_present = true
+		if o.is_cop(): cop_present = true
 	
-	if has_cop and has_robber: sprite.texture = style_resource.both_skin
-	elif has_cop: sprite.texture = style_resource.cop_skin
-	elif has_robber: sprite.texture = style_resource.robber_skin
+	if cop_present and robber_present: sprite.texture = style_resource.both_skin
+	elif cop_present: sprite.texture = style_resource.cop_skin
+	elif robber_present: sprite.texture = style_resource.robber_skin
 	else: 
 		if not burnt and mouse_inside_area and selectable: sprite.texture = style_resource.hovering_skin
 		else: sprite.texture = style_resource.default_skin
@@ -193,9 +193,9 @@ func has_cop():
 	return false
 
 
-func show_strict_corner_ranking(show:bool=true):
+func show_strict_corner_ranking(show_scr:bool=true):
 #	scr_label.text = "SCR: " + str(strict_corner_ranking)
-	scr_label.visible = show
+	scr_label.visible = show_scr
 
 
 func is_moving():

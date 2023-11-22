@@ -49,13 +49,13 @@ func _ready():
 	
 
 	await graph.load_graph(graph_path)
-	await graph.wait(0)
+	await Globals.wait(0)
 	if do_the_thing_button:
 		do_the_thing_button.pressed.emit()
 		await do_the_thing_button.thing_done
 	await graph.show_strict_corner_rankings(false)
 	await graph.refresh()
-	await graph.get_Fk_mappings()
+	graph.get_Fk_mappings()
 	
 	if next_level_path == null: 
 		next_level_button.hide()
@@ -87,10 +87,10 @@ func _ready():
 		
 		robbers.add_child(new_robber)
 	
-	var agents : Array = cops.get_children()
-	agents.append_array(robbers.get_children())
+	var agents_array : Array = cops.get_children()
+	agents_array.append_array(robbers.get_children())
 	
-	for a in agents:
+	for a in agents_array:
 		a.travel_time = game_theme.agent_travel_time
 	
 	#tracks states

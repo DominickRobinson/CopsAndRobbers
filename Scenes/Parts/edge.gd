@@ -66,7 +66,7 @@ func set_resource():
 			line.texture = null
 			line.width = style_resource.width_px
 
-func _process(delta):
+func _process(_delta):
 	if can_draw() and (start_vertex.moving or end_vertex.moving):
 		draw()
 

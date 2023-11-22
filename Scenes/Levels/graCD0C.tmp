@@ -28,7 +28,7 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
-[sub_resource type="Resource" id="Resource_q4jiy"]
+[sub_resource type="Resource" id="Resource_tcafj"]
 resource_local_to_scene = true
 script = ExtResource("12_bxg82")
 default_skin = ExtResource("8_hn86l")
@@ -498,16 +498,8 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 horizontal_alignment = 2
 
-[node name="PrintDistanceMatrix" type="Button" parent="GUI"]
-visible = false
-offset_left = 931.0
-offset_top = 126.0
-offset_right = 1089.0
-offset_bottom = 166.0
-text = "print distance matrix"
-
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_q4jiy")
+vertex_style_resource = SubResource("Resource_tcafj")
 graph_data_display_label = NodePath("../GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -607,4 +599,3 @@ redo_button = NodePath("../GUI/MarginContainer/HBoxContainer/EditButtons/RedoBut
 [connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer/ToggleSCRs" to="Graph" method="show_strict_corner_rankings"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer/RecalculateStrictCornerRankingsButton" to="Graph" method="recalculate_strict_corner_ranking"]
 [connection signal="toggled" from="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/Button" to="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer" method="set_visible"]
-[connection signal="pressed" from="GUI/PrintDistanceMatrix" to="." method="print_distance_matrix"]

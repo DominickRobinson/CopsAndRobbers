@@ -56,7 +56,7 @@ func play_random_audio(audio_list:Array[AudioStream], vol:float=0.0, loop:bool=f
 
 #to be finished+
 
-func play_random_audio_with_probability(audio_list:Array[AudioStream], probabilities:Array[float]):
+func play_random_audio_with_probability(_audio_list:Array[AudioStream], _probabilities:Array[float]):
 	pass
 
 

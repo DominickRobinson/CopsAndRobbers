@@ -24,13 +24,13 @@ func do_the_thing():
 	progress = 0
 	
 	await graph.empty(false)
-	await graph.wait(0)
+	await Globals.wait(0)
 	
 	for i in how_many_times - 1:
 		var prob = float(i+1)/float(how_many_times)
 #		prob = 0.5
 		await graph.add_strict_corner(Vector2(0,0), prob, false)
-		await graph.wait(0)
+		await Globals.wait(0)
 		
 	
 	progress = 40
@@ -53,10 +53,8 @@ func do_the_thing():
 	var lower_left = graph.vertices[0].global_position
 	var upper_right = graph.vertices[0].global_position
 		
-	var avg = Vector2.ZERO
 	for v in graph.vertices:
 		var pos = v.global_position
-		avg += pos
 		
 		lower_left.x = min(lower_left.x, pos.x)
 		lower_left.y = min(lower_left.y, pos.y)
@@ -66,7 +64,6 @@ func do_the_thing():
 	#move top of frame so that graph doesn't go under UI
 	lower_left.y -= 200
 	
-	avg /= graph.size()
 	
 	var frame_size = upper_right - lower_left
 	frame_size += Vector2.ONE * 100 #* log(graph.size())

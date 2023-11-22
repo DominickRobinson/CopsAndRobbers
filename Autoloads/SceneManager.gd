@@ -42,7 +42,7 @@ func reload_level():
 		load_custom_level(custom_game_resource, custom_graph_path)
 	elif is_auto_game:
 		await TransitionManager.fade_out()
-		await reload_scene()
+		reload_scene()
 		await TransitionManager.fade_in()
 	else:
 		load_level()
@@ -97,14 +97,14 @@ func load_level():
 	SoundManager.play_music_file(game_resource.game_theme.music)
 	await TransitionManager.fade_in()
 
-func load_custom_level(custom_game_resource:Game, graph_path:String):
+func load_custom_level(new_custom_game_resource:Game, graph_path:String):
 	is_auto_game = false
 	is_custom_game = true
-	self.custom_game_resource = custom_game_resource
+	self.custom_game_resource = new_custom_game_resource
 	self.custom_graph_path = graph_path
 	levels = [graph_path]
 	var new_level = level_resource.instantiate()
-	new_level.game_resource = custom_game_resource
+	new_level.game_resource = new_custom_game_resource
 	new_level.graph_path = graph_path
 	
 	
@@ -150,8 +150,8 @@ func get_JSON_paths_from_dir(path:String) -> Array:
 		while file_name != "":
 			if not dir.current_is_dir():
 				if file_name.get_extension() == "json":
-					var str = path + "/" + file_name
-					paths.append(str)
+					var s = path + "/" + file_name
+					paths.append(s)
 					print(file_name)
 			file_name = dir.get_next()
 #		print("paths: ", paths)

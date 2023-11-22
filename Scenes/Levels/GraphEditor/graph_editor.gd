@@ -24,6 +24,7 @@ extends Node2D
 @export_group("Save and load nodes")
 @export var save_file_dialog : FileDialog
 @export var load_file_dialog : FileDialog
+@export var add_file_dialog : FileDialog
 
 enum Modes {VertexMode, EdgeMode}
 
@@ -46,15 +47,18 @@ var clicked_on_edge = false
 
 var click_global_position : Vector2
 
+var pan_camera_initial_position : Vector2
+var panning_camera = false
 
 
 func _ready():
 #	graph.changed.connect(_on_graph_changed)
 #	graph.refreshed.connect(refresh)
-	graph.changed.connect(refresh)
+	graph.refreshed.connect(refresh)
 	
 	save_file_dialog.file_selected.connect(graph.save_graph)
 	load_file_dialog.file_selected.connect(load_graph)
+	add_file_dialog.file_selected.connect(add_graph)
 	
 	title_text_edit.text_changed.connect(set_title)
 	author_text_edit.text_changed.connect(set_author)
@@ -63,6 +67,11 @@ func _ready():
 	
 	graph.changed.connect(graph.set_graph_data_display_label)
 	graph.changed.connect(set_zoom_label)
+	
+	for n in Globals.get_all_children(self):
+		if n is Button:
+			n = n as Button
+			n.focus_mode = Control.FOCUS_NONE
 
 func set_zoom_label():
 	zoom_spinbox.value = graph.get_zoom_scale()
@@ -75,6 +84,9 @@ func load_graph(path):
 	description_text_edit.text = graph.description
 	citation_text_edit.text = graph.citation
 
+func add_graph(path):
+	graph.add_graph(path)
+
 
 func _on_graph_changed():
 	graph.refresh()
@@ -86,7 +98,7 @@ func set_description(): graph.description = description_text_edit.text
 func set_citation(): graph.citation = citation_text_edit.text
 
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	
 	if Input.is_action_just_pressed("zoom_in"):
 		zoom_spinbox.value += zoom_spinbox.step
@@ -122,21 +134,36 @@ func _unhandled_input(event):
 	
 	if Input.is_action_just_released("select"):
 		selected_vertex = null
+	
+	if Input.is_action_just_pressed("pan_camera"):
+		print("begin panning camera")
+		pan_camera_initial_position = get_global_mouse_position()
+		panning_camera = true
+	if Input.is_action_just_released("pan_camera"):
+		print("end panning camera")
+		graph.camera.global_position += graph.camera.offset
+		graph.camera.offset *= 0
+		panning_camera = false
 
-func _process(delta):
+
+func _process(_delta):
 #	display_selected_vertex()
 	
 	if mode == Modes.EdgeMode and selected_vertex != null:
 		new_edge_line.points = PackedVector2Array([selected_vertex.position, get_global_mouse_position()])
 	else:
 		new_edge_line.clear_points()
-
+	
+	if panning_camera:
+		print("panning camera")
+		graph.camera.offset = pan_camera_initial_position - get_global_mouse_position()
+		
 
 
 
 func add_vertex2():
 	var pos = await vertex_spawn_position.find_open_position()
-	var v = graph.add_vertex(pos) as Vertex
+	var _v = await graph.add_vertex(pos) as Vertex
 	
 	SoundManager.play_sound("sound_vertex_add")
 	
@@ -145,7 +172,7 @@ func add_vertex2():
 
 func add_vertex():
 	var pos = get_global_mouse_position()
-	var v = graph.add_vertex(pos) as Vertex
+	var _v = await graph.add_vertex(pos) as Vertex
 	
 	SoundManager.play_sound("sound_vertex_add")
 
@@ -205,6 +232,9 @@ func invert():
 func square():
 	graph.square()
 
+func retract_twin():
+	graph.retract_twin()
+
 func retract_twins():
 	graph.retract_twins()
 
@@ -221,17 +251,24 @@ func empty_graph():
 	graph.empty()
 
 func refresh():
-	await graph.refresh()
+	await Globals.wait(0)
+#	await graph.refresh()
 	
 	for e in graph.edges:
-		e.mouse_entered.connect(set_hovering_edge.bind(e))
-		e.mouse_exited.connect(set_hovering_edge.bind(null))
+		if not e.is_connected("mouse_entered", set_hovering_edge.bind(e)):
+			e.mouse_entered.connect(set_hovering_edge.bind(e))
+		if not e.is_connected("mouse_exited", set_hovering_edge.bind(null)):
+			e.mouse_exited.connect(set_hovering_edge.bind(null))
 	
 	for v in graph.vertices:
-		v.selected.connect(set_selected_vertex.bind(v))
-		v.deselected.connect(set_selected_vertex.bind(null))
-		v.mouse_entered.connect(set_hovering_vertex.bind(v))
-		v.mouse_exited.connect(set_hovering_vertex.bind(null))
+		if not v.is_connected("selected", set_selected_vertex.bind(v)):
+			v.selected.connect(set_selected_vertex.bind(v))
+		if not v.is_connected("deselected", set_selected_vertex.bind(null)):
+			v.deselected.connect(set_selected_vertex.bind(null))
+		if not v.is_connected("mouse_entered", set_hovering_vertex.bind(v)):
+			v.mouse_entered.connect(set_hovering_vertex.bind(v))
+		if not v.is_connected("mouse_exited", set_hovering_vertex.bind(null)):
+			v.mouse_exited.connect(set_hovering_vertex.bind(null))
 	
 	if mode == Modes.VertexMode:
 		set_vertex_mode()
@@ -375,3 +412,7 @@ func remove_edges():
 
 func organize_by_ranking():
 	graph.set_positions_by_ranking()
+
+func print_distance_matrix():
+	print("Distance matrix:")
+	Globals.print_array(graph.recalculate_distance_matrix())

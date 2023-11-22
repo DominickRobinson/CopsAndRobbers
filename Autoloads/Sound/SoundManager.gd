@@ -86,5 +86,5 @@ func change_volume_music(new_value):
 	var music_bus = AudioServer.get_bus_index("Music")
 	AudioServer.set_bus_volume_db(music_bus, linear_to_db(new_value))
 
-func change_volume(bus, new_value):
+func change_volume(_bus, _new_value):
 	pass

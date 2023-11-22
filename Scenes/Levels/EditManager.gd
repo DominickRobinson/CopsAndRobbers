@@ -17,7 +17,7 @@ func _ready():
 	add_edit()
 
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	if Input.is_action_just_pressed("undo"):
 		if not undo_button.disabled:
 			undo_button.pressed.emit()
@@ -36,7 +36,7 @@ func add_edit() -> void:
 	clear_redo_edits()
 	graph.changed.connect(add_edit)
 	
-	print_edits()
+#	print_edits()
 	
 	adjust_buttons()
 
@@ -59,7 +59,7 @@ func undo() -> void:
 	graph.changed.connect(add_edit)
 	
 	
-	print_edits()
+#	print_edits()
 	undo_button.disabled = false
 	
 	adjust_buttons()
@@ -80,7 +80,7 @@ func redo() -> void:
 	await graph.refresh()
 	graph.changed.connect(add_edit)
 	
-	print_edits()
+#	print_edits()
 	
 	redo_button.disabled = false
 	
@@ -92,16 +92,15 @@ func clear_redo_edits() -> void:
 
 
 func print_edits():
-	return
 	
 	print("Edits:", edits.size())
-	for str in edits:
-		var dict = JSON.parse_string(str)
+	for s in edits:
+		var dict = JSON.parse_string(s)
 		var a = dict["adjacency_matrix"]
 		print("   ", a)
 	print("Undo edits: ", undo_edits.size())
-	for str in undo_edits:
-		var dict = JSON.parse_string(str)
+	for s in undo_edits:
+		var dict = JSON.parse_string(s)
 		var a = dict["adjacency_matrix"]
 		print("   ", a)
 	print("")

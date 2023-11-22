@@ -170,7 +170,6 @@ color = Color(0, 0, 0, 1)
 
 [node name="Node2D" type="Control" parent="ColorRect"]
 process_mode = 4
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -350.0

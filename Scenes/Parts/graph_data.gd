@@ -10,6 +10,7 @@ var graph : Array = []
 
 var strict_corner_ranking : Array
 var corner_ranking : Array
+var distance_matrix : Array
 
 var F : Dictionary = {}
 
@@ -414,7 +415,7 @@ func add(g2 : GraphData = self, g1 : GraphData = self):
 	emit_change()
 	return sum
 
-func multiply(g2 : GraphData = self, g1 : GraphData = self):
+func multiply(g2 : GraphData = self, g1 : GraphData = self, make_bool = true):
 	assert(g1.size() == g2.size())
 	var product = GraphData.new(graph.size())
 	#multiply and add for each entry
@@ -422,7 +423,8 @@ func multiply(g2 : GraphData = self, g1 : GraphData = self):
 		var p = 0
 		for m in g1.size():
 			p += int(g1.graph[i][m]) * int(g2.graph[m][j])
-		product.graph[i][j] = bool(p)
+		if make_bool:
+			product.graph[i][j] = bool(p)
 	emit_change()
 	return product
 
@@ -435,7 +437,7 @@ func create_identity(s : int):
 	new_graph_data.make_reflexive()
 	return new_graph_data
 
-func get_max_ranking(G:GraphData=self):
+func get_max_ranking(_G:GraphData=self):
 	#strict corner ranking
 #	var scr = G.get_strict_corner_ranking()
 	
@@ -646,7 +648,46 @@ func load_graph(path : String):
 	emit_change()
 
 
+func add_graph(path : String):
+	var load_file = FileAccess.open(path, FileAccess.READ)
+	
+	var new_graph = []
+	var r = 0
+	
+	while !load_file.eof_reached():
+		new_graph.append([])
+		var row
+		match path.get_extension():
+			"csv":
+				row = load_file.get_csv_line(",")
+			"tsv":
+				row = load_file.get_csv_line("\t")
+		for j in row.size():
+			new_graph[r].append(int(row[j]))
+		r += 1
+		
+	new_graph.pop_back()
+	
+	await add_graph_from_adjacency_matrix(new_graph)
+	
+	emit_change()
+	
+	return true
 
+
+func add_graph_from_adjacency_matrix(matrix : Array):
+	var og_size = size()
+	
+	for row in matrix:
+		add_vertex()
+	
+	for i in matrix.size():
+		for j in matrix[i].size():
+			graph[og_size + i][og_size + j] = matrix[i][j]
+	
+	emit_change()
+	
+	return true
 
 func graphs_equal(g1 : Array, g2 : Array):
 	#must have same number of columns
@@ -661,3 +702,47 @@ func graphs_equal(g1 : Array, g2 : Array):
 #			if g1[i][j] != g2[i][j]: return false
 	
 	return true
+
+
+#func calculate_distance_matrix(adjacency_matrix):
+#    num_nodes = len(adjacency_matrix)
+#
+#    # Initialize the distance matrix with the same values as the adjacency matrix
+#    distance_matrix = np.copy(adjacency_matrix)
+#
+#    # Set the diagonal elements to 0, as the distance from a node to itself is 0
+#    np.fill_diagonal(distance_matrix, 0)
+#
+#    # Floyd-Warshall algorithm
+#    for k in range(num_nodes):
+#        for i in range(num_nodes):
+#            for j in range(num_nodes):
+#                # If there is a shorter path from i to j through node k, update the distance
+#                distance_matrix[i, j] = min(distance_matrix[i, j], distance_matrix[i, k] + distance_matrix[k, j])
+#
+#    return distance_matrix
+
+# only works for connected matrices
+func recalculate_distance_matrix():
+	var n = size()
+	distance_matrix = graph.duplicate(true)
+	
+	for i in n: for j in n:
+		distance_matrix[i][j] = int(distance_matrix[i][j])
+		if distance_matrix[i][j] == 0:
+			distance_matrix[i][j] = 9999
+	
+	for i in n: 
+		distance_matrix[i][i] = 0
+	
+	for k in n:
+		for i in n:
+			for j in n:
+				distance_matrix[i][j] = min(distance_matrix[i][j], distance_matrix[i][k] + distance_matrix[k][j])
+	
+	
+	
+	return distance_matrix
+
+
+

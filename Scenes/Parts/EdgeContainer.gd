@@ -13,8 +13,8 @@ var edges:
 	get:
 		return get_children()
 
-func add_edge_from_vertices(start_vtx : Vertex, end_vtx : Vertex):
-	pass
+#func add_edge_from_vertices(start_vtx : Vertex, end_vtx : Vertex):
+#	pass
 
 func add_edge(e:Edge):
 	if is_instance_valid(edge_style_resource):

@@ -51,12 +51,7 @@ func _ready():
 	
 
 
-func _unhandled_input(event):
-#	if moving and Input.is_action_just_pressed("select"):
-#		movement_tween.set_speed_scale(2)
-#		await movement_tween.finished
-#		movement_tween.set_speed_scale(1)
-	pass
+
 
 
 func get_captured():

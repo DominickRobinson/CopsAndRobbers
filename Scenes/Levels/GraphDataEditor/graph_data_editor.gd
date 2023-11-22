@@ -13,6 +13,7 @@ extends Node
 
 @export var save_file_dialog : FileDialog
 @export var load_file_dialog : FileDialog
+@export var add_file_dialog : FileDialog
 
 var edits : Array
 
@@ -23,6 +24,7 @@ func _ready():
 	
 	save_file_dialog.file_selected.connect(graph_data.save_graph)
 	load_file_dialog.file_selected.connect(load_graph)
+	add_file_dialog.file_selected.connect(add_graph)
 
 
 func display_graph():
@@ -117,6 +119,8 @@ func save_graph_button():
 func load_graph_button():
 	load_file_dialog.visible = true
 
+func add_graph_button():
+	add_file_dialog.visible = true
 
 
 
@@ -180,6 +184,11 @@ func set_spinbox_max(new_max : int = graph_data.size() - 1):
 
 func load_graph(path : String):
 	graph_data.load_graph(path)
+	edit_graph()
+	display_graph()
+
+func add_graph(path : String):
+	graph_data.add_graph(path)
 	edit_graph()
 	display_graph()
 

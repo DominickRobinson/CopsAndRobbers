@@ -47,7 +47,7 @@ muted = ExtResource("1_gddea")
 low = ExtResource("3_84qcp")
 medium = ExtResource("4_qbl4b")
 high = ExtResource("5_crkl4")
-max = ExtResource("6_f4uqg")
+maximum = ExtResource("6_f4uqg")
 
 [node name="HSeparator" type="Control" parent="Audio/GridContainer"]
 custom_minimum_size = Vector2(15, 0)
@@ -76,7 +76,6 @@ muted = ExtResource("1_gddea")
 low = ExtResource("3_84qcp")
 medium = ExtResource("4_qbl4b")
 high = ExtResource("5_crkl4")
-max = ExtResource("6_f4uqg")
 
 [node name="HSeparator2" type="Control" parent="Audio/GridContainer"]
 custom_minimum_size = Vector2(15, 0)

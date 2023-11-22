@@ -156,7 +156,6 @@ size_flags_vertical = 4
 alignment = 1
 
 [node name="Label" type="Label" parent="Sprite2D/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)

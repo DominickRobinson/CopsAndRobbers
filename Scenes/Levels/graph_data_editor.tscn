@@ -8,7 +8,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvfpu"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
 
-[node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "vertex_index", "edge_start_index", "edge_end_index", "save_file_dialog", "load_file_dialog")]
+[node name="GraphDataEditor" type="Control" node_paths=PackedStringArray("graph_data", "graph_text_display", "vertex_index", "edge_start_index", "edge_end_index", "save_file_dialog", "load_file_dialog", "add_file_dialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,6 +23,7 @@ edge_start_index = NodePath("MarginContainer/Control/VBoxContainer/EdgeActions/H
 edge_end_index = NodePath("MarginContainer/Control/VBoxContainer/EdgeActions/HBoxContainer/VBoxContainer/EdgeEndIndex")
 save_file_dialog = NodePath("SaveFileDialog")
 load_file_dialog = NodePath("LoadFileDialog")
+add_file_dialog = NodePath("AddFileDialog")
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -78,6 +79,10 @@ layout_mode = 2
 
 [node name="SaveLoad" type="HBoxContainer" parent="MarginContainer/Control/HBoxContainer"]
 layout_mode = 2
+
+[node name="AddGraph" type="Button" parent="MarginContainer/Control/HBoxContainer/SaveLoad"]
+layout_mode = 2
+text = "Add Graph"
 
 [node name="SaveGraph" type="Button" parent="MarginContainer/Control/HBoxContainer/SaveLoad"]
 layout_mode = 2
@@ -263,14 +268,15 @@ prefix = "End:"
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0127042
-anchor_top = 0.585284
-anchor_right = 0.0127042
-anchor_bottom = 0.585284
-offset_right = 132.0
-offset_bottom = 73.0
-metadata/_edit_use_anchors_ = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -73.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/PanelContainer"]
 layout_mode = 2
@@ -311,10 +317,22 @@ file_mode = 3
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv")
 
+[node name="AddFileDialog" type="FileDialog" parent="."]
+title = "Open a File or Directory"
+position = Vector2i(300, 100)
+size = Vector2i(500, 400)
+content_scale_mode = 2
+content_scale_aspect = 1
+ok_button_text = "Open"
+file_mode = 3
+root_subfolder = "Graphs"
+filters = PackedStringArray("*.csv", "*.tsv")
+
 [node name="MusicPlayer" parent="." instance=ExtResource("4_ga8o0")]
 music_track_name = "music_editor"
 
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/Undo" to="." method="undo"]
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SaveLoad/AddGraph" to="." method="add_graph_button"]
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SaveLoad/SaveGraph" to="." method="save_graph_button"]
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SaveLoad/LoadGraph" to="." method="load_graph_button"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/GraphProperties/MakeReflexive" to="." method="make_reflexive"]
