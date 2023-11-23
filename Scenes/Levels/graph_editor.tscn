@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c086hshnh55j5"]
+[gd_scene load_steps=23 format=3 uid="uid://c086hshnh55j5"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/GraphEditor/graph_editor.gd" id="1_afr4a"]
 [ext_resource type="ButtonGroup" uid="uid://b8f4ld5haadn7" path="res://Scenes/Levels/GraphEditor/graph_editor_mode_button_group.tres" id="2_lg68n"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scenes/Levels/DoTheThingButton.gd" id="4_vlmgg"]
 [ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="5_a50cc"]
 [ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="6_c4vs8"]
+[ext_resource type="Script" path="res://Scenes/Levels/SaveGraphAsScene.gd" id="6_l2ylr"]
 [ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="7_rgooi"]
 [ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="8_hn86l"]
 [ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="9_216bl"]
@@ -28,7 +29,7 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
-[sub_resource type="Resource" id="Resource_q4jiy"]
+[sub_resource type="Resource" id="Resource_xxntp"]
 resource_local_to_scene = true
 script = ExtResource("12_bxg82")
 default_skin = ExtResource("8_hn86l")
@@ -202,6 +203,7 @@ theme_override_constants/margin_bottom = 10
 [node name="ScrollContainer" type="ScrollContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+scroll_vertical = 100
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer"]
@@ -434,26 +436,54 @@ placeholder_text = "Citation"
 wrap_mode = 1
 scroll_fit_content_height = true
 
-[node name="VSeparator3" type="VSeparator" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
-visible = false
+[node name="VSeparator3" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Tips" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
-visible = false
+[node name="Dom" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="RightClick" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Tips"]
+[node name="Label" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom"]
 layout_mode = 2
-text = "Right click to deleted an edge or vertex."
+text = "For Dom to use:"
 
-[node name="VertexMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Tips"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom"]
 layout_mode = 2
-text = "You can move and delete vertices in vertex mode."
 
-[node name="EdgeMode" type="Label" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Tips"]
+[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
-text = "You can only create and delete edges in edge mode."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PrintDistanceMatrix" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Print distance matrix"
+
+[node name="SaveGraphAsScene" type="VBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SaveGraphAsScene" type="Button" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer/VBoxContainer/SaveGraphAsScene" node_paths=PackedStringArray("text_edit")]
+layout_mode = 2
+text = "Save graph as packed scene"
+script = ExtResource("6_l2ylr")
+text_edit = NodePath("../HBoxContainer/TextEdit")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer/VBoxContainer/SaveGraphAsScene"]
+layout_mode = 2
+
+[node name="HSeparator" type="Control" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer/VBoxContainer/SaveGraphAsScene/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer/VBoxContainer/SaveGraphAsScene/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "*filename*"
+scroll_fit_content_height = true
 
 [node name="GraphDataDisplay" type="PanelContainer" parent="GUI/MarginContainer"]
 visible = false
@@ -498,16 +528,8 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 horizontal_alignment = 2
 
-[node name="PrintDistanceMatrix" type="Button" parent="GUI"]
-visible = false
-offset_left = 931.0
-offset_top = 126.0
-offset_right = 1089.0
-offset_bottom = 166.0
-text = "print distance matrix"
-
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_q4jiy")
+vertex_style_resource = SubResource("Resource_xxntp")
 graph_data_display_label = NodePath("../GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -606,5 +628,5 @@ redo_button = NodePath("../GUI/MarginContainer/HBoxContainer/EditButtons/RedoBut
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/ActionsSidebar/Misc/HBoxContainer/GraphActions/PrintMappings" to="." method="print_mappings"]
 [connection signal="toggled" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer/ToggleSCRs" to="Graph" method="show_strict_corner_rankings"]
 [connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/TextSidebar/HBoxContainer/VBoxContainer/RecalculateStrictCornerRankingsButton" to="Graph" method="recalculate_strict_corner_ranking"]
+[connection signal="pressed" from="GUI/MarginContainer/VBoxContainer/AdvancedGraphActions/MarginContainer/ScrollContainer/VBoxContainer/AdvancedButtons/Dom/HBoxContainer/VBoxContainer/PrintDistanceMatrix" to="." method="print_distance_matrix"]
 [connection signal="toggled" from="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/Button" to="GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer" method="set_visible"]
-[connection signal="pressed" from="GUI/PrintDistanceMatrix" to="." method="print_distance_matrix"]

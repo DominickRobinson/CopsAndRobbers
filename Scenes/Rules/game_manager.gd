@@ -43,16 +43,16 @@ func _ready():
 
 
 func _on_state_entered():
-	print("State changed")
+#	print("State changed")
 	#shows/hides hint button depending on if a player is moving
-	print(state_machine.get_current_state().name)
+#	print(state_machine.get_current_state().name)
 	var agent = state_machine.get_agent() as Agent
-	print("Agent: ", agent.name)
+#	print("Agent: ", agent.name)
 	
 	if agent.is_player():
-		print(" is player")
+#		print(" is player")
 		if agent.is_cop():
-			print(" is cop")
+#			print(" is cop")
 			hint_button.pressed.connect(_on_get_best_cop_move)
 			agent.departed.connect(_on_player_cop_departed)
 			hint_button.disabled = false
@@ -68,7 +68,7 @@ func _on_player_cop_departed():
 func _on_get_best_cop_move():
 	hint_button.pressed.disconnect(_on_get_best_cop_move)
 	hint_button.disabled = true
-	print("pressed")
+#	print("pressed")
 	var agent = state_machine.get_agent() as Agent
 	var best_move = graph.get_best_cop_move(agent) as Vertex
 	for v in graph.get_vertices():

@@ -200,7 +200,6 @@ func add_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=tru
 
 
 func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_change=true):
-	print("vertices.size(): ", vertices.size())
 	if vertices.size() == 0:
 		await Globals.wait()
 		add_vertex(pos, false)
@@ -244,7 +243,6 @@ func add_strict_corner(pos:Vector2=Vector2(0,0), probability:float=0.5, emit_cha
 	
 	if new_vtx.get_neighbors().size() == old_vtx.get_neighbors().size():
 		var vtxs = new_vtx.get_neighbors()
-		print("vtxs.size(): ", vtxs.size())
 #		vtxs.erase(old_vtx)
 #		vtxs.erase(new_vtx)
 		var vtx_to_remove = vtxs[randi() % vtxs.size()]
@@ -521,6 +519,8 @@ func refresh_edges():
 	edge_container.remove_all()
 	await Globals.wait()
 	
+	vertices = vertex_container.get_children()
+	
 	var n = vertices.size()
 	
 	for i in n:
@@ -602,8 +602,8 @@ func get_graph_as_JSON():
 		"author" : author,
 		"description" : description,
 		"citation" : citation,
-		"zoom_scale" : get_zoom_scale(),
-		"camera_global_position" : camera.global_position
+		"zoom_scale" : var_to_str(get_zoom_scale()),
+		"camera_global_position" : var_to_str(camera.global_position)
 	}
 	var json_string = JSON.stringify(dict)
 	return json_string
@@ -744,6 +744,23 @@ func make_graph_from_JSON(json_as_text:String):
 			if graph_data.edge_exists(i, j):
 				add_edge(vertex_i, vertex_j, false, false)
 	
+	if "title" in json_as_dict.keys():
+		set_title(json_as_dict["title"])
+	if "author" in json_as_dict.keys():
+		set_author(json_as_dict["author"])
+	if "description" in json_as_dict.keys():
+		set_description(json_as_dict["description"])
+	if "citation" in json_as_dict.keys():
+		set_citation(json_as_dict["citation"])
+	if "zoom_scale" in json_as_dict.keys():
+		set_zoom_scale(str_to_var(json_as_dict["zoom_scale"]))
+	if "camera_global_position" in json_as_dict.keys():
+		var gp = (json_as_dict["camera_global_position"])
+		print("camera.global_position:", gp)
+		gp = str_to_var(gp)
+		print("camera.global_position:", gp)
+		set_camera_global_position(gp)
+
 
 func add_graph_from_JSON(json_as_text:String):
 	var json_as_dict = JSON.parse_string(json_as_text) as Dictionary
@@ -899,7 +916,6 @@ func get_best_cop_move(agent:Agent) -> Vertex:
 	
 	#if not found in any, then go to highest ranking neighbor
 	if move == null:
-		print("No move found...")
 		move = neighbors[0]
 		for nbor in neighbors:
 			nbor = nbor as Vertex
@@ -918,6 +934,9 @@ func set_zoom_scale(s : float = 1.0):
 	if is_instance_valid(camera):
 		camera.set_zoom_scale(s)
 
+func set_camera_global_position(gp:Vector2):
+	if is_instance_valid(camera):
+		camera.global_position = gp
 
 func recalculate_strict_corner_ranking():
 	strict_corner_ranking = graph_data.get_strict_corner_ranking()
@@ -971,7 +990,7 @@ func get_number_of_neighbors(v:Vertex):
 
 
 func recalculate_distance_matrix():
-	distance_matrix = graph_data.calculate_distance_matrix()
+	distance_matrix = graph_data.recalculate_distance_matrix()
 	return distance_matrix
 
 func get_distance_matrix():

@@ -3,6 +3,8 @@ extends Node2D
 
 signal level_ready
 
+@export var already_loaded : bool = false
+
 @export var do_the_thing_button : DoTheThingButton
 
 @export var game_resource : Game
@@ -35,6 +37,8 @@ var robber_script : Script
 var timer
 
 func _ready():
+	
+	
 	game_theme = game_resource.game_theme
 	game_rules = game_resource.game_rules
 	vertex_style_resource = game_theme.vertex_style_resource
@@ -47,8 +51,9 @@ func _ready():
 	
 	background.texture = game_theme.background_skin
 	
-
-	await graph.load_graph(graph_path)
+	if not already_loaded:
+		await graph.load_graph(graph_path)
+	
 	await Globals.wait(0)
 	if do_the_thing_button:
 		do_the_thing_button.pressed.emit()

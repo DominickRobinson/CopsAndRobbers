@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bxdtddrm8rfaj"]
+[gd_scene load_steps=25 format=3 uid="uid://bxdtddrm8rfaj"]
 
 [ext_resource type="Texture2D" uid="uid://d1vuogw33cowl" path="res://logo.png" id="1_6bfwp"]
 [ext_resource type="PackedScene" uid="uid://bwtbbbmd58rr2" path="res://Scenes/UI/sound_effect_button.tscn" id="2_fhouu"]
@@ -13,6 +13,7 @@
 [ext_resource type="Resource" uid="uid://c6boaiaxocxiy" path="res://Resources/level_packs/packs/pack4.tres" id="8_unhl1"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadGraphButton.gd" id="9_1cg40"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadAutoLevel.gd" id="9_himp4"]
+[ext_resource type="Script" path="res://Scenes/Levels/CustomGameContainer.gd" id="10_20duc"]
 [ext_resource type="Script" path="res://Scenes/Levels/LoadCustomGameButton.gd" id="10_pcfh5"]
 [ext_resource type="Texture2D" uid="uid://6ykvdqbfr0up" path="res://Assets/Art/Characters/cop.svg" id="11_fvfss"]
 [ext_resource type="Script" path="res://Resources/Scripts/move_player.gd" id="11_q8lxc"]
@@ -111,62 +112,63 @@ flip_h = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1100, 455)
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
-[node name="TabContainer" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 drag_to_rearrange_enabled = true
 
-[node name="Play" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+[node name="Play" type="TabContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer"]
 layout_mode = 2
 
-[node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+[node name="Level packs" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Level packs"]
 layout_mode = 2
 
-[node name="LevelPackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+[node name="LevelPackButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
 text = "Pack #1"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("5_6jhin")
 
-[node name="LevelPackButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+[node name="LevelPackButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
 text = "Pack #2"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("6_gouf6")
 
-[node name="LevelPackButton3" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+[node name="LevelPackButton3" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
 text = "Pack #3"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("7_bwkcj")
 
-[node name="LevelPackButton4" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+[node name="LevelPackButton4" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
 text = "Pack #4"
 script = ExtResource("4_52l23")
 level_pack = ExtResource("8_unhl1")
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
 
-[node name="LoadAutoLevel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Level packs/VBoxContainer"]
+[node name="LoadAutoLevel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Level packs/VBoxContainer"]
 layout_mode = 2
 text = "Automatically generated level"
 script = ExtResource("9_himp4")
 
-[node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play"]
+[node name="Custom" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -174,24 +176,37 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom"]
+[node name="CustomGameContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom"]
+layout_mode = 2
+script = ExtResource("10_20duc")
+
+[node name="ToggleAdvancedButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "Toggle advanced settings"
+
+[node name="VSeparator" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 
-[node name="CopStrategy" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="CopStrategy" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopStrategy"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/CopStrategy"]
 layout_mode = 2
 text = "Cop strategy: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopStrategy"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/CopStrategy"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -201,21 +216,21 @@ popup/item_0/text = "User controlled"
 popup/item_0/id = 0
 popup/item_1/text = "Lower way (optimal for 1 cop)"
 popup/item_1/id = 1
-popup/item_2/text = "Higher way (optimal for 1 robber)"
-popup/item_2/id = 2
+popup/item_2/text = "Zombie (minimize distance to robber)"
+popup/item_2/id = 6
 popup/item_3/text = "Drunk (random)"
 popup/item_3/id = 3
 popup/item_4/text = "Drunk (random) and nonsuicidal"
 popup/item_4/id = 4
 
-[node name="RobberStrategy" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="RobberStrategy" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberStrategy"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/RobberStrategy"]
 layout_mode = 2
 text = "Robber strategy: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberStrategy"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/RobberStrategy"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -223,23 +238,23 @@ item_count = 5
 selected = 0
 popup/item_0/text = "User controlled"
 popup/item_0/id = 0
-popup/item_1/text = "Lower way (optimal for 1 cop)"
-popup/item_1/id = 1
-popup/item_2/text = "Higher way (optimal for 1 robber)"
-popup/item_2/id = 2
+popup/item_1/text = "Higher way (optimal for 1 robber)"
+popup/item_1/id = 2
+popup/item_2/text = "Survivor (maximize distance from cops)"
+popup/item_2/id = 4
 popup/item_3/text = "Drunk (random)"
 popup/item_3/id = 3
 popup/item_4/text = "Drunk (random) and nonsuicidal"
 popup/item_4/id = 4
 
-[node name="CopSkin" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="CopSkin" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopSkin"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/CopSkin"]
 layout_mode = 2
 text = "Cop skin: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/CopSkin"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/CopSkin"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -254,14 +269,14 @@ popup/item_2/id = 2
 popup/item_3/text = "Zombie"
 popup/item_3/id = 3
 
-[node name="RobberSkin" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="RobberSkin" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberSkin"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/RobberSkin"]
 layout_mode = 2
 text = "Robber skin: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/RobberSkin"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/RobberSkin"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -276,14 +291,14 @@ popup/item_2/id = 2
 popup/item_3/text = "Survivor"
 popup/item_3/id = 3
 
-[node name="Vertex style" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="VertexStyle" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Vertex style"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/VertexStyle"]
 layout_mode = 2
 text = "Vertex aesthetic style: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Vertex style"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/VertexStyle"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -294,14 +309,14 @@ popup/item_0/id = 0
 popup/item_1/text = "Suburban area"
 popup/item_1/id = 1
 
-[node name="Edge style" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="EdgeStyle" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Edge style"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/EdgeStyle"]
 layout_mode = 2
 text = "Edge aesthetic style: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Edge style"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/EdgeStyle"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -312,14 +327,14 @@ popup/item_0/id = 0
 popup/item_1/text = "Basic (directed)"
 popup/item_1/id = 1
 
-[node name="Background image" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="BackgroundImage" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Background image"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/BackgroundImage"]
 layout_mode = 2
 text = "Background image: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Background image"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/BackgroundImage"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -338,14 +353,14 @@ popup/item_4/id = 4
 popup/item_5/text = "Grass"
 popup/item_5/id = 5
 
-[node name="Music" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="Music" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Music"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/Music"]
 layout_mode = 2
 text = "Music: "
 
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer/Music"]
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer/Music"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
@@ -362,135 +377,135 @@ popup/item_3/id = 3
 popup/item_4/text = "Editor theme"
 popup/item_4/id = 4
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer"]
 layout_mode = 2
 
-[node name="NumberOfCops" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+[node name="NumberOfCops" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops"]
 layout_mode = 2
 text = "Number of cops: "
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops"]
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops"]
 layout_mode = 2
 min_value = 1.0
 max_value = 1000.0
 value = 1.0
 
-[node name="NumberOfRobbers" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+[node name="NumberOfRobbers" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers"]
 layout_mode = 2
 text = "Number of robbers: "
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers"]
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers"]
 layout_mode = 2
 min_value = 1.0
 max_value = 1000.0
 value = 1.0
 
-[node name="CopSpeed" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+[node name="CopSpeed" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopSpeed"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/CopSpeed"]
 layout_mode = 2
 text = "Cop speed (# of moves per turn): "
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopSpeed"]
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/CopSpeed"]
 layout_mode = 2
 min_value = 1.0
 max_value = 20.0
 value = 1.0
 
-[node name="RobberSpeed" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+[node name="RobberSpeed" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberSpeed"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/RobberSpeed"]
 layout_mode = 2
 text = "Robber speed (# of moves per turn): "
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberSpeed"]
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/RobberSpeed"]
 layout_mode = 2
 min_value = 1.0
 max_value = 20.0
 value = 1.0
 
-[node name="AgentTravelTime" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+[node name="AgentTravelTime" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime"]
 layout_mode = 2
 text = "Agent travel time (seconds): "
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime"]
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime"]
 layout_mode = 2
 max_value = 5.0
 step = 0.01
 value = 0.5
 
-[node name="CopArsonist" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+[node name="CopArsonist" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopArsonist"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/CopArsonist"]
 layout_mode = 2
 text = "Cop is arsonist?"
 
-[node name="CheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/CopArsonist"]
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/CopArsonist"]
 layout_mode = 2
 
-[node name="RobberArsonist" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2"]
+[node name="RobberArsonist" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2" groups=["AdvancedButtons"]]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberArsonist"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/RobberArsonist"]
 layout_mode = 2
 text = "Robber is arsonist?"
 
-[node name="CheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/HSplitContainer/VBoxContainer2/RobberArsonist"]
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/HSplitContainer/VBoxContainer2/RobberArsonist"]
 layout_mode = 2
 
-[node name="LoadGraph" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+[node name="LoadGraph" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadGraph"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/LoadGraph"]
 layout_mode = 2
 text = "Load graph: "
 
-[node name="LoadGraph" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadGraph"]
+[node name="LoadGraph" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/LoadGraph"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-text = "res://Graphs/1421.json"
+text = "*click to choose a graph to play on*"
 script = ExtResource("9_1cg40")
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
-custom_minimum_size = Vector2(0, 30)
+[node name="VSeparator2" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer"]
 layout_mode = 2
 
-[node name="LoadCustomGameButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2" node_paths=PackedStringArray("cop_strategy_button", "robber_strategy_button", "cop_skin_button", "robber_skin_button", "vertex_style_button", "edge_style_button", "background_image_button", "music_button", "cop_number_button", "robber_number_button", "cop_speed_button", "robber_speed_button", "agent_travel_time_button", "cop_arsonist_button", "robber_arsonist_button", "load_graph_button")]
+[node name="LoadCustomGameButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer2" node_paths=PackedStringArray("cop_strategy_button", "robber_strategy_button", "cop_skin_button", "robber_skin_button", "vertex_style_button", "edge_style_button", "background_image_button", "music_button", "cop_number_button", "robber_number_button", "cop_speed_button", "robber_speed_button", "agent_travel_time_button", "cop_arsonist_button", "robber_arsonist_button", "load_graph_button")]
 layout_mode = 2
 text = "Play custom game!"
 script = ExtResource("10_pcfh5")
-cop_strategy_button = NodePath("../../HSplitContainer/VBoxContainer/CopStrategy/OptionButton")
-robber_strategy_button = NodePath("../../HSplitContainer/VBoxContainer/RobberStrategy/OptionButton")
-cop_skin_button = NodePath("../../HSplitContainer/VBoxContainer/CopSkin/OptionButton")
-robber_skin_button = NodePath("../../HSplitContainer/VBoxContainer/RobberSkin/OptionButton")
-vertex_style_button = NodePath("../../HSplitContainer/VBoxContainer/Vertex style/OptionButton")
-edge_style_button = NodePath("../../HSplitContainer/VBoxContainer/Edge style/OptionButton")
-background_image_button = NodePath("../../HSplitContainer/VBoxContainer/Background image/OptionButton")
-music_button = NodePath("../../HSplitContainer/VBoxContainer/Music/OptionButton")
-cop_number_button = NodePath("../../HSplitContainer/VBoxContainer2/NumberOfCops/SpinBox")
-robber_number_button = NodePath("../../HSplitContainer/VBoxContainer2/NumberOfRobbers/SpinBox")
-cop_speed_button = NodePath("../../HSplitContainer/VBoxContainer2/CopSpeed/SpinBox")
-robber_speed_button = NodePath("../../HSplitContainer/VBoxContainer2/RobberSpeed/SpinBox")
-agent_travel_time_button = NodePath("../../HSplitContainer/VBoxContainer2/AgentTravelTime/SpinBox")
-cop_arsonist_button = NodePath("../../HSplitContainer/VBoxContainer2/CopArsonist/CheckButton")
-robber_arsonist_button = NodePath("../../HSplitContainer/VBoxContainer2/RobberArsonist/CheckButton")
-load_graph_button = NodePath("../../LoadGraph/LoadGraph")
+cop_strategy_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/CopStrategy/OptionButton")
+robber_strategy_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/RobberStrategy/OptionButton")
+cop_skin_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/CopSkin/OptionButton")
+robber_skin_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/RobberSkin/OptionButton")
+vertex_style_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/VertexStyle/OptionButton")
+edge_style_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/EdgeStyle/OptionButton")
+background_image_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/BackgroundImage/OptionButton")
+music_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer/Music/OptionButton")
+cop_number_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfCops/SpinBox")
+robber_number_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer2/NumberOfRobbers/SpinBox")
+cop_speed_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer2/CopSpeed/SpinBox")
+robber_speed_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer2/RobberSpeed/SpinBox")
+agent_travel_time_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer2/AgentTravelTime/SpinBox")
+cop_arsonist_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer2/CopArsonist/CheckButton")
+robber_arsonist_button = NodePath("../../VBoxContainer/HSplitContainer/VBoxContainer2/RobberArsonist/CheckButton")
+load_graph_button = NodePath("../../VBoxContainer/LoadGraph/LoadGraph")
 cop_strategy = ExtResource("11_q8lxc")
 robber_strategy = ExtResource("11_q8lxc")
 cop_skin = ExtResource("11_fvfss")
@@ -500,7 +515,7 @@ edge_style = SubResource("Resource_35yqw")
 background_image = ExtResource("15_efkoq")
 music = ExtResource("16_q7tx4")
 
-[node name="LoadFileDialog" type="FileDialog" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer"]
+[node name="LoadFileDialog" type="FileDialog" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer"]
 title = "Open a File"
 position = Vector2i(300, 100)
 size = Vector2i(500, 400)
@@ -511,7 +526,7 @@ file_mode = 0
 root_subfolder = "Graphs"
 filters = PackedStringArray("*.csv", "*.tsv", "*.json")
 
-[node name="Create" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+[node name="Create" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 25
@@ -519,24 +534,24 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Create"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Create"]
 layout_mode = 2
 
-[node name="SceneButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Create/VBoxContainer"]
+[node name="SceneButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Create/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Graph editor"
 script = ExtResource("3_f3unt")
 scene_path = "res://Scenes/Levels/graph_editor.tscn"
 
-[node name="SceneButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Create/VBoxContainer"]
+[node name="SceneButton2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Create/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Graph data editor"
 script = ExtResource("3_f3unt")
 scene_path = "res://Scenes/Levels/graph_data_editor.tscn"
 
-[node name="Misc" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+[node name="Misc" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 25
@@ -544,12 +559,12 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="Misc" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Misc" instance=ExtResource("4_4fkob")]
+[node name="Misc" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Misc" instance=ExtResource("4_4fkob")]
 layout_mode = 2
 
 [node name="MusicPlayer" parent="." instance=ExtResource("4_ag7rd")]
 music_track_name = "music_title"
 
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadGraph/LoadGraph" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadFileDialog" method="show"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2/LoadCustomGameButton" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/VBoxContainer2/LoadCustomGameButton" method="_on_pressed"]
-[connection signal="file_selected" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadFileDialog" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/Play/Custom/VBoxContainer/LoadGraph/LoadGraph" method="_on_load_file_dialog_file_selected"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/LoadGraph/LoadGraph" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/LoadFileDialog" method="show"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer2/LoadCustomGameButton" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer2/LoadCustomGameButton" method="_on_pressed"]
+[connection signal="file_selected" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/LoadFileDialog" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TabContainer/Play/Custom/CustomGameContainer/VBoxContainer/LoadGraph/LoadGraph" method="_on_load_file_dialog_file_selected"]

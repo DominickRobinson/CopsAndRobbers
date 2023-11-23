@@ -137,7 +137,7 @@ func _unhandled_input(_event):
 	
 	if Input.is_action_just_pressed("pan_camera"):
 		print("begin panning camera")
-		pan_camera_initial_position = get_global_mouse_position()
+		pan_camera_initial_position = get_viewport().get_mouse_position()
 		panning_camera = true
 	if Input.is_action_just_released("pan_camera"):
 		print("end panning camera")
@@ -156,7 +156,9 @@ func _process(_delta):
 	
 	if panning_camera:
 		print("panning camera")
-		graph.camera.offset = pan_camera_initial_position - get_global_mouse_position()
+		print(" gp: ", graph.camera.global_position)
+		print(" offset: ", graph.camera.offset)
+		graph.camera.offset = (pan_camera_initial_position - get_viewport().get_mouse_position()) / graph.camera.get_zoom_scale()
 		
 
 

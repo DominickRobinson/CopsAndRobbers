@@ -1,0 +1,54 @@
+[gd_scene load_steps=18 format=3 uid="uid://e8lrl1okcbfn"]
+
+[ext_resource type="Script" path="res://Scenes/Parts/graph.gd" id="1_jrxug"]
+[ext_resource type="PackedScene" uid="uid://qfrun7bjqppy" path="res://Scenes/Parts/vertex.tscn" id="2_1kmik"]
+[ext_resource type="PackedScene" uid="uid://bhvdif8aw6u2x" path="res://Scenes/Parts/edge.tscn" id="3_h7rlh"]
+[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="4_xmidp"]
+[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="5_prmrs"]
+[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="6_g7dwo"]
+[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="7_im6r5"]
+[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="8_wbdch"]
+[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="9_qu53k"]
+[ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style.gd" id="10_ae6r8"]
+[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="11_ecbqu"]
+[ext_resource type="Resource" uid="uid://ddqhh1ur33j6o" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_directed.tres" id="12_3ov7p"]
+[ext_resource type="Script" path="res://Scenes/Parts/EdgeContainer.gd" id="13_5i30b"]
+[ext_resource type="Script" path="res://Scenes/Parts/VertexContainer.gd" id="14_c20dm"]
+[ext_resource type="PackedScene" uid="uid://bd6nyi2cnfc0w" path="res://Scenes/Parts/graph_data.tscn" id="15_4eghh"]
+[ext_resource type="Script" path="res://Scenes/Levels/LevelCamera.gd" id="17_skuek"]
+
+[sub_resource type="Resource" id="Resource_xqi8u"]
+resource_local_to_scene = true
+script = ExtResource("10_ae6r8")
+default_skin = ExtResource("7_im6r5")
+cop_skin = ExtResource("6_g7dwo")
+robber_skin = ExtResource("9_qu53k")
+both_skin = ExtResource("4_xmidp")
+burnt_skin = ExtResource("5_prmrs")
+selected_skin = ExtResource("11_ecbqu")
+hovering_skin = ExtResource("8_wbdch")
+
+[node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container", "camera") groups=["Graphs"]]
+script = ExtResource("1_jrxug")
+graph_data = NodePath("GraphData")
+vertex_container = NodePath("Vertices")
+edge_container = NodePath("Edges")
+camera = NodePath("LevelCamera")
+vertex_resource = ExtResource("2_1kmik")
+edge_resource = ExtResource("3_h7rlh")
+vertex_style_resource = SubResource("Resource_xqi8u")
+edge_style_resource = ExtResource("12_3ov7p")
+
+[node name="Edges" type="Node2D" parent="."]
+script = ExtResource("13_5i30b")
+
+[node name="Vertices" type="Node2D" parent="."]
+script = ExtResource("14_c20dm")
+
+[node name="GraphData" parent="." instance=ExtResource("15_4eghh")]
+
+[node name="LevelCamera" type="Camera2D" parent="."]
+visible = false
+position = Vector2(576, 324)
+zoom = Vector2(0.87, 0.87)
+script = ExtResource("17_skuek")

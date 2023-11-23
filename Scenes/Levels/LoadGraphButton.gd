@@ -1,7 +1,7 @@
 extends Button
 
 
-@export var graph_path : String = "res://Graphs/1421.json"
+@export var graph_path : String = ""
 
 
 func _ready():
@@ -13,5 +13,8 @@ func get_graph_path():
 
 
 func _on_load_file_dialog_file_selected(path):
+	if path == "":
+		return
+	
 	graph_path = path
 	text = path

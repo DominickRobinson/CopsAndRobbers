@@ -51,7 +51,7 @@ func play_music(audio_name:String, fade:float=1.0, vol:float=0.0, loop:bool=true
 	
 	return music_player
 
-func play_music_file(audio:AudioStream, fade:float=1.0, vol:float=0.0, loop:bool=true, pitch:float=1.0) -> AudioStreamPlayer:
+func play_music_file(audio:AudioStream, fade:float=0.5, vol:float=0.0, loop:bool=true, pitch:float=1.0) -> AudioStreamPlayer:
 	if music_player.stream == audio:
 		return
 	music_player.stream = audio
@@ -70,10 +70,14 @@ func play_music_file(audio:AudioStream, fade:float=1.0, vol:float=0.0, loop:bool
 	
 	return music_player
 
-func stop_music(fade:float=1.0) -> AudioStreamPlayer:
+func stop_music(fade:float=0.5) -> AudioStreamPlayer:
 	var tween = create_tween()
 	tween.tween_property(music_player, "volume_db", -99, fade).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	tween.play()
+	
+	await tween.finished
+	
+	music_player.stream = null
 	
 	return music_player
 

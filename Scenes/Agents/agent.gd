@@ -132,10 +132,10 @@ func move_to(new_vertex:Vertex):
 		show()
 	departed.emit()
 	
+	#check whether to burn previously occupied vertex
 	if arsonist and is_instance_valid(old_vtx) and old_vtx.get_occupents().size() == 0:
 		old_vtx.burn()
 	
-	#check whether to burn previously occupied vertex
 	var audio_player = SoundManager.play_sound("sound_footsteps")
 	await movement_tween.finished
 	audio_player.stop()

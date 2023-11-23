@@ -114,7 +114,6 @@ func add_strict_corner(probability:float=0.5, dom_vtx:int = -1):
 func remove_vertex(v : int):
 	#check for validity of vertex
 	if not is_valid_vertex(v) or graph.size() == 0: 
-		print("tried removing invalid index in graph_data: ", v)
 		return
 	#remove column
 	for i in graph.size():

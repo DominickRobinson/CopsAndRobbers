@@ -46,7 +46,6 @@ func _on_state_entered():
 	#not copwin graph
 	if not graph.is_copwin():
 		agent.move_to(neighbors[0])
-		print("Graph is not copwin...")
 		return
 	
 	var mappings = graph.get_mappings()
@@ -104,7 +103,6 @@ func _on_state_entered():
 	
 	#if not found in any, then go to highest ranking neighbor
 	if move == null:
-		print("No move found...")
 		move = neighbors[0]
 		for nbor in neighbors:
 			nbor = nbor as Vertex

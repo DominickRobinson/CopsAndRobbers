@@ -19,7 +19,9 @@ func change_scene(scene_path : String = "res://Scenes/Levels/level.tscn"):
 	
 	PauseManager.unpause()
 	
+	SoundManager.stop_music(0.4)
 	await TransitionManager.fade_out()
+	
 	
 	
 	if scene_path == null:
@@ -71,7 +73,7 @@ func load_level():
 	is_custom_game = false
 	is_auto_game = false
 	var new_level = level_resource.instantiate()
-	print("changing game resource")
+#	print("changing game resource")
 	new_level.game_resource = game_resource
 	new_level.graph_path = levels[level_index]
 	if level_index < levels.size() - 1:
@@ -90,9 +92,9 @@ func load_level():
 	
 	var graph = get_tree().get_first_node_in_group("Graphs") as Graph
 	if is_instance_valid(graph):
-		print("Graph found!")
+#		print("Graph found!")
 		await graph.created
-		print("       created!")
+#		print("       created!")
 
 	SoundManager.play_music_file(game_resource.game_theme.music)
 	await TransitionManager.fade_in()
@@ -152,7 +154,7 @@ func get_JSON_paths_from_dir(path:String) -> Array:
 				if file_name.get_extension() == "json":
 					var s = path + "/" + file_name
 					paths.append(s)
-					print(file_name)
+#					print(file_name)
 			file_name = dir.get_next()
 #		print("paths: ", paths)
 	

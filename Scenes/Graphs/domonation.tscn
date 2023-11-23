@@ -1,0 +1,1210 @@
+[gd_scene load_steps=36 format=3 uid="uid://l5f7plxp3j4i"]
+
+[ext_resource type="Script" path="res://Scenes/Parts/graph.gd" id="1_2axpe"]
+[ext_resource type="PackedScene" uid="uid://qfrun7bjqppy" path="res://Scenes/Parts/vertex.tscn" id="2_41lxa"]
+[ext_resource type="PackedScene" uid="uid://bhvdif8aw6u2x" path="res://Scenes/Parts/edge.tscn" id="3_hh0r8"]
+[ext_resource type="Texture2D" uid="uid://ce3ol8qmayrrw" path="res://Assets/Art/Objects/purple-circle.svg" id="4_4dl56"]
+[ext_resource type="Texture2D" uid="uid://l1liqrts1juh" path="res://Assets/Art/Objects/black-circle.svg" id="5_ef5u7"]
+[ext_resource type="Texture2D" uid="uid://bkp5hfkr0soki" path="res://Assets/Art/Objects/blue-circle.svg" id="6_p7khp"]
+[ext_resource type="Texture2D" uid="uid://ohk7f2737t1m" path="res://Assets/Art/Objects/white-circle.svg" id="7_67206"]
+[ext_resource type="Texture2D" uid="uid://cbnt0evbn2hns" path="res://Assets/Art/Objects/yellow-circle.svg" id="8_b0vk0"]
+[ext_resource type="Texture2D" uid="uid://n7oteo166le6" path="res://Assets/Art/Objects/red-circle.svg" id="9_m4orj"]
+[ext_resource type="Script" path="res://Resources/GameComponents/GraphStyles/VertexStyles/vertex_style.gd" id="10_82o7n"]
+[ext_resource type="Texture2D" uid="uid://bseyyrw5auxpv" path="res://Assets/Art/Objects/green-circle.svg" id="11_dyfiu"]
+[ext_resource type="Resource" uid="uid://ddqhh1ur33j6o" path="res://Resources/GameComponents/GraphStyles/EdgeStyles/edge_style_basic_directed.tres" id="12_aags6"]
+[ext_resource type="Script" path="res://Scenes/Parts/EdgeContainer.gd" id="13_pfk0x"]
+[ext_resource type="Texture2D" uid="uid://iyv5i1r41auk" path="res://Assets/Art/reflexive_edge.png" id="15_wdyoy"]
+[ext_resource type="Texture2D" uid="uid://c1xx28fv6dklb" path="res://Assets/Art/undirected_edge.png" id="16_ha11a"]
+[ext_resource type="Script" path="res://Scenes/Parts/VertexContainer.gd" id="17_ix0hs"]
+[ext_resource type="Texture2D" uid="uid://c0ysay55dwxi2" path="res://Assets/Art/Objects/fire.svg" id="19_xljac"]
+[ext_resource type="PackedScene" uid="uid://bd6nyi2cnfc0w" path="res://Scenes/Parts/graph_data.tscn" id="20_y1dow"]
+[ext_resource type="Script" path="res://Scenes/Levels/LevelCamera.gd" id="22_wpuph"]
+
+[sub_resource type="Resource" id="Resource_625ls"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Curve2D" id="Curve2D_262xl"]
+
+[sub_resource type="Resource" id="Resource_wd41i"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Animation" id="Animation_xqe5a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_o2h8y"]
+resource_name = "emphasize"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.501961, 0.501961, 0.501961, 1), Color(1, 1, 1, 1), Color(0.501961, 0.501961, 0.501961, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ygtlt"]
+resource_name = "selectable"
+length = 1.5
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.501961, 0.501961, 0.501961, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_i3lfj"]
+resource_name = "selected"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.74902, 0.74902, 0.74902, 1), Color(1, 1, 1, 1), Color(0.74902, 0.74902, 0.74902, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wc4cp"]
+_data = {
+"RESET": SubResource("Animation_xqe5a"),
+"emphasize": SubResource("Animation_o2h8y"),
+"selectable": SubResource("Animation_ygtlt"),
+"selected": SubResource("Animation_i3lfj")
+}
+
+[sub_resource type="Resource" id="Resource_ncov7"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Resource" id="Resource_kkllo"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Resource" id="Resource_km3vq"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Resource" id="Resource_4ri4h"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Resource" id="Resource_mi4cc"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Resource" id="Resource_5jbr7"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Resource" id="Resource_xgrxj"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[sub_resource type="Resource" id="Resource_da4f5"]
+resource_local_to_scene = true
+script = ExtResource("10_82o7n")
+default_skin = ExtResource("7_67206")
+cop_skin = ExtResource("6_p7khp")
+robber_skin = ExtResource("9_m4orj")
+both_skin = ExtResource("4_4dl56")
+burnt_skin = ExtResource("5_ef5u7")
+selected_skin = ExtResource("11_dyfiu")
+hovering_skin = ExtResource("8_b0vk0")
+
+[node name="Graph" type="Node2D" node_paths=PackedStringArray("graph_data", "vertex_container", "edge_container", "camera") groups=["Graphs"]]
+script = ExtResource("1_2axpe")
+graph_data = NodePath("GraphData")
+vertex_container = NodePath("Vertices")
+edge_container = NodePath("Edges")
+camera = NodePath("LevelCamera")
+vertex_resource = ExtResource("2_41lxa")
+edge_resource = ExtResource("3_hh0r8")
+vertex_style_resource = SubResource("Resource_625ls")
+edge_style_resource = ExtResource("12_aags6")
+
+[node name="Edges" type="Node2D" parent="."]
+script = ExtResource("13_pfk0x")
+
+[node name="Edge" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(763.958, 253.408)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/Edge"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/Edge"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/Edge"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/Edge"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20132" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20132"]
+texture_repeat = 2
+points = PackedVector2Array(763.958, 253.408, 540.628, 464.842)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20132"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20132"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20132"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20133" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20133"]
+texture_repeat = 2
+points = PackedVector2Array(763.958, 253.408, 1039.92, 332.505)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20133"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20133"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20133"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20134" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20134"]
+texture_repeat = 2
+points = PackedVector2Array(763.958, 253.408, 525.053, 285.229)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20134"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20134"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20134"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20135" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20135"]
+texture_repeat = 2
+points = PackedVector2Array(763.958, 253.408, 661.655, 157.235)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20135"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20135"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20135"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20136" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20136"]
+texture_repeat = 2
+points = PackedVector2Array(763.958, 253.408, 883.046, 201.444)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20136"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20136"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20136"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20137" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20137"]
+texture_repeat = 2
+points = PackedVector2Array(540.628, 464.842, 763.958, 253.408)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20137"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20137"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20137"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20138" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(540.628, 464.842)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20138"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20138"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20138"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20138"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20139" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20139"]
+texture_repeat = 2
+points = PackedVector2Array(540.628, 464.842, 385.693, 628.079)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20139"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20139"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20139"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20140" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20140"]
+texture_repeat = 2
+points = PackedVector2Array(540.628, 464.842, 525.053, 285.229)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20140"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20140"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20140"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20141" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20141"]
+texture_repeat = 2
+points = PackedVector2Array(540.628, 464.842, 696.556, 421.065)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20141"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20141"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20141"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20142" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20142"]
+texture_repeat = 2
+points = PackedVector2Array(1039.92, 332.505, 763.958, 253.408)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20142"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20142"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20142"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20143" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(1039.92, 332.505)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20143"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20143"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20143"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20143"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20144" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20144"]
+texture_repeat = 2
+points = PackedVector2Array(1039.92, 332.505, 1267.8, 383.375)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20144"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20144"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20144"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20145" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20145"]
+texture_repeat = 2
+points = PackedVector2Array(385.693, 628.079, 540.628, 464.842)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20145"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20145"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20145"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20146" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(385.693, 628.079)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20146"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20146"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20146"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20146"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20147" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20147"]
+texture_repeat = 2
+points = PackedVector2Array(525.053, 285.229, 763.958, 253.408)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20147"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20147"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20147"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20148" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20148"]
+texture_repeat = 2
+points = PackedVector2Array(525.053, 285.229, 540.628, 464.842)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20148"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20148"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20148"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20149" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(525.053, 285.229)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20149"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20149"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20149"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20149"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20150" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20150"]
+texture_repeat = 2
+points = PackedVector2Array(525.053, 285.229, 696.556, 421.065)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20150"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20150"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20150"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20151" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20151"]
+texture_repeat = 2
+points = PackedVector2Array(525.053, 285.229, 661.655, 157.235)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20151"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20151"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20151"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20152" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20152"]
+texture_repeat = 2
+points = PackedVector2Array(1267.8, 383.375, 1039.92, 332.505)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20152"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20152"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20152"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20153" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(1267.8, 383.375)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20153"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20153"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20153"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20153"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20154" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20154"]
+texture_repeat = 2
+points = PackedVector2Array(696.556, 421.065, 540.628, 464.842)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20154"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20154"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20154"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20155" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20155"]
+texture_repeat = 2
+points = PackedVector2Array(696.556, 421.065, 525.053, 285.229)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20155"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20155"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20155"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20156" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(696.556, 421.065)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20156"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20156"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20156"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20156"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20157" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20157"]
+texture_repeat = 2
+points = PackedVector2Array(696.556, 421.065, 661.655, 157.235)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20157"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20157"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20157"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20158" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20158"]
+texture_repeat = 2
+points = PackedVector2Array(696.556, 421.065, 883.046, 201.444)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20158"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20158"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20158"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20159" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20159"]
+texture_repeat = 2
+points = PackedVector2Array(661.655, 157.235, 763.958, 253.408)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20159"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20159"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20159"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20160" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20160"]
+texture_repeat = 2
+points = PackedVector2Array(661.655, 157.235, 525.053, 285.229)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20160"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20160"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20160"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20161" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20161"]
+texture_repeat = 2
+points = PackedVector2Array(661.655, 157.235, 696.556, 421.065)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20161"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20161"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20161"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20162" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(661.655, 157.235)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20162"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20162"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20162"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20162"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20163" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20163"]
+texture_repeat = 2
+points = PackedVector2Array(661.655, 157.235, 883.046, 201.444)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20163"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20163"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20163"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20164" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20164"]
+texture_repeat = 2
+points = PackedVector2Array(883.046, 201.444, 763.958, 253.408)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20164"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20164"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20164"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20165" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20165"]
+texture_repeat = 2
+points = PackedVector2Array(883.046, 201.444, 696.556, 421.065)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20165"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20165"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20165"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20166" parent="Edges" instance=ExtResource("3_hh0r8")]
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20166"]
+texture_repeat = 2
+points = PackedVector2Array(883.046, 201.444, 661.655, 157.235)
+width = 30.0
+texture = ExtResource("16_ha11a")
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20166"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20166"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20166"]
+visible = false
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="@Node2D@20167" parent="Edges" instance=ExtResource("3_hh0r8")]
+position = Vector2(883.046, 201.444)
+directed = false
+
+[node name="Line2D2" type="Line2D" parent="Edges/@Node2D@20167"]
+texture_repeat = 2
+width = 30.0
+texture_mode = 1
+
+[node name="Area2D2" type="Area2D" parent="Edges/@Node2D@20167"]
+
+[node name="Path2D2" type="Path2D" parent="Edges/@Node2D@20167"]
+curve = SubResource("Curve2D_262xl")
+
+[node name="LoopSprite3" type="Sprite2D" parent="Edges/@Node2D@20167"]
+position = Vector2(-19, -21)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_wdyoy")
+
+[node name="Vertices" type="Node2D" parent="."]
+script = ExtResource("17_ix0hs")
+
+[node name="Vertex 0" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(763.958, 253.408)
+style_resource = SubResource("Resource_wd41i")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 0"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 0" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 0"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 0"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 1" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(540.628, 464.842)
+style_resource = SubResource("Resource_ncov7")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 1"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 1" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 1"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 1"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 2" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(1039.92, 332.505)
+style_resource = SubResource("Resource_kkllo")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 2"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 2" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 2"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 2"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 3" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(385.693, 628.079)
+style_resource = SubResource("Resource_km3vq")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 3"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 3" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 3"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 3"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 4" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(525.053, 285.229)
+style_resource = SubResource("Resource_4ri4h")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 4"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 4" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 4"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 4"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 5" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(1267.8, 383.375)
+style_resource = SubResource("Resource_mi4cc")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 5"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 5" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 5"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 5"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 6" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(696.556, 421.065)
+style_resource = SubResource("Resource_5jbr7")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 6"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 6" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 6"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 6"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 7" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(661.655, 157.235)
+style_resource = SubResource("Resource_xgrxj")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 7"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 7" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 7"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 7"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="Vertex 8" parent="Vertices" instance=ExtResource("2_41lxa")]
+position = Vector2(883.046, 201.444)
+style_resource = SubResource("Resource_da4f5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 8"]
+texture = ExtResource("7_67206")
+
+[node name="Area2D2" type="Area2D" parent="Vertices/Vertex 8" groups=["vertex_area"]]
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Vertices/Vertex 8"]
+libraries = {
+"": SubResource("AnimationLibrary_wc4cp")
+}
+
+[node name="FireSprite2" type="Sprite2D" parent="Vertices/Vertex 8"]
+visible = false
+position = Vector2(0, -22)
+texture = ExtResource("19_xljac")
+
+[node name="GraphData" parent="." instance=ExtResource("20_y1dow")]
+
+[node name="LevelCamera" type="Camera2D" parent="."]
+visible = false
+position = Vector2(498.569, 309.947)
+zoom = Vector2(0.62, 0.62)
+script = ExtResource("22_wpuph")

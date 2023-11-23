@@ -101,7 +101,7 @@ func get_cop_script():
 	match cop_strategy_button.selected:
 		0: str += "player"
 		1: str += "lower_way"
-		2: str += "higher_way"
+		2: str += "zombie"
 		3: str += "drunk"
 		4: str += "drunk_nonsuicidal"
 	str += ".gd"
@@ -111,8 +111,8 @@ func get_robber_script():
 	var str = "res://Resources/Scripts/move_"
 	match robber_strategy_button.selected:
 		0: str += "player"
-		1: str += "lower_way"
-		2: str += "higher_way"
+		1: str += "higher_way"
+		2: str += "survivor"
 		3: str += "drunk"
 		4: str += "drunk_nonsuicidal"
 	str += ".gd"
