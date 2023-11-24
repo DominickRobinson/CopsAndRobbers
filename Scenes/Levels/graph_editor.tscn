@@ -29,7 +29,7 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
-[sub_resource type="Resource" id="Resource_xxntp"]
+[sub_resource type="Resource" id="Resource_wnmfu"]
 resource_local_to_scene = true
 script = ExtResource("12_bxg82")
 default_skin = ExtResource("8_hn86l")
@@ -529,7 +529,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_xxntp")
+vertex_style_resource = SubResource("Resource_wnmfu")
 graph_data_display_label = NodePath("../GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]

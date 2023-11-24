@@ -155,9 +155,6 @@ func _process(_delta):
 		new_edge_line.clear_points()
 	
 	if panning_camera:
-		print("panning camera")
-		print(" gp: ", graph.camera.global_position)
-		print(" offset: ", graph.camera.offset)
 		graph.camera.offset = (pan_camera_initial_position - get_viewport().get_mouse_position()) / graph.camera.get_zoom_scale()
 		
 
