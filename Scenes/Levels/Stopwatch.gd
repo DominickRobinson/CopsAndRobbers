@@ -21,7 +21,7 @@ func stop():
 	stopped = true
 
 func get_time_string():
-	var s = str(round(time_elapsed/60)) + ":"
+	var s = str(floor(time_elapsed/60)) + ":"
 	if round(fmod(time_elapsed, 60)) < 10:
 		s += "0"
 	s += str(round(fmod(time_elapsed, 60)))
