@@ -12,7 +12,6 @@ graph_path = "res://Graphs/null.json"
 next_level_path = ""
 
 [node name="DoTheThingButton" type="Button" parent="."]
-visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_7cirj")

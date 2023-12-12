@@ -3,8 +3,9 @@ extends Button
 
 signal thing_done
 
-@export var how_many_times := 10
+@export var how_many_times := 20
 @export var auto_start := false
+@export_file var initial_graph_path 
 
 var graph : Graph
 
@@ -24,11 +25,13 @@ func do_the_thing():
 	progress = 0
 	
 	await graph.empty(false)
+	if initial_graph_path:
+		await graph.add_graph(initial_graph_path)
 	await Globals.wait(0)
 	
 	for i in how_many_times - 1:
-		var prob = float(i+1)/float(how_many_times)
-#		prob = 0.5
+		var prob = 1 - float(i+1)/float(how_many_times)
+#		var prob = 0.5
 		await graph.add_strict_corner(Vector2(0,0), prob, false)
 		await Globals.wait(0)
 		

@@ -4,6 +4,9 @@ extends Node
 func _unhandled_input(_event):
 	if Input.is_action_just_pressed("screenshot"):
 		take_screenshot()
+	
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
 
 func get_all_children(node, arr:=[]):
 	arr.push_back(node)

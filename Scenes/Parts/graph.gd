@@ -98,6 +98,8 @@ func get_vertex_from_index(index:int):
 func get_edges():
 	return edge_container.edges
 
+func vertices_adjacent(v1:Vertex, v2:Vertex):
+	return graph_data.edge_exists(v1.index, v2.index)
 
 func set_graph_data_display_label():
 	if is_instance_valid(graph_data_display_label):
@@ -756,9 +758,7 @@ func make_graph_from_JSON(json_as_text:String):
 		set_zoom_scale(str_to_var(json_as_dict["zoom_scale"]))
 	if "camera_global_position" in json_as_dict.keys():
 		var gp = (json_as_dict["camera_global_position"])
-		print("camera.global_position:", gp)
 		gp = str_to_var(gp)
-		print("camera.global_position:", gp)
 		set_camera_global_position(gp)
 
 
@@ -954,6 +954,7 @@ func create_force_diagram():
 
 
 var k = 10
+
 var rest_length = 200 
 func _physics_process(delta):
 	if apply_forces:
@@ -962,14 +963,19 @@ func _physics_process(delta):
 			var vtx_i = vertices[i] as Vertex
 			for j in range(i+1, n):
 				var displacement = vertices[j].position - vertices[i].position
+				var F_length : float
+				var reverse = 1
 				if graph_data.edge_exists(i, j):
-					var F = k * (displacement.length() - rest_length) * displacement.normalized()
-					vertices[i].add_force(F)
-					vertices[j].add_force(-F)
+					reverse = -1
+					F_length = k * (displacement.length() - rest_length)
 				else:
-					var F = k * 100000 * vtx_i.strict_corner_ranking**2 * get_number_of_neighbors_from_index(i) / (displacement.length_squared()) * displacement.normalized()
-					vertices[i].add_force(-F)
-					vertices[j].add_force(F)
+					F_length = k * 100000 * vtx_i.strict_corner_ranking**2 * get_number_of_neighbors_from_index(i) / (displacement.length_squared())
+				
+#				F_length = min(F_length, 3000)
+				
+				var F = reverse * F_length * displacement.normalized()
+				vertices[i].add_force(-F)
+				vertices[j].add_force(F)
 		
 		var total_displacement = 0
 		for v in vertices:

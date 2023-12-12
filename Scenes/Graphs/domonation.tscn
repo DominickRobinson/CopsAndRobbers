@@ -33,7 +33,7 @@ hovering_skin = ExtResource("8_b0vk0")
 
 [sub_resource type="Curve2D" id="Curve2D_262xl"]
 
-[sub_resource type="Resource" id="Resource_x01yg"]
+[sub_resource type="Resource" id="Resource_p6j64"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -166,7 +166,7 @@ _data = {
 "selected": SubResource("Animation_i3lfj")
 }
 
-[sub_resource type="Resource" id="Resource_eqjp2"]
+[sub_resource type="Resource" id="Resource_3cir8"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -177,7 +177,7 @@ burnt_skin = ExtResource("5_ef5u7")
 selected_skin = ExtResource("11_dyfiu")
 hovering_skin = ExtResource("8_b0vk0")
 
-[sub_resource type="Resource" id="Resource_4588q"]
+[sub_resource type="Resource" id="Resource_rpttw"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -188,7 +188,7 @@ burnt_skin = ExtResource("5_ef5u7")
 selected_skin = ExtResource("11_dyfiu")
 hovering_skin = ExtResource("8_b0vk0")
 
-[sub_resource type="Resource" id="Resource_qwdbq"]
+[sub_resource type="Resource" id="Resource_h4cxs"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -199,7 +199,7 @@ burnt_skin = ExtResource("5_ef5u7")
 selected_skin = ExtResource("11_dyfiu")
 hovering_skin = ExtResource("8_b0vk0")
 
-[sub_resource type="Resource" id="Resource_0ad3a"]
+[sub_resource type="Resource" id="Resource_o4vl2"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -210,7 +210,7 @@ burnt_skin = ExtResource("5_ef5u7")
 selected_skin = ExtResource("11_dyfiu")
 hovering_skin = ExtResource("8_b0vk0")
 
-[sub_resource type="Resource" id="Resource_bqmwv"]
+[sub_resource type="Resource" id="Resource_0dinl"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -221,7 +221,7 @@ burnt_skin = ExtResource("5_ef5u7")
 selected_skin = ExtResource("11_dyfiu")
 hovering_skin = ExtResource("8_b0vk0")
 
-[sub_resource type="Resource" id="Resource_ufya2"]
+[sub_resource type="Resource" id="Resource_ll4cg"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -232,7 +232,7 @@ burnt_skin = ExtResource("5_ef5u7")
 selected_skin = ExtResource("11_dyfiu")
 hovering_skin = ExtResource("8_b0vk0")
 
-[sub_resource type="Resource" id="Resource_djg66"]
+[sub_resource type="Resource" id="Resource_vehs4"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -243,7 +243,7 @@ burnt_skin = ExtResource("5_ef5u7")
 selected_skin = ExtResource("11_dyfiu")
 hovering_skin = ExtResource("8_b0vk0")
 
-[sub_resource type="Resource" id="Resource_fxl4a"]
+[sub_resource type="Resource" id="Resource_3ri3m"]
 resource_local_to_scene = true
 script = ExtResource("10_82o7n")
 default_skin = ExtResource("7_67206")
@@ -1032,7 +1032,7 @@ script = ExtResource("17_ix0hs")
 
 [node name="Vertex 0" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(763.958, 253.408)
-style_resource = SubResource("Resource_x01yg")
+style_resource = SubResource("Resource_p6j64")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 0"]
 texture = ExtResource("7_67206")
@@ -1051,7 +1051,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 1" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(540.628, 464.842)
-style_resource = SubResource("Resource_eqjp2")
+style_resource = SubResource("Resource_3cir8")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 1"]
 texture = ExtResource("7_67206")
@@ -1070,7 +1070,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 2" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(1039.92, 332.505)
-style_resource = SubResource("Resource_4588q")
+style_resource = SubResource("Resource_rpttw")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 2"]
 texture = ExtResource("7_67206")
@@ -1089,7 +1089,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 3" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(385.693, 628.079)
-style_resource = SubResource("Resource_qwdbq")
+style_resource = SubResource("Resource_h4cxs")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 3"]
 texture = ExtResource("7_67206")
@@ -1108,7 +1108,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 4" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(525.053, 285.229)
-style_resource = SubResource("Resource_0ad3a")
+style_resource = SubResource("Resource_o4vl2")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 4"]
 texture = ExtResource("7_67206")
@@ -1127,7 +1127,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 5" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(1267.8, 383.375)
-style_resource = SubResource("Resource_bqmwv")
+style_resource = SubResource("Resource_0dinl")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 5"]
 texture = ExtResource("7_67206")
@@ -1146,7 +1146,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 6" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(696.556, 421.065)
-style_resource = SubResource("Resource_ufya2")
+style_resource = SubResource("Resource_ll4cg")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 6"]
 texture = ExtResource("7_67206")
@@ -1165,7 +1165,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 7" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(661.655, 157.235)
-style_resource = SubResource("Resource_djg66")
+style_resource = SubResource("Resource_vehs4")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 7"]
 texture = ExtResource("7_67206")
@@ -1184,7 +1184,7 @@ texture = ExtResource("19_xljac")
 
 [node name="Vertex 8" parent="Vertices" instance=ExtResource("2_41lxa")]
 position = Vector2(883.046, 201.444)
-style_resource = SubResource("Resource_fxl4a")
+style_resource = SubResource("Resource_3ri3m")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Vertices/Vertex 8"]
 texture = ExtResource("7_67206")

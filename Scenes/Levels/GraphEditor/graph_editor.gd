@@ -3,6 +3,7 @@ extends Node2D
 
 
 @export var graph : Graph
+@export var multi_click : MultiClick
 
 @export var vertex_spawn_position : Node2D
 
@@ -40,6 +41,7 @@ var selected_vertices : Array[Vertex]
 var selected_edges : Array[Edge]
 
 var selected_end_vertices : Array[Vertex]
+var highlighted_vertices : Array[Vertex]
 
 var clicked_on_vertex = false
 var clicked_on_edge = false
@@ -72,6 +74,13 @@ func _ready():
 		if n is Button:
 			n = n as Button
 			n.focus_mode = Control.FOCUS_NONE
+	
+#	multi_click.highlighted.connect(set_highlighted_vertices)
+
+
+#func set_highlighted_vertices(vtxs:Array[Vertex]):
+#	highlighted_vertices = vtxs
+
 
 func set_zoom_label():
 	zoom_spinbox.value = graph.get_zoom_scale()
@@ -108,6 +117,15 @@ func _unhandled_input(_event):
 	
 	if Input.is_action_just_pressed("select") and hovering_vertex != null:
 		hovering_vertex.selected.emit()
+		
+		if hovering_vertex in multi_click.highlighted_vertices and mode == Modes.VertexMode:
+			if multi_click.has_highlighted_vertices():
+				for vtx in multi_click.highlighted_vertices:
+					vtx.drag()
+	
+	if Input.is_action_just_pressed("select") and hovering_vertex == null:
+		print("unhighlighting all vertices")
+		unhighlight_all_vertices()
 	
 	match mode:
 		Modes.VertexMode:
@@ -149,10 +167,17 @@ func _unhandled_input(_event):
 func _process(_delta):
 #	display_selected_vertex()
 	
+#	if mode == Modes.EdgeMode and multi_click.has_highlighted_vertices():
+#		new_edge_line.clear_points()
+#		for v in multi_click.highlighted_vertices:
+#			draw_line(v.global_position, get_global_mouse_position(), Color.RED, 10)
+	
 	if mode == Modes.EdgeMode and selected_vertex != null:
 		new_edge_line.points = PackedVector2Array([selected_vertex.position, get_global_mouse_position()])
+
 	else:
 		new_edge_line.clear_points()
+	
 	
 	if panning_camera:
 		graph.camera.offset = (pan_camera_initial_position - get_viewport().get_mouse_position()) / graph.camera.get_zoom_scale()
@@ -193,7 +218,14 @@ func add_strict_corner():
 	set_vertex_mode()
 
 func remove_vertex():
-	graph.remove_vertex(hovering_vertex)
+	if (hovering_vertex != null 
+		and hovering_vertex in multi_click.highlighted_vertices 
+		and multi_click.has_highlighted_vertices()):
+		for v in multi_click.highlighted_vertices:
+			await graph.remove_vertex(v, false)
+		graph.changed.emit()
+	else:
+		graph.remove_vertex(hovering_vertex)
 	
 	SoundManager.play_sound("sound_vertex_remove")
 	
@@ -214,16 +246,48 @@ func remove_edge_given_vertex(vtx:Vertex):
 
 
 func make_reflexive():
-	graph.make_reflexive()
+	if multi_click.has_highlighted_vertices():
+		for v in multi_click.highlighted_vertices:
+			await graph.add_edge(v, v, false, false)
+		graph.changed.emit()
+		
+	else:
+		graph.make_reflexive()
 
 func make_undirected():
-	graph.make_undirected()
+	if multi_click.has_highlighted_vertices():
+		for i in multi_click.highlighted_vertices.size():
+			var v_i = multi_click.highlighted_vertices[i]
+			for j in multi_click.highlighted_vertices.size():
+				var v_j = multi_click.highlighted_vertices[j]
+				if graph.vertices_adjacent(v_i, v_j):
+					await graph.add_edge(v_j, v_i, false, false)
+		graph.changed.emit()
+		
+	else:
+		graph.make_undirected()
 
 func fill():
-	graph.fill()
+	if multi_click.has_highlighted_vertices():
+		for i in multi_click.highlighted_vertices.size():
+			var v_i = multi_click.highlighted_vertices[i]
+			for j in range(i, multi_click.highlighted_vertices.size()):
+				var v_j = multi_click.highlighted_vertices[j]
+				await graph.add_edge(v_i, v_j, true, false)
+		graph.changed.emit()
+	else:
+		graph.fill()
 
 func clear():
-	graph.clear()
+	if multi_click.has_highlighted_vertices():
+		for i in multi_click.highlighted_vertices.size():
+			var v_i = multi_click.highlighted_vertices[i]
+			for j in range(i, multi_click.highlighted_vertices.size()):
+				var v_j = multi_click.highlighted_vertices[j]
+				await graph.remove_edge_given_vertices(v_i, v_j, true, false)
+		graph.changed.emit()
+	else:
+		graph.clear()
 
 func invert():
 	graph.invert()
@@ -307,7 +371,7 @@ func set_hovering_edge(e:Edge):
 
 func set_selected_vertex(v:Vertex):
 	selected_vertex = v
-	if is_instance_valid(v) and mode == Modes.VertexMode: v.draggable = true
+	if is_instance_valid(v) and mode == Modes.VertexMode: v.drag()
 
 
 
@@ -415,3 +479,8 @@ func organize_by_ranking():
 func print_distance_matrix():
 	print("Distance matrix:")
 	Globals.print_array(graph.recalculate_distance_matrix())
+
+
+func unhighlight_all_vertices():
+	for v in graph.vertices:
+		v.unhighlight()

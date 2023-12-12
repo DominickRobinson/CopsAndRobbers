@@ -51,7 +51,7 @@ func _ready():
 	
 	background.texture = game_theme.background_skin
 	
-	if not already_loaded:
+	if not already_loaded and not do_the_thing_button and graph_path:
 		await graph.load_graph(graph_path)
 	
 	await Globals.wait(0)

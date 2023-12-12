@@ -59,6 +59,7 @@ var moving = false
 
 var old_position : Vector2
 
+var highlighted = false
 
 
 
@@ -71,12 +72,14 @@ func _ready():
 	vertex_container = get_parent()
 	set_text()
 	
-	selected.connect(anim.play.bind("selected"))
-	deselected.connect(anim.play.bind("RESET"))
+#	selected.connect(anim.play.bind("selected"))
+#	deselected.connect(anim.play.bind("RESET"))
 	selected.connect(set_skin)
 	
 	set_resource()
 	fire_sprite.hide()
+
+
 
 
 func set_resource():
@@ -88,9 +91,7 @@ func _unhandled_input(_event):
 		if Input.is_action_just_pressed("select"):
 			await get_tree().process_frame
 			if mouse_inside_area:
-				mouse_offset = global_position - get_global_mouse_position()
-				moving = true
-				old_position = position
+				drag()
 		if Input.is_action_just_released("select"):
 			draggable = false
 			deselected.emit()
@@ -109,6 +110,12 @@ func _unhandled_input(_event):
 
 
 func _process(_delta):
+	
+	if highlighted:
+		modulate = Color.BLUE
+	else:
+		modulate = Color.WHITE
+	
 	set_text()
 	if draggable: follow_mouse()
 	
@@ -152,6 +159,14 @@ func burn():
 	sprite.texture = style_resource.burnt_skin
 	burnt = true
 
+func highlight():
+	modulate = Color.CYAN
+	highlighted = true
+
+func unhighlight():
+	modulate = Color.WHITE
+	highlighted = false
+
 func emphasize():
 	anim.play("emphasize")
 
@@ -162,22 +177,26 @@ func check_if_set_default_skin():
 	if sprite.texture == null: sprite.texture = style_resource.default_skin
 
 func set_skin():
-	if not can_change_skin: return
-	var cop_present = false
-	var robber_present = false
-	for o in occupents:
-		o = o as Agent
-		if o.is_robber(): if not o.captured: robber_present = true
-		if o.is_cop(): cop_present = true
+	if not editable:
+		if not can_change_skin: return
+		var cop_present = false
+		var robber_present = false
+		for o in occupents:
+			o = o as Agent
+			if o.is_robber(): if not o.captured: robber_present = true
+			if o.is_cop(): cop_present = true
+		
+		if cop_present and robber_present: sprite.texture = style_resource.both_skin
+		elif cop_present: sprite.texture = style_resource.cop_skin
+		elif robber_present: sprite.texture = style_resource.robber_skin
+		else: 
+			if not burnt and mouse_inside_area and selectable: sprite.texture = style_resource.hovering_skin
+			else: sprite.texture = style_resource.default_skin
+		
+		if burnt: sprite.texture = style_resource.burnt_skin
 	
-	if cop_present and robber_present: sprite.texture = style_resource.both_skin
-	elif cop_present: sprite.texture = style_resource.cop_skin
-	elif robber_present: sprite.texture = style_resource.robber_skin
-	else: 
-		if not burnt and mouse_inside_area and selectable: sprite.texture = style_resource.hovering_skin
-		else: sprite.texture = style_resource.default_skin
-	
-	if burnt: sprite.texture = style_resource.burnt_skin
+	else:
+		pass
 
 func _on_selected():
 #	can_change_skin = false
@@ -216,3 +235,10 @@ func apply_force(delta):
 	return d
 #func _physics_process(delta):
 #	apply_force(delta)
+
+func drag():
+	draggable = true
+	mouse_offset = global_position - get_global_mouse_position()
+#	print("Trying to move ", name, "    offset: ", mouse_offset, "    old position: ", old_position)
+	moving = true
+	old_position = position
