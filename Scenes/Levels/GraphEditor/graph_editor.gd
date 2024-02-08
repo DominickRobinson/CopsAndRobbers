@@ -58,6 +58,13 @@ func _ready():
 #	graph.refreshed.connect(refresh)
 	graph.refreshed.connect(refresh)
 	
+	var exe_path = OS.get_executable_path()
+	var dir_path = exe_path.get_base_dir()
+	
+	save_file_dialog.root_subfolder = dir_path
+	load_file_dialog.root_subfolder = dir_path
+	add_file_dialog.root_subfolder = dir_path
+	
 	save_file_dialog.file_selected.connect(graph.save_graph)
 	load_file_dialog.file_selected.connect(load_graph)
 	add_file_dialog.file_selected.connect(add_graph)

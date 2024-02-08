@@ -30,7 +30,7 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 
-[sub_resource type="Resource" id="Resource_b8012"]
+[sub_resource type="Resource" id="Resource_ewnbm"]
 resource_local_to_scene = true
 script = ExtResource("12_bxg82")
 default_skin = ExtResource("8_hn86l")
@@ -533,7 +533,7 @@ size_flags_vertical = 8
 horizontal_alignment = 2
 
 [node name="Graph" parent="." node_paths=PackedStringArray("graph_data_display_label") instance=ExtResource("4_7hxle")]
-vertex_style_resource = SubResource("Resource_b8012")
+vertex_style_resource = SubResource("Resource_ewnbm")
 graph_data_display_label = NodePath("../GUI/MarginContainer/GraphDataDisplay/MarginContainer/VBoxContainer/VBoxContainer/GraphTextDisplay")
 
 [node name="SaveFileDialog" type="FileDialog" parent="."]
@@ -542,8 +542,9 @@ size = Vector2i(500, 400)
 content_scale_mode = 2
 content_scale_aspect = 1
 ok_button_text = "Save"
-root_subfolder = "Graphs"
+access = 2
 filters = PackedStringArray("*.json")
+use_native_dialog = true
 
 [node name="LoadFileDialog" type="FileDialog" parent="."]
 title = "Open a File or Directory"
@@ -553,8 +554,9 @@ content_scale_mode = 2
 content_scale_aspect = 1
 ok_button_text = "Open"
 file_mode = 3
-root_subfolder = "Graphs"
+access = 2
 filters = PackedStringArray("*.csv", "*.tsv", "*.json")
+use_native_dialog = true
 
 [node name="AddFileDialog" type="FileDialog" parent="."]
 title = "Open a File or Directory"
@@ -564,8 +566,9 @@ content_scale_mode = 2
 content_scale_aspect = 1
 ok_button_text = "Open"
 file_mode = 3
-root_subfolder = "Graphs"
+access = 2
 filters = PackedStringArray("*.csv", "*.tsv", "*.json")
+use_native_dialog = true
 
 [node name="UploadFileDialog" type="FileDialog" parent="."]
 title = "Open a File or Directory"

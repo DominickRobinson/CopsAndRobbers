@@ -67,6 +67,7 @@ script = ExtResource("1_fdy4f")
 pause_menu = NodePath("PanelContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
